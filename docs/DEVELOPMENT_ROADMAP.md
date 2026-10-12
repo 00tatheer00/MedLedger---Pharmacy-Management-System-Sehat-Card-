@@ -68,6 +68,9 @@ gantt
 
 ## Phase 2: Project Initialization & Engineering Setup
 
+> [!NOTE]
+> **Engineering Status Note (2026-10-13):** The Next.js repository scaffolding, tooling (TypeScript, ESLint, Prettier, Husky, lint-staged), testing suites (Vitest, Playwright), CI workflow, and modular directory skeleton were initialized in Git commit `71db268`. The engineering infrastructure is provisioned; formal Phase 1 review approval is required before proceeding to UI design system and domain logic.
+
 **Goal:** Create the Next.js project with all tooling, linting, and development infrastructure configured.
 
 **Prerequisites:** Phase 1 approved.

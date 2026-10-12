@@ -17,6 +17,7 @@
 6. **UUIDs for primary keys.** Prevents enumeration attacks and simplifies multi-environment data management.
 7. **Monetary values stored as integers** (smallest currency unit, e.g., paisa) or `NUMERIC(12,2)`. Never floating point.
 8. **Enums defined as PostgreSQL `CHECK` constraints or reference tables**, not application-level string conventions.
+9. **Partial unique indexes for soft-deleted tables.** Tables with soft delete (`deleted_at`) must enforce uniqueness via partial unique indexes (`WHERE deleted_at IS NULL`) so soft deletion does not permanently block reusing identifiers (e.g., `mr_number`, `admission_number`).
 
 ---
 
@@ -133,7 +134,7 @@ erDiagram
 | Entity              | Purpose                                             | Key Fields                                                                                                                                                                                                                        |
 | ------------------- | --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **claims**          | Claims submitted to the hospital for reimbursement. | `id`, `claim_number` (unique), `claim_period_start`, `claim_period_end`, `total_amount`, `status` (draft/submitted/under_review/approved/partially_approved/rejected/paid), `submitted_by`, `submitted_at`, `notes`, `created_at` |
-| **claim_items**     | Individual items included in a claim.               | `id`, `claim_id` (FK), `dispensing_record_id` (FK), `medicine_id` (FK), `quantity`, `unit_rate`, `total_amount`, `status` (pending/approved/rejected), `rejection_reason`                                                         |
+| **claim_items**     | Individual items included in a claim.               | `id`, `claim_id` (FK), `dispensing_record_id` (FK), `dispensing_item_id` (FK), `medicine_id` (FK), `quantity`, `unit_rate`, `total_amount`, `status` (pending/approved/rejected), `rejection_reason`                              |
 | **claim_approvals** | Approval/rejection actions on a claim.              | `id`, `claim_id` (FK), `action` (approved/partially_approved/rejected/returned), `approved_by` (FK to users), `approved_amount`, `comments`, `approved_at`                                                                        |
 | **claim_payments**  | Payments received from the hospital against claims. | `id`, `claim_id` (FK), `payment_date`, `amount`, `payment_method`, `reference_number`, `received_by` (FK to users), `created_at`                                                                                                  |
 
@@ -187,14 +188,14 @@ erDiagram
 
 All foreign keys have explicit `ON DELETE` behavior:
 
-| Relationship                   | ON DELETE                                                       |
-| ------------------------------ | --------------------------------------------------------------- |
-| Patient → Admission            | `RESTRICT` (cannot delete patient with admissions)              |
-| Prescription → Dispensing      | `RESTRICT`                                                      |
-| Medicine → Batch               | `RESTRICT`                                                      |
-| Batch → Stock Movement         | `RESTRICT`                                                      |
-| Purchase Order → Goods Receipt | `RESTRICT`                                                      |
-| Claim → Claim Items            | `CASCADE` (draft claims only; submitted claims use soft delete) |
+| Relationship                   | ON DELETE                                                                                                    |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| Patient → Admission            | `RESTRICT` (cannot delete patient with admissions)                                                           |
+| Prescription → Dispensing      | `RESTRICT`                                                                                                   |
+| Medicine → Batch               | `RESTRICT`                                                                                                   |
+| Batch → Stock Movement         | `RESTRICT`                                                                                                   |
+| Purchase Order → Goods Receipt | `RESTRICT`                                                                                                   |
+| Claim → Claim Items            | `RESTRICT` at DDL level (draft item cascade managed via application transaction; submitted claims protected) |
 
 ---
 

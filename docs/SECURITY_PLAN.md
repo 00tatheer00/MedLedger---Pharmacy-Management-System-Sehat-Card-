@@ -194,13 +194,13 @@ CREATE POLICY "staff_insert_patients" ON patients
 
 ### 6.1 Secret Categories
 
-| Secret                            | Stored Where         | Access                                             |
-| --------------------------------- | -------------------- | -------------------------------------------------- |
-| `SUPABASE_URL`                    | Environment variable | Server-side only.                                  |
-| `SUPABASE_ANON_KEY`               | Environment variable | Client-safe (used with RLS).                       |
-| `SUPABASE_SERVICE_ROLE_KEY`       | Environment variable | **Server-side only. Never exposed to the client.** |
-| `NEXTAUTH_SECRET` (or equivalent) | Environment variable | Server-side only.                                  |
-| Database connection string        | Supabase platform    | Not directly used by the application.              |
+| Secret                          | Stored Where         | Access                                             |
+| ------------------------------- | -------------------- | -------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`      | Environment variable | Client-safe (base project URL).                    |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Environment variable | Client-safe (used with RLS).                       |
+| `SUPABASE_SERVICE_ROLE_KEY`     | Environment variable | **Server-side only. Never exposed to the client.** |
+| `AUTH_SECRET`                   | Environment variable | Server-side only (session/token signing key).      |
+| Database connection string      | Supabase platform    | Not directly used by the application.              |
 
 ### 6.2 Environment Variable Management
 

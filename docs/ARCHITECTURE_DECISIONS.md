@@ -348,7 +348,7 @@ Use **Tailwind CSS** as the primary styling approach, per the project specificat
 **Positive:**
 
 - Utility-first approach enables rapid UI development.
-- Consistent design tokens (colors, spacing, typography) configured in `tailwind.config.ts`.
+- Consistent design tokens (colors, spacing, typography) configured via CSS `@theme` tokens in `src/app/globals.css` (Tailwind CSS v4).
 - Excellent integration with shadcn/ui.
 - No CSS naming conflicts or specificity issues.
 - Easy responsive design with breakpoint prefixes.
