@@ -44,6 +44,29 @@ export interface AppError {
  * }
  * ```
  */
-export type ActionResult<T> =
-  | { success: true; data: T }
-  | { success: false; error: AppError };
+export type ActionResult<T> = { success: true; data: T } | { success: false; error: AppError };
+
+/**
+ * Creates a successful ActionResult.
+ */
+export function successResult<T>(data: T): ActionResult<T> {
+  return { success: true, data };
+}
+
+/**
+ * Creates an error ActionResult.
+ */
+export function errorResult(
+  code: ErrorCode,
+  message: string,
+  fields?: Record<string, string[]>,
+): ActionResult<never> {
+  return {
+    success: false,
+    error: {
+      code,
+      message,
+      ...(fields ? { fields } : {}),
+    },
+  };
+}

@@ -1,0 +1,10 @@
+/**
+ * MedLedger — Shared UI Components
+ *
+ * This directory will contain shadcn/ui components installed via CLI.
+ * Components are customized through Tailwind configuration, not modified directly.
+ *
+ * Installation: npx shadcn@latest add <component>
+ *
+ * Implementation: Phase 3 (Design System)
+ */

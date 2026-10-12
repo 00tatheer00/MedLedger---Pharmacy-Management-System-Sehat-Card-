@@ -1,0 +1,6 @@
+/**
+ * MedLedger — Table Components
+ *
+ * DataTable with server-side pagination, sorting, filtering, and empty states.
+ * Implementation: Phase 3 (Design System)
+ */
