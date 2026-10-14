@@ -35,7 +35,7 @@ describe('Header Component', () => {
 
     expect(screen.getByText('System Alerts')).toBeInTheDocument();
 
-    const closeBtn = screen.getByText('Close panel');
+    const closeBtn = screen.getByRole('button', { name: /close/i });
     fireEvent.click(closeBtn);
 
     expect(screen.queryByText('System Alerts')).not.toBeInTheDocument();

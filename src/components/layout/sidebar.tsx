@@ -20,7 +20,6 @@ import {
   Cross,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { InstallButton } from '@/components/pwa/install-button';
 
 interface NavItem {
   label: string;
@@ -165,9 +164,8 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
         ))}
       </nav>
 
-      {/* Footer info box & Install App */}
+      {/* Footer info box */}
       <div className="shrink-0 p-3 space-y-2 border-t border-slate-800">
-        <InstallButton variant="sidebar" />
         <div className="rounded-lg bg-slate-800 p-2.5 px-3 border border-slate-700 flex items-center justify-between">
           <div className="flex flex-col">
             <span className="text-[10px] font-medium uppercase tracking-wider text-slate-500">

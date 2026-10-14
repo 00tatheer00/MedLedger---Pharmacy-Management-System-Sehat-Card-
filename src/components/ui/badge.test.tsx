@@ -11,12 +11,12 @@ describe('Badge component', () => {
   it('applies success variant style', () => {
     render(<Badge variant="success">Passed</Badge>);
     const badge = screen.getByText('Passed');
-    expect(badge.className).toContain('text-success');
+    expect(badge.className).toContain('text-emerald-700');
   });
 
   it('applies warning variant style', () => {
     render(<Badge variant="warning">Low Stock</Badge>);
     const badge = screen.getByText('Low Stock');
-    expect(badge.className).toContain('text-amber-800');
+    expect(badge.className).toContain('text-amber-700');
   });
 });

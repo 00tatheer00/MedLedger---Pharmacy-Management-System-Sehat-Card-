@@ -29,7 +29,6 @@ import { priorityAlerts } from '@/lib/demo-data';
 import { searchCatalogueAction } from '@/modules/dashboard/actions';
 import { SearchResultItem } from '@/modules/dashboard/types';
 import { SYSTEM_ROLES, SystemRole } from '@/core/authorization/roles';
-import { InstallButton } from '@/components/pwa/install-button';
 import { cn } from '@/lib/utils';
 
 const DEFAULT_QUICK_ACTIONS: SearchResultItem[] = [
@@ -300,9 +299,8 @@ export function Header({
         </div>
       </div>
 
-      {/* Right: Notifications, User Profile, PWA Install */}
+      {/* Right: Notifications, User Profile */}
       <div className="flex items-center gap-2">
-        <InstallButton />
         {/* Notifications Bell */}
         <div className="relative">
           <Button

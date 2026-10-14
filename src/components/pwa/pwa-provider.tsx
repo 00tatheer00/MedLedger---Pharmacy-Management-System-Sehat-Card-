@@ -8,7 +8,7 @@ import {
   useContext,
   type ReactNode,
 } from 'react';
-import { Download, WifiOff, X } from 'lucide-react';
+import { WifiOff } from 'lucide-react';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -79,7 +79,6 @@ function getStandaloneServerSnapshot(): boolean {
 export function PWAProvider({ children }: { children: ReactNode }) {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstallable, setIsInstallable] = useState(false);
-  const [dismissedPrompt, setDismissedPrompt] = useState(false);
 
   // Synchronize browser online and standalone state without cascading effect renders
   const isOnline = useSyncExternalStore(
@@ -106,7 +105,7 @@ export function PWAProvider({ children }: { children: ReactNode }) {
         });
     }
 
-    // 2. Capture beforeinstallprompt event for custom install banner
+    // 2. Capture beforeinstallprompt event for install handling
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
@@ -144,41 +143,6 @@ export function PWAProvider({ children }: { children: ReactNode }) {
           <span>
             Hospital Network Offline — Working with cached pharmacy data (انٹرنیٹ منقطع ہے)
           </span>
-        </div>
-      )}
-
-      {/* Floating PWA Install Prompt Banner (Only when installable and not dismissed) */}
-      {isInstallable && !dismissedPrompt && !isInstalled && (
-        <div className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 max-w-sm w-full bg-navy text-white p-4 rounded-2xl border-2 border-primary/50 shadow-2xl flex items-center justify-between gap-3 animate-in fade-in slide-in-from-bottom-4 duration-300">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-teal to-primary text-white shrink-0 shadow-sm font-black text-sm">
-              ML
-            </div>
-            <div className="min-w-0">
-              <h4 className="text-sm font-extrabold text-white leading-tight truncate">
-                Install MedLedger App
-              </h4>
-              <p className="text-[11px] text-teal-light font-medium" dir="rtl">
-                ایپ انسٹال کریں • تیز رفتار اور آف لائن
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-1.5 shrink-0">
-            <button
-              onClick={promptInstall}
-              className="bg-primary hover:bg-primary-hover text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 shadow-sm transition-colors cursor-pointer"
-            >
-              <Download className="h-3.5 w-3.5" />
-              <span>Install</span>
-            </button>
-            <button
-              onClick={() => setDismissedPrompt(true)}
-              className="text-text-on-dark-muted hover:text-white p-1 rounded-md transition-colors"
-              aria-label="Dismiss install banner"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
         </div>
       )}
 
