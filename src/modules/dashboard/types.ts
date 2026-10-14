@@ -69,11 +69,14 @@ export interface QuickActionItem {
   isPrimary?: boolean;
 }
 
+export type SearchCategory =
+  'Medicine' | 'Patient' | 'Prescription' | 'Batch' | 'Supplier' | 'Claim' | 'Action';
+
 export interface SearchResultItem {
   id: string;
   title: string;
   subtitle: string;
-  category: 'Medicine' | 'Batch' | 'Claim' | 'Prescription';
+  category: SearchCategory;
   badgeText: string;
   badgeVariant: 'default' | 'success' | 'warning' | 'danger' | 'info' | 'muted';
   href: string;

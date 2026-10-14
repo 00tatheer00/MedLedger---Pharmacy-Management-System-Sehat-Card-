@@ -1,6 +1,16 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { Header } from './header';
+
+const mockPush = vi.fn();
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: mockPush,
+    replace: vi.fn(),
+    prefetch: vi.fn(),
+  }),
+  usePathname: () => '/',
+}));
 
 describe('Header Component', () => {
   it('renders title, subtitle, and search trigger', () => {
@@ -40,5 +50,18 @@ describe('Header Component', () => {
     expect(screen.getByText('Simulated Role Preview')).toBeInTheDocument();
     expect(screen.getByText('ayesha.khan@dhqkohat.test')).toBeInTheDocument();
     expect(screen.getByText('Staff Pharmacist')).toBeInTheDocument();
+  });
+
+  it('opens search palette and shows quick actions and categories', () => {
+    render(<Header onToggleMobileMenu={vi.fn()} />);
+
+    const searchTrigger = screen.getByRole('button', { name: /search shortcut/i });
+    act(() => {
+      fireEvent.click(searchTrigger);
+    });
+
+    expect(screen.getByText(/popular searches/i)).toBeInTheDocument();
+    expect(screen.getByText(/dispense medicine/i)).toBeInTheDocument();
+    expect(screen.getByText(/all \(تمام\)/i)).toBeInTheDocument();
   });
 });
