@@ -117,32 +117,32 @@ export function Header({
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 w-full items-center justify-between border-b border-border bg-card-bg/95 px-4 sm:px-6 backdrop-blur-xs">
+    <header className="sticky top-0 z-30 flex h-[72px] w-full items-center justify-between border-b border-border bg-card-bg/98 px-5 sm:px-6 backdrop-blur-sm">
       {/* Left: Mobile Toggle & Page Title */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         <button
           onClick={onToggleMobileMenu}
-          className="lg:hidden rounded-lg p-2 text-text-secondary hover:bg-hover-bg hover:text-text-primary focus-ring"
+          className="lg:hidden rounded-xl p-2.5 text-text-secondary hover:bg-hover-bg hover:text-text-primary focus-ring transition-colors"
           aria-label="Open navigation menu"
         >
-          <Menu className="h-5 w-5" />
+          <Menu className="h-6 w-6" />
         </button>
 
         <div className="hidden sm:flex flex-col">
-          <h1 className="text-base font-bold text-text-primary leading-tight tracking-tight">
+          <h1 className="text-lg font-bold text-text-primary leading-tight tracking-tight">
             {title}
           </h1>
-          <span className="text-xs text-text-secondary">{subtitle}</span>
+          <span className="text-sm text-text-secondary">{subtitle}</span>
         </div>
       </div>
 
       {/* Middle: Global Search Input / Trigger */}
-      <div className="flex-1 max-w-md mx-4 hidden md:block">
+      <div className="flex-1 max-w-lg mx-6 hidden md:block">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-text-muted" />
           <input
             type="text"
-            placeholder="Search medicines, prescriptions, claims, or batch numbers..."
+            placeholder="Search medicines, prescriptions, claims..."
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -151,11 +151,11 @@ export function Header({
               }
             }}
             onClick={() => setSearchOpen(true)}
-            className="w-full h-9 pl-9 pr-14 rounded-lg border border-border bg-page-bg/60 text-xs text-text-primary placeholder:text-text-muted focus-ring transition-colors cursor-pointer"
+            className="w-full h-12 pl-12 pr-16 rounded-xl border-2 border-border bg-page-bg/60 text-sm text-text-primary placeholder:text-text-muted focus-ring transition-all hover:border-primary/30 focus:border-primary cursor-pointer"
           />
           <button
             onClick={() => setSearchOpen(true)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded border border-border bg-card-bg px-1.5 py-0.5 text-[10px] font-mono text-text-muted shadow-2xs hover:text-text-primary"
+            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg border border-border bg-card-bg px-2.5 py-1 text-xs font-mono text-text-muted shadow-sm hover:text-text-primary transition-colors"
             aria-label="Search shortcut"
           >
             Ctrl K
@@ -163,28 +163,22 @@ export function Header({
         </div>
       </div>
 
-      {/* Right: Environment pill, Notifications, User Profile */}
-      <div className="flex items-center gap-2 sm:gap-3">
-        {/* Prototype Environment Pill */}
-        <div className="hidden xl:flex items-center gap-2 rounded-full border border-border bg-page-bg px-3 py-1 text-xs text-text-secondary">
-          <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <span className="font-medium text-xs">Phase 4 • App Integration</span>
-        </div>
-
+      {/* Right: Notifications, User Profile */}
+      <div className="flex items-center gap-3 sm:gap-4">
         {/* Notifications Bell */}
         <div className="relative">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setShowNotifications(!showNotifications)}
-            className="relative h-9 w-9 p-0 rounded-lg text-text-secondary hover:text-text-primary hover:bg-hover-bg"
+            className="relative h-11 w-11 p-0 rounded-xl text-text-secondary hover:text-text-primary hover:bg-hover-bg"
             aria-label="Open notifications"
           >
-            <Bell className="h-4.5 w-4.5" />
+            <Bell className="h-5 w-5" />
             {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 flex h-2 w-2">
+              <span className="absolute top-1.5 right-1.5 flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-danger opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-danger" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-danger" />
               </span>
             )}
           </Button>
@@ -197,16 +191,16 @@ export function Header({
                 onClick={() => setShowNotifications(false)}
                 aria-hidden="true"
               />
-              <div className="absolute right-0 mt-2 z-50 w-80 sm:w-96 rounded-xl border border-border bg-card-bg shadow-dropdown p-4 animate-in fade-in zoom-in-95 duration-150">
-                <div className="flex items-center justify-between pb-3 border-b border-border">
-                  <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-semibold text-text-primary">System Alerts</h4>
+              <div className="absolute right-0 mt-3 z-50 w-96 sm:w-[420px] rounded-2xl border border-border bg-card-bg shadow-dropdown p-5 animate-in fade-in zoom-in-95 duration-200">
+                <div className="flex items-center justify-between pb-4 border-b border-border">
+                  <div className="flex items-center gap-2.5">
+                    <h4 className="text-base font-bold text-text-primary">System Alerts</h4>
                     {unreadCount > 0 ? (
-                      <Badge variant="warning" size="sm">
+                      <Badge variant="warning" size="sm" className="font-bold">
                         {unreadCount} unread
                       </Badge>
                     ) : (
-                      <Badge variant="success" size="sm">
+                      <Badge variant="success" size="sm" className="font-bold">
                         All read
                       </Badge>
                     )}
@@ -214,20 +208,20 @@ export function Header({
                   {unreadCount > 0 && (
                     <button
                       onClick={handleMarkAllRead}
-                      className="text-[11px] text-primary hover:underline font-medium"
+                      className="text-sm text-primary hover:underline font-bold"
                     >
-                      Mark all as read
+                      Mark all read
                     </button>
                   )}
                 </div>
 
-                <div className="mt-3 space-y-2.5 max-h-80 overflow-y-auto scrollbar-thin">
+                <div className="mt-4 space-y-3 max-h-96 overflow-y-auto scrollbar-thin">
                   {notificationsList.map((alert) => (
                     <div
                       key={alert.id}
-                      className="rounded-lg border border-border/80 bg-page-bg/60 p-2.5 hover:bg-hover-bg transition-colors"
+                      className="rounded-xl border border-border bg-page-bg/60 p-4 hover:bg-hover-bg hover:border-primary/30 transition-all duration-200 cursor-pointer"
                     >
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between mb-2">
                         <Badge
                           variant={
                             alert.severity === 'critical'
@@ -240,28 +234,26 @@ export function Header({
                         >
                           {alert.severity}
                         </Badge>
-                        <span className="text-[10px] text-text-muted">
+                        <span className="text-xs text-text-muted font-medium">
                           {alert.timestamp.replace('T', ' ').slice(0, 16)}
                         </span>
                       </div>
-                      <p className="mt-1.5 text-xs font-semibold text-text-primary">
-                        {alert.title}
-                      </p>
-                      <p className="mt-0.5 text-[11px] text-text-secondary line-clamp-2">
+                      <p className="text-sm font-bold text-text-primary mb-1">{alert.title}</p>
+                      <p className="text-sm text-text-secondary line-clamp-2">
                         {alert.description}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-3 pt-3 border-t border-border flex items-center justify-between">
+                <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
                   <button
                     onClick={() => setShowNotifications(false)}
-                    className="text-xs text-text-secondary hover:text-text-primary font-medium"
+                    className="text-sm text-text-secondary hover:text-text-primary font-semibold transition-colors"
                   >
                     Close panel
                   </button>
-                  <span className="text-[10px] text-text-muted">Simulated operational alerts</span>
+                  <span className="text-xs text-text-muted">Operational alerts</span>
                 </div>
               </div>
             </>
@@ -272,22 +264,22 @@ export function Header({
         <div className="relative">
           <button
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="flex items-center gap-2.5 pl-2 sm:pl-3 border-l border-border focus-ring rounded-lg py-1"
+            className="flex items-center gap-3 pl-3 sm:pl-4 border-l-2 border-border focus-ring rounded-xl py-1.5 hover:bg-hover-bg transition-colors"
             aria-label="User profile and role menu"
             aria-expanded={showUserMenu}
           >
-            <div className="flex h-8.5 w-8.5 items-center justify-center rounded-full bg-navy text-white text-xs font-bold ring-2 ring-teal/30">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-navy to-primary text-white text-sm font-bold ring-3 ring-teal/30 shadow-sm">
               AK
             </div>
             <div className="hidden sm:flex flex-col text-left">
-              <span className="text-xs font-semibold text-text-primary leading-tight">
+              <span className="text-sm font-bold text-text-primary leading-tight">
                 Dr. Ayesha Khan
               </span>
-              <span className="text-[10px] text-text-secondary font-medium">
+              <span className="text-xs text-text-secondary font-semibold">
                 {SYSTEM_ROLES[activeRole].name}
               </span>
             </div>
-            <ChevronDown className="hidden sm:block h-3.5 w-3.5 text-text-muted" />
+            <ChevronDown className="hidden sm:block h-4 w-4 text-text-muted" />
           </button>
 
           {showUserMenu && (
@@ -297,33 +289,33 @@ export function Header({
                 onClick={() => setShowUserMenu(false)}
                 aria-hidden="true"
               />
-              <div className="absolute right-0 mt-2 z-50 w-72 rounded-xl border border-border bg-card-bg shadow-dropdown p-4 animate-in fade-in zoom-in-95 duration-150">
-                <div className="flex items-center gap-3 pb-3 border-b border-border">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-navy text-white text-sm font-bold">
+              <div className="absolute right-0 mt-3 z-50 w-80 rounded-2xl border border-border bg-card-bg shadow-dropdown p-5 animate-in fade-in zoom-in-95 duration-200">
+                <div className="flex items-center gap-4 pb-4 border-b border-border">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-navy to-primary text-white text-base font-bold shadow-md">
                     AK
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-text-primary">Dr. Ayesha Khan</h4>
-                    <p className="text-xs text-text-secondary">ayesha.khan@dhqkohat.test</p>
+                    <h4 className="text-base font-bold text-text-primary">Dr. Ayesha Khan</h4>
+                    <p className="text-sm text-text-secondary">ayesha.khan@dhqkohat.test</p>
                   </div>
                 </div>
 
                 {/* Role Simulation Switcher */}
-                <div className="mt-3">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs font-semibold text-text-primary flex items-center gap-1.5">
-                      <SlidersHorizontal className="h-3.5 w-3.5 text-primary" />
+                <div className="mt-4">
+                  <div className="flex items-center justify-between mb-2.5">
+                    <span className="text-sm font-bold text-text-primary flex items-center gap-2">
+                      <SlidersHorizontal className="h-4 w-4 text-primary" />
                       Simulated Role Preview
                     </span>
-                    <Badge variant="info" size="sm">
+                    <Badge variant="info" size="sm" className="font-bold">
                       Provisional
                     </Badge>
                   </div>
-                  <p className="text-[11px] text-text-muted leading-tight mb-2">
-                    Switch roles to evaluate provisional permission boundaries in this prototype.
+                  <p className="text-sm text-text-muted leading-snug mb-3">
+                    Switch roles to evaluate permission boundaries.
                   </p>
 
-                  <div className="space-y-1">
+                  <div className="space-y-1.5">
                     {(Object.keys(SYSTEM_ROLES) as SystemRole[]).map((roleKey) => (
                       <button
                         key={roleKey}
@@ -331,27 +323,27 @@ export function Header({
                           setActiveRole(roleKey);
                           setShowUserMenu(false);
                         }}
-                        className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                        className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
                           activeRole === roleKey
-                            ? 'bg-primary-light text-primary font-semibold'
-                            : 'text-text-secondary hover:bg-hover-bg hover:text-text-primary'
+                            ? 'bg-primary-light text-primary font-bold border-2 border-primary/30'
+                            : 'text-text-secondary hover:bg-hover-bg hover:text-text-primary border-2 border-transparent'
                         }`}
                       >
                         <span>{SYSTEM_ROLES[roleKey].name}</span>
                         {activeRole === roleKey && (
-                          <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
+                          <CheckCircle2 className="h-5 w-5 text-primary" />
                         )}
                       </button>
                     ))}
                   </div>
                 </div>
 
-                <div className="mt-3 pt-3 border-t border-border flex items-center justify-between text-[11px] text-text-muted">
-                  <span className="flex items-center gap-1">
-                    <ShieldCheck className="h-3.5 w-3.5 text-success" />
+                <div className="mt-4 pt-4 border-t border-border flex items-center justify-between text-sm text-text-muted">
+                  <span className="flex items-center gap-1.5">
+                    <ShieldCheck className="h-4 w-4 text-emerald-500" />
                     Supabase RBAC
                   </span>
-                  <span>DHQ Kohat Dispensary</span>
+                  <span>DHQ Kohat</span>
                 </div>
               </div>
             </>
@@ -361,57 +353,53 @@ export function Header({
 
       {/* Global Search Dialog Modal (Ctrl+K) */}
       {searchOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-navy-dark/60 backdrop-blur-xs animate-in fade-in duration-150">
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 sm:pt-28 px-4 bg-navy-dark/60 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="fixed inset-0" onClick={handleCloseSearch} aria-hidden="true" />
-          <div className="relative z-10 w-full max-w-xl rounded-xl border border-border bg-card-bg shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150">
+          <div className="relative z-10 w-full max-w-xl rounded-2xl border border-border bg-card-bg shadow-dropdown overflow-hidden animate-in zoom-in-95 duration-200">
             {/* Search Input Bar */}
-            <div className="flex items-center px-4 py-3 border-b border-border bg-card-bg">
-              <Search className="h-4.5 w-4.5 text-text-muted mr-3 shrink-0" />
+            <div className="flex items-center px-5 py-4 border-b border-border bg-card-bg">
+              <Search className="h-5 w-5 text-text-muted mr-3 shrink-0" />
               <input
                 ref={searchInputRef}
                 type="text"
                 placeholder="Search medicines, generic names, batches, or claims..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 bg-transparent text-sm text-text-primary placeholder:text-text-muted focus:outline-hidden"
+                className="flex-1 bg-transparent text-base text-text-primary placeholder:text-text-muted focus:outline-hidden"
               />
-              {isSearching && <Loader2 className="h-4 w-4 text-primary animate-spin mr-2" />}
+              {isSearching && <Loader2 className="h-5 w-5 text-primary animate-spin mr-2" />}
               <button
                 onClick={handleCloseSearch}
-                className="text-text-muted hover:text-text-primary p-1 rounded-md"
+                className="text-text-muted hover:text-text-primary p-1.5 rounded-lg hover:bg-hover-bg transition-colors"
                 aria-label="Close search"
               >
-                <X className="h-4 w-4" />
+                <X className="h-5 w-5" />
               </button>
             </div>
 
             {/* Search Results Area */}
-            <div className="max-h-80 overflow-y-auto p-2 scrollbar-thin">
+            <div className="max-h-96 overflow-y-auto p-3 scrollbar-thin">
               {searchQuery.trim().length < 2 ? (
-                <div className="py-8 px-4 text-center">
-                  <p className="text-xs text-text-secondary">
-                    Type at least 2 characters to search the medicine catalogue, batch numbers, or
-                    claims.
+                <div className="py-10 px-4 text-center">
+                  <p className="text-sm text-text-secondary">
+                    Type at least 2 characters to search the medicine catalogue.
                   </p>
-                  <p className="text-[11px] text-text-muted mt-1">
-                    Examples: &quot;Amoxicillin&quot;, &quot;B-2026&quot;, &quot;CLM-2026&quot;,
-                    &quot;Ceftriaxone&quot;
+                  <p className="text-sm text-text-muted mt-2">
+                    Examples: &quot;Amoxicillin&quot;, &quot;B-2026&quot;, &quot;Ceftriaxone&quot;
                   </p>
                 </div>
               ) : searchResults.length > 0 ? (
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   {searchResults.map((item) => (
                     <Link
                       key={`${item.category}-${item.id}`}
                       href={item.href}
                       onClick={handleCloseSearch}
-                      className="flex items-center justify-between p-2.5 rounded-lg hover:bg-hover-bg transition-colors focus-ring"
+                      className="flex items-center justify-between p-4 rounded-xl hover:bg-hover-bg transition-all duration-150 focus-ring"
                     >
                       <div className="flex flex-col">
-                        <span className="text-xs font-semibold text-text-primary">
-                          {item.title}
-                        </span>
-                        <span className="text-[11px] text-text-secondary">{item.subtitle}</span>
+                        <span className="text-sm font-bold text-text-primary">{item.title}</span>
+                        <span className="text-sm text-text-secondary">{item.subtitle}</span>
                       </div>
                       <Badge variant={item.badgeVariant} size="sm">
                         {item.badgeText}
@@ -420,11 +408,11 @@ export function Header({
                   ))}
                 </div>
               ) : (
-                <div className="py-8 px-4 text-center">
-                  <p className="text-xs font-medium text-text-primary">
+                <div className="py-10 px-4 text-center">
+                  <p className="text-sm font-bold text-text-primary">
                     No records found matching &ldquo;{searchQuery}&rdquo;
                   </p>
-                  <p className="text-[11px] text-text-secondary mt-1">
+                  <p className="text-sm text-text-secondary mt-2">
                     Try searching by medicine name, generic ingredient, or batch code.
                   </p>
                 </div>
@@ -432,9 +420,9 @@ export function Header({
             </div>
 
             {/* Modal Footer */}
-            <div className="flex items-center justify-between px-4 py-2 border-t border-border bg-page-bg/60 text-[11px] text-text-muted">
+            <div className="flex items-center justify-between px-5 py-3.5 border-t border-border bg-page-bg/60 text-sm text-text-muted">
               <span>ESC to close • Enter to select</span>
-              <span>Prototype Evaluation Search</span>
+              <span>Search</span>
             </div>
           </div>
         </div>

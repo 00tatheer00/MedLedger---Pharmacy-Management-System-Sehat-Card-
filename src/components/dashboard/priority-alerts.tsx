@@ -1,93 +1,205 @@
 'use client';
 
 import { useState } from 'react';
-import { ShieldAlert } from 'lucide-react';
+import Link from 'next/link';
+import {
+  ShieldAlert,
+  AlertCircle,
+  AlertTriangle,
+  Info,
+  ArrowRight,
+  ExternalLink,
+} from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Alert } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
 import { priorityAlerts, type AlertItem } from '@/lib/demo-data';
 
 export function PriorityAlerts() {
   const [selectedAlert, setSelectedAlert] = useState<AlertItem | null>(null);
 
+  const getSeverityConfig = (severity: string) => {
+    switch (severity) {
+      case 'critical':
+        return {
+          icon: AlertCircle,
+          iconColor: 'text-rose-600',
+          iconBg: 'bg-rose-100',
+          border: 'border-rose-200 hover:border-rose-400',
+          badge: 'Critical • فوری توجہ',
+          badgeClass: 'bg-rose-100 text-rose-800 border-rose-200',
+          actionText: 'Resolve Urgently',
+          actionHref: '/inventory',
+          btnClass: 'bg-rose-600 hover:bg-rose-700 text-white',
+        };
+      case 'warning':
+        return {
+          icon: AlertTriangle,
+          iconColor: 'text-amber-600',
+          iconBg: 'bg-amber-100',
+          border: 'border-amber-200 hover:border-amber-400',
+          badge: 'Warning • توجہ طلب',
+          badgeClass: 'bg-amber-100 text-amber-800 border-amber-200',
+          actionText: 'Check Stock',
+          actionHref: '/inventory',
+          btnClass: 'bg-amber-600 hover:bg-amber-700 text-white',
+        };
+      default:
+        return {
+          icon: Info,
+          iconColor: 'text-blue-600',
+          iconBg: 'bg-blue-100',
+          border: 'border-blue-200 hover:border-blue-400',
+          badge: 'Info • نوٹس',
+          badgeClass: 'bg-blue-100 text-blue-800 border-blue-200',
+          actionText: 'Review',
+          actionHref: '/claims',
+          btnClass: 'bg-blue-600 hover:bg-blue-700 text-white',
+        };
+    }
+  };
+
   return (
     <>
-      <Card>
-        <CardHeader className="px-4 py-3 border-b border-border/80 flex flex-row items-center justify-between">
-          <div className="flex items-center gap-2">
-            <ShieldAlert className="h-4 w-4 text-danger" />
-            <CardTitle className="text-sm font-bold text-text-primary">
-              Priority Alerts & Clinical Notifications
-            </CardTitle>
+      <Card className="h-full border-2 border-border/80 shadow-card">
+        <CardHeader className="px-6 py-5 border-b border-border/80 flex flex-row items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-rose-100 text-rose-700 shadow-sm">
+              <ShieldAlert className="h-6 w-6" />
+            </div>
+            <div>
+              <CardTitle className="text-xl font-extrabold text-text-primary">
+                Urgent Pharmacy Alerts
+              </CardTitle>
+              <p className="text-xs sm:text-sm text-text-secondary mt-0.5 font-medium">
+                ہسپتال کے فوری انتباہات — Requires pharmacist or storekeeper intervention
+              </p>
+            </div>
           </div>
-          <Badge variant="warning" size="sm" className="text-[10px]">
-            {priorityAlerts.length} Flagged • Simulated
-          </Badge>
+          <span className="bg-rose-100 text-rose-800 border border-rose-200 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+            {priorityAlerts.length} Flagged
+          </span>
         </CardHeader>
-        <CardContent className="p-3 sm:p-3.5 space-y-2.5">
-          {priorityAlerts.map((alert) => (
-            <Alert
-              key={alert.id}
-              variant={alert.severity}
-              title={alert.title}
-              description={alert.description}
-              className="py-2.5 px-3"
-              action={
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setSelectedAlert(alert)}
-                  className="h-6.5 text-[11px] px-2 font-medium"
-                >
-                  Inspect
-                </Button>
-              }
-            />
-          ))}
+        <CardContent className="p-6 space-y-4">
+          {priorityAlerts.map((alert) => {
+            const config = getSeverityConfig(alert.severity);
+            const Icon = config.icon;
+
+            return (
+              <div
+                key={alert.id}
+                className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl border-2 bg-card-bg shadow-sm transition-all duration-300 ease-out group hover:-translate-y-1 hover:shadow-lg cursor-pointer ${config.border}`}
+                onClick={() => setSelectedAlert(alert)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedAlert(alert);
+                  }
+                }}
+              >
+                <div className="flex items-start gap-4">
+                  <div
+                    className={`flex h-12 w-12 items-center justify-center rounded-xl ${config.iconBg} ${config.iconColor} shrink-0 mt-0.5 shadow-sm group-hover:scale-105 transition-transform`}
+                  >
+                    <Icon className="h-6 w-6" strokeWidth={2.2} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                      <span
+                        className={`text-xs font-extrabold px-2.5 py-0.5 rounded-full border ${config.badgeClass}`}
+                      >
+                        {config.badge}
+                      </span>
+                      <span className="text-xs text-text-muted font-mono font-semibold">
+                        {alert.timestamp.slice(0, 10)}
+                      </span>
+                    </div>
+                    <h4 className="text-base font-extrabold text-text-primary mb-1 group-hover:text-primary transition-colors">
+                      {alert.title}
+                    </h4>
+                    <p className="text-sm text-text-secondary leading-relaxed line-clamp-2">
+                      {alert.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedAlert(alert);
+                    }}
+                    className="font-bold text-xs sm:text-sm h-10 px-4 rounded-xl border-2 hover:border-primary"
+                  >
+                    Details
+                  </Button>
+                  <Link
+                    href={config.actionHref}
+                    onClick={(e) => e.stopPropagation()}
+                    className={`font-bold text-xs sm:text-sm h-10 px-4 rounded-xl flex items-center gap-1.5 shadow-sm transition-colors ${config.btnClass}`}
+                  >
+                    <span>{config.actionText}</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
         </CardContent>
       </Card>
 
-      {/* Alert Inspection Dialog (Honest Prototype) */}
+      {/* Alert Inspection Dialog */}
       <Dialog
         open={!!selectedAlert}
         onClose={() => setSelectedAlert(null)}
         title={selectedAlert?.title || 'Alert Details'}
-        description={`Severity: ${selectedAlert?.severity?.toUpperCase()} • Timestamp: ${selectedAlert?.timestamp}`}
+        description={`Classification: ${selectedAlert?.severity?.toUpperCase()} • DHQ Kohat Pharmacy`}
         footer={
-          <Button variant="primary" size="sm" onClick={() => setSelectedAlert(null)}>
-            Dismiss View
-          </Button>
+          <div className="flex items-center justify-between w-full">
+            <Button variant="ghost" size="md" onClick={() => setSelectedAlert(null)}>
+              Close
+            </Button>
+            <Link
+              href={selectedAlert?.severity === 'critical' ? '/inventory' : '/purchases'}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white font-bold text-sm shadow-sm transition-colors"
+              onClick={() => setSelectedAlert(null)}
+            >
+              <span>Take Operational Action</span>
+              <ExternalLink className="h-4 w-4" />
+            </Link>
+          </div>
         }
       >
-        <div className="space-y-3 py-1">
-          <div className="rounded-lg bg-page-bg p-3 border border-border text-xs space-y-1.5">
+        <div className="space-y-4 py-2">
+          <div className="rounded-xl bg-page-bg p-4 border border-border text-sm space-y-2.5">
             <div className="flex justify-between">
-              <span className="text-text-muted">Notification ID:</span>
-              <span className="font-mono text-text-primary">{selectedAlert?.id} (Fictional)</span>
+              <span className="text-text-muted font-medium">Alert ID:</span>
+              <span className="font-mono font-bold text-text-primary">{selectedAlert?.id}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-text-muted">Recorded Timestamp:</span>
-              <span className="text-text-primary">{selectedAlert?.timestamp}</span>
+              <span className="text-text-muted font-medium">Recorded Date:</span>
+              <span className="text-text-primary font-semibold">{selectedAlert?.timestamp}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-text-muted">Classification:</span>
-              <span className="font-semibold capitalize text-text-primary">
+              <span className="text-text-muted font-medium">Priority Level:</span>
+              <span className="font-extrabold capitalize text-rose-700">
                 {selectedAlert?.severity}
               </span>
             </div>
           </div>
 
-          <div className="text-xs text-text-secondary leading-relaxed">
-            <p className="font-semibold text-text-primary mb-1">Alert Description:</p>
-            <p>{selectedAlert?.description}</p>
+          <div className="text-base text-text-primary leading-relaxed bg-card-bg p-4 rounded-xl border border-border">
+            <p className="font-extrabold mb-1">Issue Summary:</p>
+            <p className="text-text-secondary">{selectedAlert?.description}</p>
           </div>
 
-          <div className="rounded-md border border-info/30 bg-info-light/40 p-2.5 text-[11px] text-blue-900 leading-normal">
-            ℹ️ <strong>Prototype Note:</strong> In Phase 3 and Phase 4, taking action on this alert
-            will trigger batch quarantine, automated purchase order creation, or claim dispute
-            submission.
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900 leading-relaxed">
+            ✅ <strong>Recommended Action:</strong> Check the central warehouse store or initiate a
+            fast-track purchase order to maintain minimum emergency reserve levels.
           </div>
         </div>
       </Dialog>

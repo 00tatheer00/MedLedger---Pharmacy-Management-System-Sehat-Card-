@@ -7,25 +7,27 @@ interface PrototypeBannerProps {
 
 export function PrototypeBanner({ isLiveDatabase = false, sourceNotice }: PrototypeBannerProps) {
   return (
-    <div className="rounded-lg border border-primary/20 bg-primary-light/30 px-3.5 py-2.5 text-xs text-text-secondary flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 shadow-2xs">
-      <div className="flex items-start gap-2.5">
+    <div className="rounded-2xl border-2 border-primary/20 bg-gradient-to-r from-primary-light/40 to-card-bg px-5 sm:px-6 py-4 sm:py-5 text-sm text-text-secondary flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+      <div className="flex items-start gap-3">
         {isLiveDatabase ? (
-          <Database className="h-4.5 w-4.5 text-success shrink-0 mt-0.5" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 shrink-0">
+            <Database className="h-5 w-5 text-emerald-600" />
+          </div>
         ) : (
-          <ShieldCheck className="h-4.5 w-4.5 text-primary shrink-0 mt-0.5" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-light shrink-0">
+            <ShieldCheck className="h-5 w-5 text-primary" />
+          </div>
         )}
-        <div className="space-y-0.5">
-          <p className="font-semibold text-text-primary text-xs">
-            MedLedger Evaluation Environment • DHQ Hospital Kohat
-          </p>
-          <p className="text-[11px] text-text-secondary leading-normal">
+        <div className="space-y-1">
+          <p className="font-bold text-text-primary text-base">MedLedger — DHQ Hospital Kohat</p>
+          <p className="text-sm text-text-secondary leading-relaxed">
             {sourceNotice ||
-              'All records, batch numbers, and PKR amounts are simulated demonstration records for UI evaluation. No real patient data or backend mutations exist.'}
+              'All records, batch numbers, and PKR amounts are simulated demonstration records for UI evaluation.'}
           </p>
         </div>
       </div>
-      <div className="shrink-0 text-[10px] font-mono text-primary font-bold uppercase tracking-wider bg-card-bg/90 border border-primary/20 px-2 py-0.5 rounded">
-        {isLiveDatabase ? 'Supabase Live • v0.4.0' : 'v0.4.0 • Integrated Phase 4'}
+      <div className="shrink-0 text-xs font-mono font-bold uppercase tracking-wider text-primary bg-primary-light/60 border border-primary/20 px-4 py-2 rounded-xl">
+        {isLiveDatabase ? 'Supabase Live • v0.4.0' : 'v0.4.0 • Phase 4'}
       </div>
     </div>
   );

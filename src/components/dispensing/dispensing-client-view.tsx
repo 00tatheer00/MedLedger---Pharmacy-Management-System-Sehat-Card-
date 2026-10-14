@@ -52,93 +52,103 @@ export function DispensingClientView({
 
   return (
     <div className="space-y-6">
-      {/* Top Operational KPIs */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex items-center justify-between">
+      {/* Top Operational Big KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="bg-card-bg rounded-2xl border-2 border-emerald-200/80 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between group">
           <div>
-            <span className="text-xs text-slate-500 font-medium block">Dispensed Today</span>
-            <span className="text-2xl font-bold font-mono text-slate-900 mt-1 block">
+            <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-800 block">
+              Dispensed Today • آج جاری کردہ
+            </span>
+            <span className="text-3xl sm:text-4xl font-black text-emerald-950 mt-1.5 block">
               {kpis.total_dispensed_today}
             </span>
-            <span className="text-[11px] text-emerald-600 font-medium flex items-center gap-1 mt-0.5">
-              <Sparkles className="h-3 w-3" />
+            <span className="text-xs text-emerald-700 font-extrabold flex items-center gap-1.5 mt-1 bg-emerald-100/60 px-2.5 py-0.5 rounded-full w-fit">
+              <Sparkles className="h-3.5 w-3.5" />
               {kpis.total_units_dispensed_today} units issued
             </span>
           </div>
-          <div className="h-10 w-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-            <ClipboardCheck className="h-5 w-5" />
+          <div className="h-14 w-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-sm">
+            <ClipboardCheck className="h-7 w-7" strokeWidth={2.2} />
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex items-center justify-between">
+        <div className="bg-card-bg rounded-2xl border-2 border-primary/30 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between group">
           <div>
-            <span className="text-xs text-slate-500 font-medium block">Pending Rx Queue</span>
-            <span className="text-2xl font-bold font-mono text-primary mt-1 block">
+            <span className="text-xs font-extrabold uppercase tracking-wider text-primary block">
+              Pending Rx Queue • منتظر نسخے
+            </span>
+            <span className="text-3xl sm:text-4xl font-black text-text-primary mt-1.5 block">
               {kpis.pending_prescriptions_count}
             </span>
-            <span className="text-[11px] text-slate-400 mt-0.5 block">
+            <span className="text-xs text-text-secondary font-bold mt-1 block">
               Awaiting dispensary issue
             </span>
           </div>
-          <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-            <Clock className="h-5 w-5" />
+          <div className="h-14 w-14 rounded-2xl bg-primary/15 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-sm">
+            <Clock className="h-7 w-7" strokeWidth={2.2} />
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex items-center justify-between">
+        <div className="bg-card-bg rounded-2xl border-2 border-amber-200/80 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between group">
           <div>
-            <span className="text-xs text-slate-500 font-medium block">Partially Dispensed</span>
-            <span className="text-2xl font-bold font-mono text-amber-600 mt-1 block">
+            <span className="text-xs font-extrabold uppercase tracking-wider text-amber-800 block">
+              Partially Dispensed • جزوی جاری
+            </span>
+            <span className="text-3xl sm:text-4xl font-black text-amber-950 mt-1.5 block">
               {kpis.partially_dispensed_count}
             </span>
-            <span className="text-[11px] text-amber-700 font-medium mt-0.5 block">
+            <span className="text-xs text-amber-800 font-bold mt-1 block">
               Remaining balance active
             </span>
           </div>
-          <div className="h-10 w-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
-            <Package className="h-5 w-5" />
+          <div className="h-14 w-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-sm">
+            <Package className="h-7 w-7" strokeWidth={2.2} />
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex items-center justify-between">
+        <div className="bg-card-bg rounded-2xl border-2 border-slate-200 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between group">
           <div>
-            <span className="text-xs text-slate-500 font-medium block">Reversals Recorded</span>
-            <span className="text-2xl font-bold font-mono text-slate-700 mt-1 block">
+            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-700 block">
+              Reversals Recorded • واپس شدہ
+            </span>
+            <span className="text-3xl sm:text-4xl font-black text-slate-900 mt-1.5 block">
               {kpis.reversed_dispensations_count}
             </span>
-            <span className="text-[11px] text-slate-400 mt-0.5 block">Restored to warehouse</span>
+            <span className="text-xs text-slate-500 font-bold mt-1 block">
+              Restored to warehouse
+            </span>
           </div>
-          <div className="h-10 w-10 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
-            <History className="h-5 w-5" />
+          <div className="h-14 w-14 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-sm">
+            <History className="h-7 w-7" strokeWidth={2.2} />
           </div>
         </div>
       </div>
 
       {/* Main Mode Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
+      <div className="flex items-center gap-3 border-b-2 border-border pb-3">
         <button
           onClick={() => setActiveTab('counter')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+          className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-extrabold transition-all duration-200 shadow-sm cursor-pointer ${
             activeTab === 'counter'
-              ? 'bg-primary text-white shadow-sm'
-              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              ? 'bg-primary text-white shadow-md scale-[1.02]'
+              : 'text-text-secondary hover:text-text-primary hover:bg-hover-bg'
           }`}
         >
-          <ClipboardCheck className="h-4 w-4" />
-          Dispensing Counter
+          <ClipboardCheck className="h-5 w-5" />
+          <span>Dispensing Counter (دوائی جاری کاؤنٹر)</span>
         </button>
 
         <button
           onClick={() => setActiveTab('history')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+          className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-extrabold transition-all duration-200 shadow-sm cursor-pointer ${
             activeTab === 'history'
-              ? 'bg-primary text-white shadow-sm'
-              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              ? 'bg-primary text-white shadow-md scale-[1.02]'
+              : 'text-text-secondary hover:text-text-primary hover:bg-hover-bg'
           }`}
         >
-          <History className="h-4 w-4" />
-          Dispensing History & Audit Log
-          <Badge variant="default" className="ml-1 text-[10px]">
+          <History className="h-5 w-5" />
+          <span>Dispensing History & Audit Log</span>
+          <Badge variant="default" className="ml-1 text-xs font-bold">
             {dispensingRecords.length}
           </Badge>
         </button>
@@ -164,27 +174,30 @@ export function DispensingClientView({
               </div>
 
               {/* Right Column: Prompt & Counter Welcome */}
-              <div className="lg:col-span-7 bg-white rounded-xl border border-slate-200 p-8 shadow-sm text-center">
-                <div className="max-w-md mx-auto space-y-4">
-                  <div className="h-16 w-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mx-auto">
-                    <FileCheck2 className="h-8 w-8" />
+              <div className="lg:col-span-7 bg-card-bg rounded-3xl border-2 border-border/80 p-8 sm:p-10 shadow-card text-center">
+                <div className="max-w-md mx-auto space-y-5">
+                  <div className="h-20 w-20 bg-primary/10 text-primary rounded-3xl flex items-center justify-center mx-auto shadow-sm">
+                    <FileCheck2 className="h-10 w-10" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-slate-900 tracking-tight">
+                    <h2 className="text-2xl font-black text-text-primary tracking-tight">
                       Ready to Dispense Medicines
                     </h2>
-                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                    <p className="text-sm font-bold text-primary mt-1" dir="rtl">
+                      نسخہ منتخب کریں اور دوائی جاری کریں
+                    </p>
+                    <p className="text-sm text-text-secondary mt-2 leading-relaxed font-medium">
                       Select an eligible pending or partially dispensed prescription from the queue
                       on the left to open the batch allocation counter.
                     </p>
                   </div>
 
-                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left text-xs text-slate-600 space-y-2">
-                    <div className="font-semibold text-slate-800 flex items-center gap-1.5">
-                      <Layers className="h-4 w-4 text-primary" />
+                  <div className="bg-page-bg p-5 rounded-2xl border-2 border-border text-left text-sm text-text-secondary space-y-3">
+                    <div className="font-extrabold text-text-primary flex items-center gap-2">
+                      <Layers className="h-5 w-5 text-primary" />
                       Automatic Pharmacist Guarantees:
                     </div>
-                    <ul className="list-disc list-inside space-y-1 text-slate-500 pl-1 text-[11px]">
+                    <ul className="list-disc list-inside space-y-2 text-text-secondary pl-1 font-medium text-xs sm:text-sm">
                       <li>First-Expiry-First-Out (FEFO) batches recommended automatically</li>
                       <li>Negative stock strictly prohibited at transaction boundary</li>
                       <li>Expired and quarantined stock excluded from dispensing eligibility</li>

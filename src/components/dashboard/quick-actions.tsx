@@ -1,183 +1,165 @@
 'use client';
 
-import { useState } from 'react';
-import {
-  Pill,
-  PackagePlus,
-  ClipboardCheck,
-  FileCheck2,
-  Sparkles,
-  ArrowRight,
-  Info,
-} from 'lucide-react';
+import Link from 'next/link';
+import { Pill, PackagePlus, ClipboardCheck, FileCheck2, ArrowRight } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Dialog } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { quickActions, type QuickAction } from '@/lib/demo-data';
+
+interface ActionItem {
+  id: string;
+  label: string;
+  urduLabel: string;
+  description: string;
+  href: string;
+  icon: typeof Pill;
+  iconBg: string;
+  iconColor: string;
+  borderColor: string;
+  hoverGlow: string;
+  badge: string;
+  badgeBg: string;
+  buttonColor: string;
+}
+
+const actions: ActionItem[] = [
+  {
+    id: 'qa-dispense',
+    label: 'Dispense Medicine',
+    urduLabel: 'دوائی جاری کریں',
+    description: 'Issue prescribed medicines to OPD/IPD patients with real-time stock reduction.',
+    href: '/dispensing',
+    icon: ClipboardCheck,
+    iconBg: 'bg-emerald-100',
+    iconColor: 'text-emerald-700',
+    borderColor: 'border-emerald-200 hover:border-emerald-500',
+    hoverGlow: 'hover:shadow-emerald-500/15',
+    badge: 'Counter Action',
+    badgeBg: 'bg-emerald-100 text-emerald-800',
+    buttonColor: 'bg-emerald-600 hover:bg-emerald-700 text-white',
+  },
+  {
+    id: 'qa-receive-stock',
+    label: 'Receive New Stock',
+    urduLabel: 'نیا سامان وصول کریں',
+    description:
+      'Verify supplier deliveries against Purchase Orders and log batches into inventory.',
+    href: '/purchases',
+    icon: PackagePlus,
+    iconBg: 'bg-teal-100',
+    iconColor: 'text-teal-700',
+    borderColor: 'border-teal-200 hover:border-teal-500',
+    hoverGlow: 'hover:shadow-teal-500/15',
+    badge: 'Store Intake',
+    badgeBg: 'bg-teal-100 text-teal-800',
+    buttonColor: 'bg-teal-600 hover:bg-teal-700 text-white',
+  },
+  {
+    id: 'qa-add-medicine',
+    label: 'Medicine Catalog',
+    urduLabel: 'ادویات کا ریکارڈ',
+    description: 'Search formulary, check unit prices, reorder levels, and register new drugs.',
+    href: '/medicines',
+    icon: Pill,
+    iconBg: 'bg-blue-100',
+    iconColor: 'text-blue-700',
+    borderColor: 'border-blue-200 hover:border-blue-500',
+    hoverGlow: 'hover:shadow-blue-500/15',
+    badge: 'Registry',
+    badgeBg: 'bg-blue-100 text-blue-800',
+    buttonColor: 'bg-blue-600 hover:bg-blue-700 text-white',
+  },
+  {
+    id: 'qa-review-claims',
+    label: 'Sehat Card & Claims',
+    urduLabel: 'صحت کارڈ اور کلیمز',
+    description: 'Audit patient eligibility, review pending hospital claims, and balance billing.',
+    href: '/claims',
+    icon: FileCheck2,
+    iconBg: 'bg-purple-100',
+    iconColor: 'text-purple-700',
+    borderColor: 'border-purple-200 hover:border-purple-500',
+    hoverGlow: 'hover:shadow-purple-500/15',
+    badge: 'Finance',
+    badgeBg: 'bg-purple-100 text-purple-800',
+    buttonColor: 'bg-purple-600 hover:bg-purple-700 text-white',
+  },
+];
 
 export function QuickActions() {
-  const [activeModalAction, setActiveModalAction] = useState<QuickAction | null>(null);
-
-  const getActionConfig = (id: string) => {
-    switch (id) {
-      case 'qa-dispense':
-        return {
-          icon: ClipboardCheck,
-          isPrimary: true,
-          badge: 'Primary Clinical Action',
-          category: 'Dispensing Counter',
-          targetPhase: 'Phase 4 (Prescription Dispensing)',
-          iconColor: 'bg-primary text-white shadow-xs',
-          borderStyle: 'border-primary/40 bg-primary-light/20 hover:border-primary',
-        };
-      case 'qa-receive-stock':
-        return {
-          icon: PackagePlus,
-          isPrimary: false,
-          badge: 'Inventory Intake',
-          category: 'Goods Receipt (GRN)',
-          targetPhase: 'Phase 3 (Purchasing & Goods Receipt)',
-          iconColor: 'bg-teal/15 text-teal',
-          borderStyle: 'border-border bg-card-bg hover:border-teal',
-        };
-      case 'qa-add-medicine':
-        return {
-          icon: Pill,
-          isPrimary: false,
-          badge: 'Catalogue',
-          category: 'Drug Registry',
-          targetPhase: 'Phase 3 (Medicines Catalogue)',
-          iconColor: 'bg-blue/15 text-primary',
-          borderStyle: 'border-border bg-card-bg hover:border-primary',
-        };
-      case 'qa-review-claims':
-        return {
-          icon: FileCheck2,
-          isPrimary: false,
-          badge: 'Finance',
-          category: 'DHQ Billing Audit',
-          targetPhase: 'Phase 5 (Claims & Billing Reconciliation)',
-          iconColor: 'bg-warning-light/80 text-amber-800',
-          borderStyle: 'border-border bg-card-bg hover:border-amber-500',
-        };
-      default:
-        return {
-          icon: Sparkles,
-          isPrimary: false,
-          badge: 'General',
-          category: 'System',
-          targetPhase: 'Upcoming Phase',
-          iconColor: 'bg-hover-bg text-text-primary',
-          borderStyle: 'border-border bg-card-bg hover:border-border',
-        };
-    }
-  };
-
   return (
-    <>
-      <Card>
-        <CardHeader className="px-4 py-3 border-b border-border/80 flex flex-row items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-primary" />
-            <CardTitle className="text-sm font-bold text-text-primary">
+    <Card className="border-2 border-border/80 shadow-card">
+      <CardHeader className="px-6 py-5 border-b border-border/80 flex flex-row items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <span className="text-xl">⚡</span>
+          </div>
+          <div>
+            <CardTitle className="text-xl font-extrabold text-text-primary">
               Frequent Pharmacy Operations
             </CardTitle>
-          </div>
-          <Badge variant="muted" size="sm" className="text-[10px]">
-            Phase 2 Workflow Preview
-          </Badge>
-        </CardHeader>
-        <CardContent className="p-3 sm:p-3.5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
-            {quickActions.map((action) => {
-              const config = getActionConfig(action.id);
-              const Icon = config.icon;
-
-              return (
-                <button
-                  key={action.id}
-                  onClick={() => setActiveModalAction(action)}
-                  className={`flex flex-col text-left p-3 rounded-lg border transition-all group focus-ring cursor-pointer hover:shadow-card ${config.borderStyle}`}
-                >
-                  <div className="flex items-center justify-between w-full mb-1.5">
-                    <div className="flex items-center gap-2">
-                      <div
-                        className={`flex h-7.5 w-7.5 items-center justify-center rounded-md ${config.iconColor}`}
-                      >
-                        <Icon className="h-4 w-4" />
-                      </div>
-                      <span className="text-[10px] font-semibold tracking-wider text-text-secondary uppercase">
-                        {config.category}
-                      </span>
-                    </div>
-                    {config.isPrimary ? (
-                      <Badge variant="info" size="sm" className="text-[9px] px-1.5 py-0 font-bold">
-                        Primary
-                      </Badge>
-                    ) : (
-                      <ArrowRight className="h-3.5 w-3.5 text-text-muted group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
-                    )}
-                  </div>
-
-                  <span className="font-bold text-xs sm:text-sm text-text-primary group-hover:text-primary transition-colors">
-                    {action.label}
-                  </span>
-                  <span className="mt-0.5 text-[11px] text-text-secondary line-clamp-1">
-                    {action.description}
-                  </span>
-
-                  <div className="mt-2 flex items-center justify-between text-[10px] text-text-muted pt-1 border-t border-border/50">
-                    <span className="truncate">{config.targetPhase.split('(')[0].trim()}</span>
-                    <span className="text-primary font-medium text-[10px]">Preview</span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Honest Prototype Modal */}
-      <Dialog
-        open={!!activeModalAction}
-        onClose={() => setActiveModalAction(null)}
-        title={activeModalAction ? `${activeModalAction.label} (Workflow Preview)` : ''}
-        description={activeModalAction?.description}
-        footer={
-          <Button variant="primary" size="sm" onClick={() => setActiveModalAction(null)}>
-            Understood
-          </Button>
-        }
-      >
-        <div className="space-y-3 py-2">
-          <div className="rounded-lg border border-info/30 bg-info-light/40 p-3 flex items-start gap-3">
-            <Info className="h-4.5 w-4.5 text-primary shrink-0 mt-0.5" />
-            <div className="text-xs text-blue-950 space-y-1">
-              <p className="font-semibold">Honest Prototype Notice</p>
-              <p className="leading-relaxed">
-                This workflow is targeted for{' '}
-                <strong>
-                  {activeModalAction ? getActionConfig(activeModalAction.id).targetPhase : ''}
-                </strong>
-                . In Phase 2, backend connections, database persistence, and mutations are
-                intentionally inactive to preserve architectural isolation and adhere to engineering
-                standards.
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-lg border border-border bg-page-bg p-3 text-xs space-y-1.5">
-            <h5 className="font-semibold text-text-primary">What this workflow will include:</h5>
-            <ul className="list-disc list-inside space-y-1 text-text-secondary">
-              <li>Strict role-based authorization check (Pharmacist / Admin)</li>
-              <li>Atomic database transaction with audit trail logging</li>
-              <li>Input validation with Zod schema verification</li>
-              <li>Real-time inventory quantity recalculation</li>
-            </ul>
+            <p className="text-xs sm:text-sm text-text-secondary mt-0.5 font-medium">
+              فارمیسی کے بنیادی کام — One-click access to operational workflows
+            </p>
           </div>
         </div>
-      </Dialog>
-    </>
+        <Badge variant="muted" size="md" className="font-bold hidden sm:inline-flex">
+          DHQ Live Operations
+        </Badge>
+      </CardHeader>
+      <CardContent className="p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+          {actions.map((action) => {
+            const Icon = action.icon;
+
+            return (
+              <Link
+                key={action.id}
+                href={action.href}
+                className={`flex flex-col justify-between p-6 rounded-2xl border-2 bg-card-bg shadow-sm transition-all duration-300 ease-out group cursor-pointer hover:-translate-y-1.5 hover:shadow-xl active:scale-[0.98] ${action.borderColor} ${action.hoverGlow}`}
+              >
+                <div>
+                  {/* Icon & Badge Header */}
+                  <div className="flex items-center justify-between w-full mb-5">
+                    <div
+                      className={`flex h-16 w-16 items-center justify-center rounded-2xl ${action.iconBg} ${action.iconColor} group-hover:scale-110 transition-transform duration-300 shadow-sm`}
+                    >
+                      <Icon className="h-8 w-8" strokeWidth={2.2} />
+                    </div>
+                    <span
+                      className={`${action.badgeBg} px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide`}
+                    >
+                      {action.badge}
+                    </span>
+                  </div>
+
+                  {/* Urdu & English Labels */}
+                  <div className="mb-2">
+                    <h3 className="font-extrabold text-lg sm:text-xl text-text-primary group-hover:text-primary transition-colors duration-200">
+                      {action.label}
+                    </h3>
+                    <p className="text-sm font-bold text-primary/80 mt-0.5" dir="rtl">
+                      {action.urduLabel}
+                    </p>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-sm text-text-secondary leading-relaxed line-clamp-2 mb-6">
+                    {action.description}
+                  </p>
+                </div>
+
+                {/* Direct action button */}
+                <div
+                  className={`w-full py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-colors ${action.buttonColor}`}
+                >
+                  <span>Open Workflow</span>
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </CardContent>
+    </Card>
   );
 }

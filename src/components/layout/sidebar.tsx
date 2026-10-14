@@ -81,23 +81,23 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
   const pathname = usePathname();
 
   const content = (
-    <div className="flex h-full flex-col justify-between bg-navy text-text-on-dark w-64 border-r border-navy-dark shadow-sidebar">
+    <div className="flex h-full flex-col justify-between bg-navy text-text-on-dark w-72 border-r border-navy-dark shadow-sidebar">
       {/* Brand Header */}
       <div>
-        <div className="flex h-14 items-center justify-between px-5 border-b border-navy-light/40">
+        <div className="flex h-[72px] items-center justify-between px-6 border-b border-navy-light/40">
           <Link
             href="/"
             onClick={onCloseMobile}
-            className="flex items-center gap-2.5 group focus-ring rounded-lg py-1"
+            className="flex items-center gap-3 group focus-ring rounded-xl py-1"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal text-white shadow-xs group-hover:bg-teal-light transition-colors">
-              <Cross className="h-4.5 w-4.5 rotate-45" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-teal to-primary text-white shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
+              <Cross className="h-5 w-5 rotate-45" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold tracking-tight text-white text-base leading-tight">
+              <span className="font-extrabold tracking-tight text-white text-xl leading-tight">
                 MedLedger
               </span>
-              <span className="text-[10px] uppercase font-semibold tracking-wider text-teal-light">
+              <span className="text-xs uppercase font-bold tracking-wider text-teal-light">
                 DHQ Hospital Kohat
               </span>
             </div>
@@ -105,22 +105,22 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
           {onCloseMobile && (
             <button
               onClick={onCloseMobile}
-              className="lg:hidden text-text-on-dark-muted hover:text-white p-1 rounded-md"
+              className="lg:hidden text-text-on-dark-muted hover:text-white p-2 rounded-xl hover:bg-navy-light transition-colors"
               aria-label="Close menu"
             >
-              <X className="h-5 w-5" />
+              <X className="h-6 w-6" />
             </button>
           )}
         </div>
 
         {/* Navigation list */}
-        <nav className="p-4 space-y-6 overflow-y-auto max-h-[calc(100vh-140px)] scrollbar-thin">
+        <nav className="p-4 space-y-6 overflow-y-auto max-h-[calc(100vh-160px)] scrollbar-thin">
           {navigationGroups.map((group) => (
-            <div key={group.title} className="space-y-1">
-              <h4 className="px-3 text-[11px] font-bold uppercase tracking-wider text-text-on-dark-muted/80">
+            <div key={group.title} className="space-y-1.5">
+              <h4 className="px-3 text-xs font-bold uppercase tracking-widest text-text-on-dark-muted/70 mb-2">
                 {group.title}
               </h4>
-              <div className="mt-1 space-y-0.5">
+              <div className="space-y-1">
                 {group.items.map((item) => {
                   const Icon = item.icon;
                   const isActive =
@@ -132,16 +132,16 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
                       href={item.href}
                       onClick={onCloseMobile}
                       className={cn(
-                        'flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-colors focus-ring',
+                        'flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-200 focus-ring',
                         isActive
-                          ? 'bg-teal text-white shadow-xs font-semibold'
-                          : 'text-text-on-dark-muted hover:bg-navy-light/60 hover:text-white',
+                          ? 'bg-gradient-to-r from-teal to-primary text-white shadow-md font-bold'
+                          : 'text-text-on-dark-muted hover:bg-navy-light/80 hover:text-white hover:translate-x-1',
                       )}
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3.5">
                         <Icon
                           className={cn(
-                            'h-4 w-4 shrink-0',
+                            'h-5 w-5 shrink-0',
                             isActive ? 'text-white' : 'text-text-on-dark-muted',
                           )}
                         />
@@ -150,10 +150,10 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
                       {item.badge && (
                         <span
                           className={cn(
-                            'rounded-full px-1.5 py-0.2 text-[10px] font-bold leading-normal',
+                            'rounded-full px-2.5 py-0.5 text-xs font-bold leading-normal',
                             isActive
-                              ? 'bg-white text-teal'
-                              : 'bg-teal/30 text-teal-light border border-teal/40',
+                              ? 'bg-white/25 text-white'
+                              : 'bg-teal/25 text-teal-light border border-teal/40',
                           )}
                         >
                           {item.badge}
@@ -169,17 +169,15 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
       </div>
 
       {/* Footer info box */}
-      <div className="p-4 border-t border-navy-light/30 bg-navy-dark/40">
-        <div className="rounded-lg bg-navy/60 p-3 border border-navy-light/30">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-teal-light">
-              Phase 2 Prototype
+      <div className="p-4 border-t border-navy-light/30 bg-navy-dark/50">
+        <div className="rounded-xl bg-navy-light/40 p-4 border border-navy-light/30">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-xs font-bold uppercase tracking-wider text-teal-light">
+              System Status
             </span>
-            <span className="h-2 w-2 rounded-full bg-teal animate-pulse" />
+            <span className="h-2.5 w-2.5 rounded-full bg-teal animate-pulse shadow-sm shadow-teal/50" />
           </div>
-          <p className="mt-1 text-xs text-text-on-dark-muted leading-tight">
-            Design system & dashboard view. Backend disabled.
-          </p>
+          <p className="text-sm text-text-on-dark-muted leading-snug">All systems operational</p>
         </div>
       </div>
     </div>
@@ -196,7 +194,7 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
       {mobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden flex">
           <div
-            className="fixed inset-0 bg-navy-dark/70 backdrop-blur-xs"
+            className="fixed inset-0 bg-navy-dark/80 backdrop-blur-sm"
             onClick={onCloseMobile}
             aria-hidden="true"
           />

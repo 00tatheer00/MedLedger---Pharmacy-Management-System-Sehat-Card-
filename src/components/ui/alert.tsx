@@ -22,28 +22,28 @@ const variantStyles: Record<
   }
 > = {
   critical: {
-    container: 'border-danger/30 bg-danger-light/50 text-danger',
+    container: 'border-danger/30 bg-red-50 text-red-700',
     icon: AlertCircle,
-    iconColor: 'text-danger',
+    iconColor: 'text-red-500',
     titleColor: 'text-red-900',
   },
   warning: {
-    container: 'border-warning/30 bg-warning-light/50 text-amber-900',
+    container: 'border-amber-300 bg-amber-50 text-amber-800',
     icon: AlertTriangle,
-    iconColor: 'text-amber-600',
-    titleColor: 'text-amber-950',
+    iconColor: 'text-amber-500',
+    titleColor: 'text-amber-900',
   },
   info: {
-    container: 'border-info/30 bg-info-light/50 text-blue-900',
+    container: 'border-sky-300 bg-sky-50 text-sky-800',
     icon: Info,
-    iconColor: 'text-info',
-    titleColor: 'text-blue-950',
+    iconColor: 'text-sky-500',
+    titleColor: 'text-sky-900',
   },
   success: {
-    container: 'border-success/30 bg-success-light/50 text-emerald-900',
+    container: 'border-emerald-300 bg-emerald-50 text-emerald-800',
     icon: CheckCircle2,
-    iconColor: 'text-success',
-    titleColor: 'text-emerald-950',
+    iconColor: 'text-emerald-500',
+    titleColor: 'text-emerald-900',
   },
 };
 
@@ -55,19 +55,19 @@ export function Alert({ variant = 'info', title, description, action, className 
     <div
       role="alert"
       className={cn(
-        'flex items-start gap-3 rounded-lg border p-3.5 transition-all',
+        'flex items-start gap-4 rounded-xl border-2 p-4 sm:p-5 transition-all',
         config.container,
         className,
       )}
     >
       <IconComponent
-        className={cn('h-5 w-5 shrink-0 mt-0.5', config.iconColor)}
+        className={cn('h-6 w-6 shrink-0 mt-0.5', config.iconColor)}
         aria-hidden="true"
       />
       <div className="flex-1 min-w-0">
-        <h4 className={cn('text-sm font-semibold tracking-tight', config.titleColor)}>{title}</h4>
+        <h4 className={cn('text-base font-bold tracking-tight', config.titleColor)}>{title}</h4>
         {description && (
-          <p className="mt-0.5 text-xs text-text-secondary leading-relaxed">{description}</p>
+          <p className="mt-1 text-sm text-text-secondary leading-relaxed">{description}</p>
         )}
       </div>
       {action && <div className="shrink-0 self-center pl-2">{action}</div>}

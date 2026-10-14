@@ -59,7 +59,7 @@ export const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTable
     <tr
       ref={ref}
       className={cn(
-        'border-b border-border transition-colors hover:bg-hover-bg/70 data-[state=selected]:bg-hover-bg',
+        'border-b border-border transition-colors duration-150 hover:bg-hover-bg data-[state=selected]:bg-hover-bg',
         className,
       )}
       {...props}
@@ -73,7 +73,7 @@ export const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLT
     <th
       ref={ref}
       className={cn(
-        'h-10 px-4 text-left align-middle text-xs font-semibold uppercase tracking-wider text-text-secondary [&:has([role=checkbox])]:pr-0',
+        'h-12 px-5 text-left align-middle text-sm font-bold uppercase tracking-wider text-text-secondary [&:has([role=checkbox])]:pr-0',
         className,
       )}
       {...props}
@@ -87,7 +87,7 @@ export const TableCell = forwardRef<HTMLTableCellElement, TdHTMLAttributes<HTMLT
     <td
       ref={ref}
       className={cn(
-        'p-4 align-middle text-sm text-text-primary [&:has([role=checkbox])]:pr-0',
+        'p-5 align-middle text-sm text-text-primary [&:has([role=checkbox])]:pr-0',
         className,
       )}
       {...props}
@@ -100,6 +100,6 @@ export const TableCaption = forwardRef<
   HTMLTableCaptionElement,
   HTMLAttributes<HTMLTableCaptionElement>
 >(({ className, ...props }, ref) => (
-  <caption ref={ref} className={cn('mt-4 text-xs text-text-muted', className)} {...props} />
+  <caption ref={ref} className={cn('mt-4 text-sm text-text-muted', className)} {...props} />
 ));
 TableCaption.displayName = 'TableCaption';

@@ -1,8 +1,7 @@
 'use client';
 
 import { useSyncExternalStore } from 'react';
-import { Calendar, Building2, Sparkles, Database } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { Calendar, Building2, CheckCircle2, ShieldCheck, HeartPulse } from 'lucide-react';
 
 const subscribe = () => () => {};
 
@@ -23,45 +22,65 @@ interface WelcomeBannerProps {
   isLiveDatabase?: boolean;
 }
 
-export function WelcomeBanner({ isLiveDatabase = false }: WelcomeBannerProps) {
+export function WelcomeBanner({ isLiveDatabase = true }: WelcomeBannerProps) {
   const formattedDate = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-border bg-gradient-to-r from-card-bg via-card-bg to-page-bg/90 px-4 py-3 sm:py-3.5 shadow-2xs">
-      <div className="space-y-0.5">
-        <div className="flex items-center gap-2">
-          <h2 className="text-lg sm:text-xl font-bold tracking-tight text-text-primary">
-            Welcome back, Dr. Ayesha
-          </h2>
-          <Badge variant="info" size="sm" className="gap-1 font-semibold text-[11px] py-0.2">
-            <Building2 className="h-3 w-3" />
-            DHQ Hospital Kohat
-          </Badge>
-          <span className="hidden md:inline-flex items-center gap-1 text-[11px] text-teal font-medium bg-teal/10 px-2 py-0.5 rounded-full">
-            {isLiveDatabase ? (
-              <>
-                <Database className="h-2.5 w-2.5 text-success" />
-                Live Supabase Connected
-              </>
-            ) : (
-              <>
-                <Sparkles className="h-2.5 w-2.5" />
-                Phase 4 App Integration
-              </>
-            )}
-          </span>
-        </div>
-        <p className="text-xs text-text-secondary">
-          Central Inpatient & Outpatient Dispensary • Operational stock, claims, and dispensing
-          journal.
-        </p>
-      </div>
+    <div className="relative overflow-hidden rounded-3xl border-2 border-teal-600/30 bg-gradient-to-r from-teal-800 via-teal-700 to-emerald-800 px-6 py-7 sm:px-8 sm:py-8 shadow-xl text-white">
+      {/* Decorative ambient background */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 left-1/3 w-48 h-48 bg-emerald-400/10 rounded-full blur-xl translate-y-1/3 pointer-events-none" />
 
-      <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto rounded-lg border border-border bg-card-bg px-2.5 py-1.5 text-xs text-text-secondary shadow-2xs">
-        <Calendar className="h-3.5 w-3.5 text-primary" />
-        <span className="font-medium text-text-primary text-xs">
-          {formattedDate || 'DHQ Kohat Central Pharmacy'}
-        </span>
+      <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div className="space-y-3">
+          {/* Hospital & Status badges */}
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-extrabold bg-white/20 border border-white/30 px-3.5 py-1.5 rounded-full text-white backdrop-blur-md shadow-sm">
+              <Building2 className="h-4 w-4 text-emerald-200" />
+              DHQ Hospital Kohat • ڈسٹرکٹ ہیڈ کوارٹر ہسپتال کوہاٹ
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-extrabold bg-emerald-400/25 border border-emerald-300/40 px-3.5 py-1.5 rounded-full text-emerald-100 backdrop-blur-md">
+              <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+              {isLiveDatabase ? 'Live Supabase Connected' : 'Live Pharmacy Counter Active'}
+            </span>
+          </div>
+
+          {/* Heading */}
+          <div>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white flex items-center gap-3">
+              Welcome back, Dr. Ayesha Khan 👋
+            </h2>
+            <p className="text-base sm:text-lg text-emerald-50/90 font-medium mt-1 max-w-2xl">
+              Central Hospital Dispensary & Inventory Control — Dispensary, Sehat Card, and
+              Procurement System.
+            </p>
+          </div>
+
+          {/* Quick Counter Info Pills */}
+          <div className="flex items-center gap-3 pt-1 flex-wrap text-xs sm:text-sm">
+            <span className="inline-flex items-center gap-1.5 font-bold bg-white/15 px-3 py-1.5 rounded-xl border border-white/20">
+              <HeartPulse className="h-4 w-4 text-emerald-300" />
+              OPD & Emergency Dispensary Ready
+            </span>
+            <span className="inline-flex items-center gap-1.5 font-bold bg-white/15 px-3 py-1.5 rounded-xl border border-white/20">
+              <ShieldCheck className="h-4 w-4 text-teal-200" />
+              Khyber Pakhtunkhwa Sehat Sahulat Program
+            </span>
+          </div>
+        </div>
+
+        {/* Date / Calendar Widget */}
+        <div className="flex lg:flex-col items-center lg:items-end justify-between lg:justify-center gap-2 shrink-0 rounded-2xl bg-white/15 backdrop-blur-md px-5 py-4 border border-white/20 shadow-inner">
+          <div className="flex items-center gap-2 text-emerald-200">
+            <Calendar className="h-5 w-5" />
+            <span className="text-xs uppercase font-extrabold tracking-wider">
+              Today&apos;s Shift
+            </span>
+          </div>
+          <div className="text-base sm:text-lg font-black text-white text-right">
+            {formattedDate || 'DHQ Kohat Central Pharmacy'}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ export function AppShell({ children, title, subtitle }: AppShellProps) {
           title={title}
           subtitle={subtitle}
         />
-        <main className="flex-1 p-3.5 sm:p-5 lg:p-6 max-w-7xl w-full mx-auto">{children}</main>
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">{children}</main>
       </div>
     </div>
   );
