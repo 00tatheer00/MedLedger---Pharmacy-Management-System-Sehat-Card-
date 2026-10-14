@@ -36,6 +36,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { PaginatedPurchaseOrdersResponse, PurchaseOrderStatus } from '@/modules/purchasing/types';
 import { formatPKR } from '@/lib/decimal';
+import { ExportCsvButton } from '@/lib/csv-helper';
 
 interface PurchaseOrdersTableProps {
   initialData: PaginatedPurchaseOrdersResponse;
@@ -52,24 +53,50 @@ export function PurchaseOrdersTable({
   const [searchTerm, setSearchTerm] = useState(currentSearch);
   const [selectedStatus, setSelectedStatus] = useState(currentStatus);
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const applyFilters = (term: string, status: string, page = 1) => {
     const params = new URLSearchParams();
-    if (searchTerm.trim()) params.set('search', searchTerm.trim());
-    if (selectedStatus !== 'all') params.set('status', selectedStatus);
+    if (term.trim()) params.set('search', term.trim());
+    if (status !== 'all') params.set('status', status);
     params.set('tab', 'orders');
-    params.set('page', '1');
+    params.set('page', String(page));
     router.push(`/purchases?${params.toString()}`);
   };
 
-  const handlePageChange = (newPage: number) => {
-    const params = new URLSearchParams();
-    if (searchTerm.trim()) params.set('search', searchTerm.trim());
-    if (selectedStatus !== 'all') params.set('status', selectedStatus);
-    params.set('tab', 'orders');
-    params.set('page', String(newPage));
-    router.push(`/purchases?${params.toString()}`);
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    applyFilters(searchTerm, selectedStatus, 1);
   };
+
+  const handlePageChange = (newPage: number) => {
+    applyFilters(searchTerm, selectedStatus, newPage);
+  };
+
+  const quickChips = [
+    { label: 'All Orders', status: 'all' },
+    { label: 'Submitted', status: 'submitted' },
+    { label: 'Partially Received', status: 'partially_received' },
+    { label: 'Fully Received', status: 'fully_received' },
+    { label: 'Cancelled', status: 'cancelled' },
+  ];
+
+  const exportData = initialData.orders.map((po) => {
+    const totalOrdered = po.items.reduce((sum, i) => sum + i.quantity_ordered, 0);
+    const totalReceived = po.items.reduce((sum, i) => sum + i.quantity_received, 0);
+    const pct = totalOrdered > 0 ? Math.round((totalReceived / totalOrdered) * 100) : 0;
+
+    return {
+      'PO Number': po.po_number,
+      Supplier: po.supplier?.name || 'Unknown Supplier',
+      'Order Date': po.order_date,
+      'Expected Delivery': po.expected_delivery_date || '—',
+      'Items Count': po.items.length,
+      'Total Ordered': totalOrdered,
+      'Total Received': totalReceived,
+      'Fulfillment Pct': `${pct}%`,
+      'Order Total (PKR)': formatPKR(po.total_amount),
+      Status: po.status,
+    };
+  });
 
   const renderStatusBadge = (status: PurchaseOrderStatus) => {
     switch (status) {
@@ -113,8 +140,9 @@ export function PurchaseOrdersTable({
   return (
     <div className="space-y-4">
       {/* Controls */}
-      <Card className="border border-border shadow-card">
-        <CardContent className="p-4">
+      <Card className="border border-border shadow-card overflow-hidden">
+        <div className="h-1 bg-gradient-to-r from-teal-500 via-primary to-emerald-500" />
+        <CardContent className="p-4 space-y-3">
           <form
             onSubmit={handleSearchSubmit}
             className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between"
@@ -135,12 +163,7 @@ export function PurchaseOrdersTable({
                 value={selectedStatus}
                 onChange={(e) => {
                   setSelectedStatus(e.target.value);
-                  const params = new URLSearchParams();
-                  if (searchTerm.trim()) params.set('search', searchTerm.trim());
-                  if (e.target.value !== 'all') params.set('status', e.target.value);
-                  params.set('tab', 'orders');
-                  params.set('page', '1');
-                  router.push(`/purchases?${params.toString()}`);
+                  applyFilters(searchTerm, e.target.value, 1);
                 }}
                 className="h-10 px-3 text-sm rounded-lg border border-border bg-white text-text-primary focus:outline-hidden focus:ring-2 focus:ring-primary/20"
               >
@@ -156,14 +179,50 @@ export function PurchaseOrdersTable({
               </Button>
             </div>
 
-            <Link
-              href="/purchases/new"
-              className={buttonVariants({ variant: 'primary', className: 'h-10 gap-2 shrink-0' })}
-            >
-              <Plus className="w-4 h-4" />
-              Create Purchase Order
-            </Link>
+            <div className="flex items-center gap-2 shrink-0">
+              <ExportCsvButton
+                data={exportData}
+                filename="MedLedger_Purchase_Orders.csv"
+                label="Export Orders CSV"
+                size="sm"
+              />
+
+              <Link
+                href="/purchases/new"
+                className={buttonVariants({ variant: 'primary', className: 'h-10 gap-2 shrink-0' })}
+              >
+                <Plus className="w-4 h-4" />
+                Create Purchase Order
+              </Link>
+            </div>
           </form>
+
+          {/* Quick Filter Chips */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pt-1 pb-0.5 text-xs">
+            <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider shrink-0 mr-1">
+              Quick Filter:
+            </span>
+            {quickChips.map((chip) => {
+              const active = selectedStatus === chip.status;
+              return (
+                <button
+                  key={chip.label}
+                  type="button"
+                  onClick={() => {
+                    setSelectedStatus(chip.status);
+                    applyFilters(searchTerm, chip.status, 1);
+                  }}
+                  className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-150 cursor-pointer whitespace-nowrap ${
+                    active
+                      ? 'bg-teal-600 text-white shadow-xs font-semibold'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                  }`}
+                >
+                  {chip.label}
+                </button>
+              );
+            })}
+          </div>
         </CardContent>
       </Card>
 

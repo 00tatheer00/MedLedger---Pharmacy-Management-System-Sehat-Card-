@@ -17,6 +17,7 @@ import {
   TableCell,
 } from '@/components/ui/table';
 import { EmptyState } from '@/components/ui/empty-state';
+import { ExportCsvButton } from '@/lib/csv-helper';
 import { AdmissionWithPatient } from '@/modules/admissions/types';
 
 interface AdmissionsTableProps {
@@ -44,22 +45,40 @@ export function AdmissionsTable({
   const [search, setSearch] = useState(currentSearch);
   const [statusFilter, setStatusFilter] = useState(currentStatus);
 
-  const handleFilterSubmit = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
+  const applyFilters = (term: string, status: string, pageNum = 1) => {
     const query = new URLSearchParams();
-    if (search.trim()) query.set('search', search.trim());
-    if (statusFilter !== 'all') query.set('status', statusFilter);
-    query.set('page', '1');
+    if (term.trim()) query.set('search', term.trim());
+    if (status !== 'all') query.set('status', status);
+    query.set('page', pageNum.toString());
     router.push(`/admissions?${query.toString()}`);
   };
 
-  const handlePageChange = (newPage: number) => {
-    const query = new URLSearchParams();
-    if (search.trim()) query.set('search', search.trim());
-    if (statusFilter !== 'all') query.set('status', statusFilter);
-    query.set('page', newPage.toString());
-    router.push(`/admissions?${query.toString()}`);
+  const handleFilterSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    applyFilters(search, statusFilter, 1);
   };
+
+  const handlePageChange = (newPage: number) => {
+    applyFilters(search, statusFilter, newPage);
+  };
+
+  const quickChips = [
+    { label: 'All Records', status: 'all' },
+    { label: 'Active Admitted', status: 'admitted' },
+    { label: 'Discharged', status: 'discharged' },
+    { label: 'Transferred', status: 'transferred' },
+  ];
+
+  const exportData = initialAdmissions.map((adm) => ({
+    'Admission #': adm.admission_number,
+    'Patient Name': adm.patient?.full_name || 'N/A',
+    MRN: adm.patient?.mr_number || 'N/A',
+    'Ward / Department': adm.ward,
+    'Bed Number': adm.bed_number || 'Unassigned',
+    'Attending Doctor': adm.attending_doctor || 'Staff Physician',
+    'Admission Date': adm.admission_date,
+    Status: adm.status,
+  }));
 
   return (
     <div className="space-y-4">
@@ -77,54 +96,87 @@ export function AdmissionsTable({
             Active ward bed assignments, patient admission dates, and clinical discharge records.
           </p>
         </div>
+
+        <ExportCsvButton
+          data={exportData}
+          filename="MedLedger_Admissions_Registry.csv"
+          label="Export Admissions CSV"
+          size="sm"
+        />
       </div>
 
       {/* Filter and Search Bar */}
-      <Card className="p-3 bg-card-bg border-border">
-        <form
-          onSubmit={handleFilterSubmit}
-          className="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center justify-between"
-        >
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
-            <Input
-              type="text"
-              placeholder="Search by admission number, ward, doctor, or patient..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 text-xs h-9"
-            />
-          </div>
+      <Card className="border border-border shadow-card overflow-hidden">
+        <div className="h-1 bg-gradient-to-r from-teal-500 via-primary to-emerald-500" />
+        <CardContent className="p-4 space-y-3">
+          <form
+            onSubmit={handleFilterSubmit}
+            className="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center justify-between"
+          >
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
+              <Input
+                type="text"
+                placeholder="Search by admission number, ward, doctor, or patient..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-9 text-xs h-9"
+              />
+            </div>
 
-          <div className="flex items-center gap-2">
-            <select
-              aria-label="Filter by admission status"
-              value={statusFilter}
-              onChange={(e) => {
-                setStatusFilter(e.target.value);
-                const query = new URLSearchParams();
-                if (search.trim()) query.set('search', search.trim());
-                if (e.target.value !== 'all') query.set('status', e.target.value);
-                query.set('page', '1');
-                router.push(`/admissions?${query.toString()}`);
-              }}
-              className="h-9 rounded-md border border-border bg-card-bg px-2.5 py-1 text-xs text-text-primary focus-ring"
-            >
-              <option value="all">All Statuses</option>
-              <option value="admitted">Admitted</option>
-              <option value="discharged">Discharged</option>
-              <option value="transferred">Transferred</option>
-            </select>
+            <div className="flex items-center gap-2">
+              <select
+                aria-label="Filter by admission status"
+                value={statusFilter}
+                onChange={(e) => {
+                  setStatusFilter(e.target.value);
+                  applyFilters(search, e.target.value, 1);
+                }}
+                className="h-9 rounded-md border border-border bg-card-bg px-2.5 py-1 text-xs text-text-primary focus-ring"
+              >
+                <option value="all">All Statuses</option>
+                <option value="admitted">Admitted</option>
+                <option value="discharged">Discharged</option>
+                <option value="transferred">Transferred</option>
+              </select>
 
-            <Button type="submit" variant="secondary" size="sm" className="h-9 text-xs">
-              Apply
-            </Button>
+              <Button type="submit" variant="secondary" size="sm" className="h-9 text-xs">
+                Apply
+              </Button>
+            </div>
+          </form>
+
+          {/* Quick Filter Chips */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pt-1 pb-0.5 text-xs">
+            <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider shrink-0 mr-1">
+              Quick Filter:
+            </span>
+            {quickChips.map((chip) => {
+              const active = statusFilter === chip.status;
+              return (
+                <button
+                  key={chip.label}
+                  type="button"
+                  onClick={() => {
+                    setStatusFilter(chip.status);
+                    applyFilters(search, chip.status, 1);
+                  }}
+                  className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-150 cursor-pointer whitespace-nowrap ${
+                    active
+                      ? 'bg-teal-600 text-white shadow-xs font-semibold'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                  }`}
+                >
+                  {chip.label}
+                </button>
+              );
+            })}
           </div>
-        </form>
+        </CardContent>
       </Card>
 
       {/* Table Section */}
-      <Card>
+      <Card className="border border-border shadow-card overflow-hidden">
         <CardContent className="p-0">
           {initialAdmissions.length === 0 ? (
             <div className="py-12">

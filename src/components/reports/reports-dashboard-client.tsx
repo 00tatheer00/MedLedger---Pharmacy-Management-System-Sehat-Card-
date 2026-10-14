@@ -30,6 +30,8 @@ import {
   FileSpreadsheet,
 } from 'lucide-react';
 
+import { ExportCsvButton } from '@/lib/csv-helper';
+
 interface ReportsDashboardClientProps {
   kpis: FinancialPositionKPIs;
   initialReport: ReportExecutionResult;
@@ -44,6 +46,17 @@ export function ReportsDashboardClient({
   transactions = [],
 }: ReportsDashboardClientProps) {
   const [activeTab, setActiveTab] = useState<'reports' | 'reconciliation' | 'cashflow'>('reports');
+
+  const exportTxData = transactions.map((tx) => ({
+    'Voucher / Ref': tx.voucher_or_ref,
+    'Flow Type': tx.transaction_type,
+    Counterparty: tx.counterparty,
+    'Payment Method': tx.payment_method,
+    'Transaction Date': tx.transaction_date,
+    'Amount (PKR)': tx.amount.toFixed(2),
+    'Authorized By': tx.operator_name,
+    Notes: tx.notes || '—',
+  }));
 
   return (
     <div className="space-y-6">
@@ -117,7 +130,8 @@ export function ReportsDashboardClient({
 
       {activeTab === 'cashflow' && (
         <section aria-label="Cash Flow Transactions" className="space-y-4">
-          <Card className="border border-border shadow-card">
+          <Card className="border border-border shadow-card overflow-hidden">
+            <div className="h-1 bg-gradient-to-r from-teal-500 via-primary to-blue-600" />
             <CardHeader className="pb-3 pt-4 px-4">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                 <div>
@@ -130,9 +144,17 @@ export function ReportsDashboardClient({
                     receipts
                   </CardDescription>
                 </div>
-                <div className="text-xs text-text-muted">
-                  Total Logged:{' '}
-                  <span className="font-semibold text-text-primary">{transactions.length}</span>
+                <div className="flex items-center gap-3">
+                  <div className="text-xs text-text-muted">
+                    Total Logged:{' '}
+                    <span className="font-semibold text-text-primary">{transactions.length}</span>
+                  </div>
+                  <ExportCsvButton
+                    data={exportTxData}
+                    filename="MedLedger_Treasury_Transactions.csv"
+                    label="Export Log CSV"
+                    size="sm"
+                  />
                 </div>
               </div>
             </CardHeader>

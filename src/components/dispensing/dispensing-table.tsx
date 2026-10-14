@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { formatPKR } from '@/lib/decimal';
+import { ExportCsvButton } from '@/lib/csv-helper';
 import { DispensingWithDetails, DispensingStatus } from '@/modules/dispensing/types';
 import { DispensingReceiptDialog } from './dispensing-receipt-dialog';
 import { ReverseDispensingDialog } from './reverse-dispensing-dialog';
@@ -48,6 +49,19 @@ export function DispensingTable({ initialRecords }: DispensingTableProps) {
     );
   });
 
+  const exportData = filtered.map((r) => ({
+    'Voucher #': r.dispensing_number,
+    'Date & Time': new Date(r.dispensed_at).toLocaleString('en-PK'),
+    'Patient Name': r.patient_name,
+    MRN: r.mr_number,
+    'Prescription #': r.prescription_number,
+    'Care Ward': r.ward || 'Outpatient (OPD)',
+    'Items Count': r.items.length,
+    'Gross Total': formatPKR(r.total_amount),
+    'Dispensed By': r.dispensed_by_name,
+    Status: r.status,
+  }));
+
   function handleReversalSuccess(updated: DispensingWithDetails) {
     setRecords((prev) => prev.map((r) => (r.id === updated.id ? updated : r)));
   }
@@ -55,31 +69,69 @@ export function DispensingTable({ initialRecords }: DispensingTableProps) {
   return (
     <div className="space-y-4">
       {/* Search and Filter Header */}
-      <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex flex-col sm:flex-row gap-3 items-center justify-between">
-        <div className="relative w-full sm:w-80">
-          <Input
-            type="search"
-            placeholder="Search by voucher #, MRN, patient, or slip..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="text-xs pl-3 pr-8 py-2"
-          />
-        </div>
+      <div className="bg-white rounded-xl border border-slate-200 shadow-card overflow-hidden">
+        <div className="h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-600" />
+        <div className="p-4 space-y-3">
+          <div className="flex flex-col sm:flex-row gap-3 items-center justify-between">
+            <div className="relative w-full sm:w-80">
+              <Input
+                type="search"
+                placeholder="Search by voucher #, MRN, patient, or slip..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="text-xs pl-3 pr-8 py-2"
+              />
+            </div>
 
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          <label htmlFor="dispensing-status-select" className="text-xs text-slate-500 font-medium">
-            Status:
-          </label>
-          <select
-            id="dispensing-status-select"
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value as 'all' | DispensingStatus)}
-            className="text-xs p-2 rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-          >
-            <option value="all">All Records</option>
-            <option value="completed">Completed Only</option>
-            <option value="reversed">Reversed / Cancelled</option>
-          </select>
+            <div className="flex items-center gap-2.5 w-full sm:w-auto">
+              <select
+                id="dispensing-status-select"
+                aria-label="Filter by dispensing status"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value as 'all' | DispensingStatus)}
+                className="text-xs p-2 rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              >
+                <option value="all">All Records</option>
+                <option value="completed">Completed Only</option>
+                <option value="reversed">Reversed / Cancelled</option>
+              </select>
+
+              <ExportCsvButton
+                data={exportData}
+                filename="MedLedger_Dispensing_Audit_Log.csv"
+                label="Export Log CSV"
+                size="sm"
+              />
+            </div>
+          </div>
+
+          {/* Quick Filter Chips */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pt-1 pb-0.5 text-xs">
+            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider shrink-0 mr-1">
+              Quick Filter:
+            </span>
+            {[
+              { label: 'All Records', value: 'all' },
+              { label: 'Completed', value: 'completed' },
+              { label: 'Reversed / Cancelled', value: 'reversed' },
+            ].map((chip) => {
+              const active = statusFilter === chip.value;
+              return (
+                <button
+                  key={chip.label}
+                  type="button"
+                  onClick={() => setStatusFilter(chip.value as 'all' | DispensingStatus)}
+                  className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-150 cursor-pointer whitespace-nowrap ${
+                    active
+                      ? 'bg-teal-600 text-white shadow-xs font-semibold'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                  }`}
+                >
+                  {chip.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 

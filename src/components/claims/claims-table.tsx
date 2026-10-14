@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { formatPKR } from '@/lib/decimal';
+import { ExportCsvButton } from '@/lib/csv-helper';
 import { ClaimWithDetails, ClaimStatus } from '@/modules/claims/types';
 import { ClaimReviewDialog } from './claim-review-dialog';
 import { ClaimPaymentDialog } from './claim-payment-dialog';
@@ -50,6 +51,20 @@ export function ClaimsTable({ initialClaims }: ClaimsTableProps) {
     );
   });
 
+  const exportData = filtered.map((c) => ({
+    'Claim Reference': c.claim_number,
+    'Submitted By': c.submitted_by_name || 'Draft',
+    'Period Start': c.claim_period_start,
+    'Period End': c.claim_period_end,
+    'Patients Count': c.patient_count,
+    'Total Items': c.total_items,
+    'Submitted Amount': formatPKR(c.total_amount),
+    'Approved Amount': c.approved_amount > 0 ? formatPKR(c.approved_amount) : '—',
+    'Paid Amount': c.paid_amount > 0 ? formatPKR(c.paid_amount) : '—',
+    'Outstanding Balance': c.approved_amount > 0 ? formatPKR(c.outstanding_balance) : '—',
+    Status: c.status,
+  }));
+
   function getStatusBadge(status: ClaimStatus) {
     switch (status) {
       case 'draft':
@@ -84,43 +99,55 @@ export function ClaimsTable({ initialClaims }: ClaimsTableProps) {
   return (
     <div className="space-y-4">
       {/* Search & Status Filter Controls */}
-      <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex flex-col md:flex-row gap-3 items-center justify-between">
-        <div className="relative w-full md:w-80">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-          <Input
-            id="claims-search-input"
-            type="text"
-            placeholder="Search claim #, patient, MRN..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-9 bg-slate-50 border-slate-200 text-sm"
-          />
-        </div>
+      <div className="bg-white rounded-xl border border-slate-200 shadow-card overflow-hidden">
+        <div className="h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-teal-500" />
+        <div className="p-4 space-y-3">
+          <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
+            <div className="relative w-full md:w-80">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Input
+                id="claims-search-input"
+                type="text"
+                placeholder="Search claim #, patient, MRN..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-9 bg-slate-50 border-slate-200 text-sm"
+              />
+            </div>
 
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 text-xs">
-          {[
-            { key: 'all', label: 'All' },
-            { key: 'submitted', label: 'Submitted' },
-            { key: 'under_review', label: 'In Review' },
-            { key: 'approved', label: 'Approved' },
-            { key: 'partially_paid', label: 'Partial Paid' },
-            { key: 'paid', label: 'Paid' },
-            { key: 'returned', label: 'Returned' },
-            { key: 'rejected', label: 'Rejected' },
-            { key: 'draft', label: 'Draft' },
-          ].map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setStatusFilter(tab.key)}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-all duration-150 whitespace-nowrap cursor-pointer ${
-                statusFilter === tab.key
-                  ? 'bg-blue-600 text-white shadow-xs font-semibold'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+            <ExportCsvButton
+              data={exportData}
+              filename="MedLedger_Claims_Register.csv"
+              label="Export Claims CSV"
+              size="sm"
+            />
+          </div>
+
+          <div className="flex items-center gap-1.5 overflow-x-auto w-full pb-1 text-xs">
+            {[
+              { key: 'all', label: 'All' },
+              { key: 'submitted', label: 'Submitted' },
+              { key: 'under_review', label: 'In Review' },
+              { key: 'approved', label: 'Approved' },
+              { key: 'partially_paid', label: 'Partial Paid' },
+              { key: 'paid', label: 'Paid' },
+              { key: 'returned', label: 'Returned' },
+              { key: 'rejected', label: 'Rejected' },
+              { key: 'draft', label: 'Draft' },
+            ].map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setStatusFilter(tab.key)}
+                className={`px-3 py-1.5 rounded-lg font-medium transition-all duration-150 whitespace-nowrap cursor-pointer ${
+                  statusFilter === tab.key
+                    ? 'bg-blue-600 text-white shadow-xs font-semibold'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

@@ -163,6 +163,17 @@ export const PatientPrototypeStore = {
     return updated;
   },
 
+  delete(id: string): boolean {
+    const index = patientStore.findIndex((p) => p.id === id && p.deleted_at === null);
+    if (index === -1) return false;
+    patientStore[index] = {
+      ...patientStore[index],
+      deleted_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+    return true;
+  },
+
   reset(): void {
     patientStore = [...initialPatients];
   },

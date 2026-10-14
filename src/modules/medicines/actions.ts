@@ -293,3 +293,59 @@ export async function toggleMedicineStatusAction(
     return errorResult('INTERNAL_ERROR', message);
   }
 }
+
+/**
+ * Server Action: Soft delete a medicine from the catalogue.
+ */
+export async function deleteMedicineAction(
+  id: string,
+): Promise<ActionResult<{ success: boolean; id: string }>> {
+  try {
+    const user = await getCurrentUser();
+    const authCheck = requirePermission(user, 'medicines:manage');
+    if (!authCheck.success) {
+      return authCheck;
+    }
+
+    if (isSupabaseConfigured()) {
+      const supabase = await createServerClient();
+      if (supabase) {
+        const { error } = await supabase
+          .from('medicines')
+          .update({
+            is_active: false,
+            deleted_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', id);
+
+        if (error) return errorResult('INTERNAL_ERROR', error.message);
+
+        await auditLogger.log({
+          eventType: 'medicines:deleted',
+          entityType: 'medicines',
+          entityId: id,
+          action: 'delete',
+          userId: user?.id || null,
+        });
+
+        return successResult({ success: true, id });
+      }
+    }
+
+    medicineStore.deleteMedicine(id);
+
+    await auditLogger.log({
+      eventType: 'medicines:deleted',
+      entityType: 'medicines',
+      entityId: id,
+      action: 'delete',
+      userId: user?.id || 'prototype-user',
+    });
+
+    return successResult({ success: true, id });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Failed to delete medicine';
+    return errorResult('INTERNAL_ERROR', message);
+  }
+}

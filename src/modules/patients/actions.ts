@@ -217,3 +217,61 @@ export async function searchPatientsAction(
     return errorResult('INTERNAL_ERROR', msg);
   }
 }
+
+/**
+ * Server Action: Soft delete a patient record.
+ */
+export async function deletePatientAction(
+  id: string,
+): Promise<ActionResult<{ success: boolean; id: string }>> {
+  try {
+    const user = await getCurrentUser();
+    const authCheck = requirePermission(user, 'patients:manage');
+    if (!authCheck.success) {
+      return authCheck;
+    }
+
+    if (isSupabaseConfigured()) {
+      const supabase = await createServerClient();
+      if (supabase) {
+        const { error } = await supabase
+          .from('patients')
+          .update({
+            deleted_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', id);
+
+        if (error) return errorResult('INTERNAL_ERROR', error.message);
+
+        await auditLogger.log({
+          eventType: 'patients:deleted',
+          entityType: 'patients',
+          entityId: id,
+          action: 'delete',
+          userId: user?.id || null,
+        });
+
+        return successResult({ success: true, id });
+      }
+    }
+
+    const deleted = PatientPrototypeStore.delete(id);
+    if (!deleted) {
+      return errorResult('NOT_FOUND', 'Patient record not found.');
+    }
+
+    await auditLogger.log({
+      eventType: 'patients:deleted',
+      entityType: 'patients',
+      entityId: id,
+      action: 'delete',
+      userId: user?.id || 'prototype-user',
+    });
+
+    return successResult({ success: true, id });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Failed to delete patient record';
+    return errorResult('INTERNAL_ERROR', msg);
+  }
+}

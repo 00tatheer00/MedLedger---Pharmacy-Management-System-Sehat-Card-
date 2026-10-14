@@ -26,6 +26,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { EmptyState } from '@/components/ui/empty-state';
 import { MedicineBatch } from '@/modules/inventory/types';
+import { ExportCsvButton } from '@/lib/csv-helper';
 import { StockAdjustmentDialog } from './stock-adjustment-dialog';
 import { calculateDaysUntilExpiry } from '@/modules/inventory/alerts';
 
@@ -57,26 +58,53 @@ export function BatchesTable({
   const [statusFilter, setStatusFilter] = useState(currentStatus);
   const [expiryFilter, setExpiryFilter] = useState(currentExpiryWindow);
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const applyFilters = (term: string, status: string, expiry: string, page = 1) => {
     const params = new URLSearchParams();
     params.set('tab', 'batches');
-    if (searchTerm.trim()) params.set('search', searchTerm.trim());
-    if (statusFilter !== 'all') params.set('status', statusFilter);
-    if (expiryFilter !== 'all') params.set('expiry_window', expiryFilter);
-    params.set('page', '1');
+    if (term.trim()) params.set('search', term.trim());
+    if (status !== 'all') params.set('status', status);
+    if (expiry !== 'all') params.set('expiry_window', expiry);
+    params.set('page', page.toString());
     router.push(`/inventory?${params.toString()}`);
   };
 
-  const handlePageChange = (newPage: number) => {
-    const params = new URLSearchParams();
-    params.set('tab', 'batches');
-    if (searchTerm.trim()) params.set('search', searchTerm.trim());
-    if (statusFilter !== 'all') params.set('status', statusFilter);
-    if (expiryFilter !== 'all') params.set('expiry_window', expiryFilter);
-    params.set('page', newPage.toString());
-    router.push(`/inventory?${params.toString()}`);
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    applyFilters(searchTerm, statusFilter, expiryFilter, 1);
   };
+
+  const handlePageChange = (newPage: number) => {
+    applyFilters(searchTerm, statusFilter, expiryFilter, newPage);
+  };
+
+  const quickChips = [
+    { label: 'All Batches', status: 'all', expiry: 'all' },
+    { label: 'Available', status: 'available', expiry: 'all' },
+    { label: 'Expiring (<60d)', status: 'all', expiry: 'near_expiry' },
+    { label: 'Quarantined', status: 'quarantined', expiry: 'all' },
+    { label: 'Expired', status: 'expired', expiry: 'all' },
+  ];
+
+  const isChipActive = (chip: { status: string; expiry: string }) => {
+    if (chip.status === 'all' && chip.expiry === 'all') {
+      return statusFilter === 'all' && expiryFilter === 'all';
+    }
+    if (chip.expiry !== 'all') {
+      return expiryFilter === chip.expiry;
+    }
+    return statusFilter === chip.status;
+  };
+
+  const exportData = initialData.batches.map((b) => ({
+    'Batch Number': b.batch_number,
+    'Medicine Name': b.medicine_name || 'N/A',
+    'Dosage Form': b.dosage_form || '—',
+    Strength: b.strength || '—',
+    'Expiry Date': b.expiry_date,
+    'Stock on Hand': b.quantity_on_hand,
+    'Unit Cost (PKR)': b.unit_cost.toFixed(2),
+    Status: b.status,
+  }));
 
   const getStatusBadge = (batch: MedicineBatch) => {
     const days = calculateDaysUntilExpiry(batch.expiry_date);
@@ -127,8 +155,9 @@ export function BatchesTable({
   return (
     <div className="space-y-4">
       {/* Search and Filters Form */}
-      <Card className="border border-border shadow-card">
-        <CardContent className="p-4">
+      <Card className="border border-border shadow-card overflow-hidden">
+        <div className="h-1 bg-gradient-to-r from-teal-500 via-primary to-emerald-500" />
+        <CardContent className="p-4 space-y-3">
           <form
             onSubmit={handleSearchSubmit}
             className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between"
@@ -140,7 +169,7 @@ export function BatchesTable({
                   placeholder="Search by batch number, medicine name, strength..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-9 h-10 text-sm"
+                  className="pl-9 h-10 text-sm focus:border-teal-500"
                 />
               </div>
 
@@ -149,13 +178,7 @@ export function BatchesTable({
                 value={statusFilter}
                 onChange={(e) => {
                   setStatusFilter(e.target.value);
-                  const params = new URLSearchParams();
-                  params.set('tab', 'batches');
-                  if (searchTerm.trim()) params.set('search', searchTerm.trim());
-                  if (e.target.value !== 'all') params.set('status', e.target.value);
-                  if (expiryFilter !== 'all') params.set('expiry_window', expiryFilter);
-                  params.set('page', '1');
-                  router.push(`/inventory?${params.toString()}`);
+                  applyFilters(searchTerm, e.target.value, expiryFilter, 1);
                 }}
                 className="h-10 px-3 text-sm rounded-lg border border-border bg-white text-text-primary"
               >
@@ -171,13 +194,7 @@ export function BatchesTable({
                 value={expiryFilter}
                 onChange={(e) => {
                   setExpiryFilter(e.target.value);
-                  const params = new URLSearchParams();
-                  params.set('tab', 'batches');
-                  if (searchTerm.trim()) params.set('search', searchTerm.trim());
-                  if (statusFilter !== 'all') params.set('status', statusFilter);
-                  if (e.target.value !== 'all') params.set('expiry_window', e.target.value);
-                  params.set('page', '1');
-                  router.push(`/inventory?${params.toString()}`);
+                  applyFilters(searchTerm, statusFilter, e.target.value, 1);
                 }}
                 className="h-10 px-3 text-sm rounded-lg border border-border bg-white text-text-primary"
               >
@@ -191,7 +208,44 @@ export function BatchesTable({
                 Apply
               </Button>
             </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <ExportCsvButton
+                data={exportData}
+                filename="MedLedger_Batches_Inventory.csv"
+                label="Export Batches CSV"
+                size="sm"
+              />
+            </div>
           </form>
+
+          {/* Quick Filter Chips */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pt-1 pb-0.5 text-xs">
+            <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider shrink-0 mr-1">
+              Quick Filter:
+            </span>
+            {quickChips.map((chip) => {
+              const active = isChipActive(chip);
+              return (
+                <button
+                  key={chip.label}
+                  type="button"
+                  onClick={() => {
+                    setStatusFilter(chip.status);
+                    setExpiryFilter(chip.expiry);
+                    applyFilters(searchTerm, chip.status, chip.expiry, 1);
+                  }}
+                  className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-150 cursor-pointer whitespace-nowrap ${
+                    active
+                      ? 'bg-teal-600 text-white shadow-xs font-semibold'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                  }`}
+                >
+                  {chip.label}
+                </button>
+              );
+            })}
+          </div>
         </CardContent>
       </Card>
 

@@ -89,14 +89,14 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
           onClick={onCloseMobile}
           className="flex items-center gap-2.5 group focus-ring rounded-lg py-1"
         >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-600 text-white transition-colors duration-150 group-hover:bg-teal-500">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-teal-500 to-emerald-600 text-white shadow-md shadow-teal-900/40 transition-transform duration-200 group-hover:scale-105">
             <Cross className="h-4 w-4 rotate-45 stroke-[2.5]" />
           </div>
           <div className="flex flex-col">
             <span className="font-bold tracking-tight text-white text-[15px] leading-tight">
               MedLedger
             </span>
-            <span className="text-[10px] uppercase font-medium tracking-wider text-slate-500">
+            <span className="text-[10px] uppercase font-semibold tracking-wider text-teal-400/80">
               DHQ Hospital Kohat
             </span>
           </div>
@@ -116,7 +116,7 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
       <nav className="flex-1 overflow-y-auto no-scrollbar p-2.5 space-y-3">
         {navigationGroups.map((group) => (
           <div key={group.title} className="space-y-0.5">
-            <h4 className="px-3 text-[10px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
+            <h4 className="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400/70 mb-1">
               {group.title}
             </h4>
             <div className="space-y-0.5">
@@ -133,15 +133,15 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
                     className={cn(
                       'flex items-center justify-between rounded-lg px-3 py-2 text-[13px] font-medium transition-all duration-150 ease-out focus-ring',
                       isActive
-                        ? 'bg-teal-600/15 text-teal-400 font-semibold'
-                        : 'text-slate-400 hover:bg-slate-800 hover:text-slate-100 hover:pl-3.5',
+                        ? 'bg-gradient-to-r from-teal-500/20 via-teal-500/10 to-transparent text-white font-semibold border-l-2 border-teal-400 pl-2.5 shadow-xs'
+                        : 'text-slate-400 hover:bg-slate-800/80 hover:text-white hover:pl-3.5',
                     )}
                   >
                     <div className="flex items-center gap-2.5">
                       <Icon
                         className={cn(
                           'h-4 w-4 shrink-0 transition-colors duration-150',
-                          isActive ? 'text-teal-400' : 'text-slate-500',
+                          isActive ? 'text-teal-400' : 'text-slate-400 group-hover:text-white',
                         )}
                       />
                       <span>{item.label}</span>
@@ -149,8 +149,8 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
                     {item.badge && (
                       <span
                         className={cn(
-                          'rounded-md px-1.5 py-0.5 text-[10px] font-semibold leading-normal',
-                          isActive ? 'bg-teal-500/20 text-teal-300' : 'bg-slate-800 text-slate-400',
+                          'rounded-md px-1.5 py-0.5 text-[10px] font-bold leading-normal',
+                          isActive ? 'bg-teal-500/25 text-teal-300' : 'bg-slate-800 text-slate-400',
                         )}
                       >
                         {item.badge}

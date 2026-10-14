@@ -13,6 +13,7 @@ import {
   TableCell,
 } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ExportCsvButton } from '@/lib/csv-helper';
 import { recentActivity, type ActivityItem } from '@/lib/demo-data';
 
 export function RecentActivityTable() {
@@ -25,6 +26,14 @@ export function RecentActivityTable() {
     if (filter === 'adjustment') return item.type === 'adjustment';
     return true;
   });
+
+  const exportData = filteredItems.map((item) => ({
+    'Reference #': item.refNumber,
+    'Activity Type': item.type,
+    Summary: item.summary,
+    Date: item.date,
+    Status: item.status,
+  }));
 
   const getTypeBadge = (type: ActivityItem['type']) => {
     switch (type) {
@@ -83,34 +92,44 @@ export function RecentActivityTable() {
   };
 
   return (
-    <Card>
+    <Card className="border border-border shadow-card overflow-hidden">
+      <div className="h-1 bg-gradient-to-r from-teal-500 via-primary to-blue-600" />
       <CardHeader className="px-5 py-4 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-light">
             <Activity className="h-4 w-4 text-primary" />
           </div>
           <CardTitle className="text-base font-semibold text-text-primary">
-            Recent Activity
+            Recent Activity Journal
           </CardTitle>
         </div>
 
-        {/* Filter tabs */}
-        <Tabs defaultValue="all" value={filter} onValueChange={setFilter}>
-          <TabsList className="h-8">
-            <TabsTrigger value="all" className="text-xs px-3 py-1">
-              All ({recentActivity.length})
-            </TabsTrigger>
-            <TabsTrigger value="dispensing" className="text-xs px-3 py-1">
-              Dispensing
-            </TabsTrigger>
-            <TabsTrigger value="receipt" className="text-xs px-3 py-1">
-              Receipts
-            </TabsTrigger>
-            <TabsTrigger value="adjustment" className="text-xs px-3 py-1">
-              Adjustments
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <div className="flex items-center gap-2.5 flex-wrap">
+          {/* Filter tabs */}
+          <Tabs defaultValue="all" value={filter} onValueChange={setFilter}>
+            <TabsList className="h-8">
+              <TabsTrigger value="all" className="text-xs px-3 py-1">
+                All ({recentActivity.length})
+              </TabsTrigger>
+              <TabsTrigger value="dispensing" className="text-xs px-3 py-1">
+                Dispensing
+              </TabsTrigger>
+              <TabsTrigger value="receipt" className="text-xs px-3 py-1">
+                Receipts
+              </TabsTrigger>
+              <TabsTrigger value="adjustment" className="text-xs px-3 py-1">
+                Adjustments
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+
+          <ExportCsvButton
+            data={exportData}
+            filename="MedLedger_Activity_Journal.csv"
+            label="Export CSV"
+            size="sm"
+          />
+        </div>
       </CardHeader>
 
       <CardContent className="p-0">

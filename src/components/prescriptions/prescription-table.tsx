@@ -17,6 +17,7 @@ import {
   TableCell,
 } from '@/components/ui/table';
 import { EmptyState } from '@/components/ui/empty-state';
+import { ExportCsvButton } from '@/lib/csv-helper';
 import { PrescriptionWithDetails } from '@/modules/prescriptions/types';
 
 interface PrescriptionTableProps {
@@ -44,22 +45,42 @@ export function PrescriptionTable({
   const [search, setSearch] = useState(currentSearch);
   const [statusFilter, setStatusFilter] = useState(currentStatus);
 
-  const handleFilterSubmit = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
+  const applyFilters = (term: string, status: string, pageNum = 1) => {
     const query = new URLSearchParams();
-    if (search.trim()) query.set('search', search.trim());
-    if (statusFilter !== 'all') query.set('status', statusFilter);
-    query.set('page', '1');
+    if (term.trim()) query.set('search', term.trim());
+    if (status !== 'all') query.set('status', status);
+    query.set('page', pageNum.toString());
     router.push(`/prescriptions?${query.toString()}`);
   };
 
-  const handlePageChange = (newPage: number) => {
-    const query = new URLSearchParams();
-    if (search.trim()) query.set('search', search.trim());
-    if (statusFilter !== 'all') query.set('status', statusFilter);
-    query.set('page', newPage.toString());
-    router.push(`/prescriptions?${query.toString()}`);
+  const handleFilterSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    applyFilters(search, statusFilter, 1);
   };
+
+  const handlePageChange = (newPage: number) => {
+    applyFilters(search, statusFilter, newPage);
+  };
+
+  const quickChips = [
+    { label: 'All Orders', status: 'all' },
+    { label: 'Pending Dispense', status: 'pending' },
+    { label: 'Partially Dispensed', status: 'partially_dispensed' },
+    { label: 'Fully Dispensed', status: 'fully_dispensed' },
+    { label: 'Cancelled', status: 'cancelled' },
+  ];
+
+  const exportData = initialPrescriptions.map((rx) => ({
+    'Prescription Number': rx.prescription_number,
+    'Patient Name': rx.patient.full_name,
+    MRN: rx.patient.mr_number,
+    'Care Setting': rx.admission ? `Inpatient (${rx.admission.ward})` : 'Outpatient',
+    'Prescribing Doctor': rx.prescriber_name,
+    'Prescription Date': rx.prescription_date,
+    'Prescribed Medicines': rx.items.map((i) => i.medicine.name).join('; '),
+    'Total Units Prescribed': rx.items.reduce((acc, it) => acc + it.prescribed_quantity, 0),
+    Status: rx.status,
+  }));
 
   return (
     <div className="space-y-4">
@@ -81,6 +102,12 @@ export function PrescriptionTable({
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
+          <ExportCsvButton
+            data={exportData}
+            filename="MedLedger_Prescriptions_Queue.csv"
+            label="Export CSV"
+            size="sm"
+          />
           <Link
             href="/prescriptions/new"
             className={buttonVariants({
@@ -96,52 +123,78 @@ export function PrescriptionTable({
       </div>
 
       {/* Filter and Search Bar */}
-      <Card className="p-3 bg-card-bg border-border">
-        <form
-          onSubmit={handleFilterSubmit}
-          className="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center justify-between"
-        >
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
-            <Input
-              type="text"
-              placeholder="Search by Rx number, doctor, patient name, MRN, or medicine..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 text-xs h-9"
-            />
-          </div>
+      <Card className="border border-border shadow-card overflow-hidden">
+        <div className="h-1 bg-gradient-to-r from-blue-600 via-teal-500 to-emerald-500" />
+        <CardContent className="p-4 space-y-3">
+          <form
+            onSubmit={handleFilterSubmit}
+            className="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center justify-between"
+          >
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
+              <Input
+                type="text"
+                placeholder="Search by Rx number, doctor, patient name, MRN, or medicine..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-9 text-xs h-9"
+              />
+            </div>
 
-          <div className="flex items-center gap-2">
-            <select
-              aria-label="Filter by prescription status"
-              value={statusFilter}
-              onChange={(e) => {
-                setStatusFilter(e.target.value);
-                const query = new URLSearchParams();
-                if (search.trim()) query.set('search', search.trim());
-                if (e.target.value !== 'all') query.set('status', e.target.value);
-                query.set('page', '1');
-                router.push(`/prescriptions?${query.toString()}`);
-              }}
-              className="h-9 rounded-md border border-border bg-card-bg px-2.5 py-1 text-xs text-text-primary focus-ring"
-            >
-              <option value="all">All Statuses</option>
-              <option value="pending">Pending Dispensing</option>
-              <option value="partially_dispensed">Partially Dispensed</option>
-              <option value="fully_dispensed">Fully Dispensed</option>
-              <option value="cancelled">Cancelled</option>
-            </select>
+            <div className="flex items-center gap-2">
+              <select
+                aria-label="Filter by prescription status"
+                value={statusFilter}
+                onChange={(e) => {
+                  setStatusFilter(e.target.value);
+                  applyFilters(search, e.target.value, 1);
+                }}
+                className="h-9 rounded-md border border-border bg-card-bg px-2.5 py-1 text-xs text-text-primary focus-ring"
+              >
+                <option value="all">All Statuses</option>
+                <option value="pending">Pending Dispensing</option>
+                <option value="partially_dispensed">Partially Dispensed</option>
+                <option value="fully_dispensed">Fully Dispensed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
 
-            <Button type="submit" variant="secondary" size="sm" className="h-9 text-xs">
-              Apply
-            </Button>
+              <Button type="submit" variant="secondary" size="sm" className="h-9 text-xs">
+                Apply
+              </Button>
+            </div>
+          </form>
+
+          {/* Quick Filter Chips */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pt-1 pb-0.5 text-xs">
+            <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider shrink-0 mr-1">
+              Quick Filter:
+            </span>
+            {quickChips.map((chip) => {
+              const active = statusFilter === chip.status;
+              return (
+                <button
+                  key={chip.label}
+                  type="button"
+                  onClick={() => {
+                    setStatusFilter(chip.status);
+                    applyFilters(search, chip.status, 1);
+                  }}
+                  className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-150 cursor-pointer whitespace-nowrap ${
+                    active
+                      ? 'bg-primary text-white shadow-xs font-semibold'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                  }`}
+                >
+                  {chip.label}
+                </button>
+              );
+            })}
           </div>
-        </form>
+        </CardContent>
       </Card>
 
       {/* Table Section */}
-      <Card>
+      <Card className="border border-border shadow-card overflow-hidden">
         <CardContent className="p-0">
           {initialPrescriptions.length === 0 ? (
             <div className="py-12">

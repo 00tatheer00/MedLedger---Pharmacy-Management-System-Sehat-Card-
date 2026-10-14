@@ -215,3 +215,41 @@ export async function toggleSupplierStatusAction(
     };
   }
 }
+
+export async function deleteSupplierAction(
+  id: string,
+): Promise<{ success: boolean; id?: string; error?: string }> {
+  try {
+    const user = await getCurrentUser();
+    const authCheck = requirePermission(user, 'suppliers:manage');
+    if (!authCheck.success) {
+      const altCheck = requirePermission(user, 'purchasing:manage');
+      if (!altCheck.success) {
+        return {
+          success: false,
+          error: 'Unauthorized: insufficient permissions to delete suppliers.',
+        };
+      }
+    }
+
+    supplierStore.deleteSupplier(id);
+
+    await auditLogger.log({
+      eventType: 'record_deleted',
+      entityType: 'supplier',
+      entityId: id,
+      action: 'delete',
+      userId: user?.id || 'system',
+    });
+
+    revalidatePath('/suppliers');
+    revalidatePath('/purchases');
+
+    return { success: true, id };
+  } catch (err) {
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Failed to delete supplier.',
+    };
+  }
+}

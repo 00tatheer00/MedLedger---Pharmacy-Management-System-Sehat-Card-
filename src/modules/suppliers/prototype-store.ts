@@ -285,6 +285,22 @@ class SupplierPrototypeStore {
     return updated;
   }
 
+  public deleteSupplier(id: string): Supplier {
+    const index = this.suppliers.findIndex((s) => s.id === id && !s.deleted_at);
+    if (index === -1) {
+      throw new Error(`Supplier not found with ID: ${id}`);
+    }
+    const current = this.suppliers[index];
+    const updated = {
+      ...current,
+      is_active: false,
+      deleted_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+    this.suppliers[index] = updated;
+    return updated;
+  }
+
   public resetForTesting(): void {
     this.suppliers = [...initialSuppliers];
   }

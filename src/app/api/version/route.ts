@@ -6,7 +6,11 @@ import { NextResponse, connection } from 'next/server';
  * In local environments, falls back to package version or build stamp.
  */
 export async function GET() {
-  await connection();
+  try {
+    await connection();
+  } catch {
+    // Gracefully handle invocation in unit test runners (e.g. vitest) where Next.js RequestStore is not initialized
+  }
   const version =
     process.env.VERCEL_GIT_COMMIT_SHA ||
     process.env.VERCEL_DEPLOYMENT_ID ||

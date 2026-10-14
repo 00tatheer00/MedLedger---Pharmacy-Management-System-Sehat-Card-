@@ -430,6 +430,22 @@ class MedicinePrototypeStore {
     return this.medicines[index];
   }
 
+  public deleteMedicine(id: string): Medicine {
+    const index = this.medicines.findIndex((m) => m.id === id && !m.deleted_at);
+    if (index === -1) {
+      throw new Error(`Medicine not found: ${id}`);
+    }
+
+    this.medicines[index] = {
+      ...this.medicines[index],
+      is_active: false,
+      deleted_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
+    return this.medicines[index];
+  }
+
   public resetForTesting() {
     this.medicines = [...initialMedicinesList];
   }
