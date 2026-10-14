@@ -111,7 +111,7 @@ export function StockAdjustmentDialog({ batch, medicineName }: StockAdjustmentDi
           {error && <Alert variant="critical" title="Adjustment Failed" description={error} />}
 
           {/* Batch Context Banner */}
-          <div className="p-3 bg-surface-muted/50 rounded-lg border border-border/80 text-xs flex items-center justify-between">
+          <div className="p-3 bg-slate-50 rounded-lg border border-border text-xs flex items-center justify-between">
             <div>
               <div className="font-semibold text-text-primary">
                 {medicineName || batch.medicine?.name || 'Selected Item'}
@@ -200,7 +200,7 @@ export function StockAdjustmentDialog({ batch, medicineName }: StockAdjustmentDi
                 className={`h-9 px-3 flex items-center rounded-lg border font-mono text-xs font-bold ${
                   isNegative
                     ? 'border-rose-300 bg-rose-50 text-rose-700'
-                    : 'border-border bg-surface-muted/40 text-text-primary'
+                    : 'border-border bg-slate-50 text-text-primary'
                 }`}
               >
                 {isNegative ? 'Prohibited (Negative)' : `${projectedBalance} units`}
@@ -243,7 +243,7 @@ export function StockAdjustmentDialog({ batch, medicineName }: StockAdjustmentDi
             </p>
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-4 border-t border-border/60">
+          <div className="flex items-center justify-end gap-2 pt-4 border-t border-border">
             <Button type="button" variant="outline" size="sm" onClick={() => setIsOpen(false)}>
               Cancel
             </Button>

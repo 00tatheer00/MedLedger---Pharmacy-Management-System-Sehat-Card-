@@ -73,7 +73,7 @@ export function ModulePlaceholder({
               {plannedFeatures.map((feat, idx) => (
                 <li
                   key={idx}
-                  className="flex items-start gap-2 text-xs text-text-secondary rounded-lg border border-border/80 bg-page-bg/60 p-2.5"
+                  className="flex items-start gap-2 text-xs text-text-secondary rounded-lg border border-border bg-slate-50 p-2.5"
                 >
                   <CheckCircle2 className="h-4 w-4 text-teal shrink-0 mt-0.5" />
                   <span>{feat}</span>

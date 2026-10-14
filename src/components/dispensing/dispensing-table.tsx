@@ -84,7 +84,7 @@ export function DispensingTable({ initialRecords }: DispensingTableProps) {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
@@ -111,7 +111,10 @@ export function DispensingTable({ initialRecords }: DispensingTableProps) {
                 filtered.map((record) => {
                   const isReversed = record.status === 'reversed';
                   return (
-                    <tr key={record.id} className="hover:bg-slate-50/80 transition-colors">
+                    <tr
+                      key={record.id}
+                      className="hover:bg-slate-50 transition-colors duration-150"
+                    >
                       <td className="p-3 font-mono font-semibold text-primary">
                         <Link href={`/dispensing/${record.id}`} className="hover:underline">
                           {record.dispensing_number}

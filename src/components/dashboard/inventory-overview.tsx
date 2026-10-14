@@ -16,8 +16,9 @@ export function InventoryOverview() {
       count: inventorySummary.inStock,
       pct: inStockPct,
       color: 'bg-emerald-500',
-      bgColor: 'bg-emerald-50 border-emerald-200 hover:border-emerald-400',
+      bgColor: 'bg-emerald-50 border-emerald-200',
       textColor: 'text-emerald-700',
+      pctColor: 'text-emerald-600',
       icon: CheckCircle2,
     },
     {
@@ -26,8 +27,9 @@ export function InventoryOverview() {
       count: inventorySummary.lowStock,
       pct: lowStockPct,
       color: 'bg-amber-500',
-      bgColor: 'bg-amber-50 border-amber-200 hover:border-amber-400',
+      bgColor: 'bg-amber-50 border-amber-200',
       textColor: 'text-amber-700',
+      pctColor: 'text-amber-600',
       icon: AlertTriangle,
     },
     {
@@ -36,8 +38,9 @@ export function InventoryOverview() {
       count: inventorySummary.outOfStock,
       pct: outOfStockPct,
       color: 'bg-rose-500',
-      bgColor: 'bg-rose-50 border-rose-200 hover:border-rose-400',
+      bgColor: 'bg-rose-50 border-rose-200',
       textColor: 'text-rose-700',
+      pctColor: 'text-rose-600',
       icon: XCircle,
     },
     {
@@ -45,9 +48,10 @@ export function InventoryOverview() {
       urdu: 'میعاد ختم',
       count: inventorySummary.expired,
       pct: expiredPct,
-      color: 'bg-slate-500',
-      bgColor: 'bg-slate-50 border-slate-200 hover:border-slate-400',
+      color: 'bg-slate-400',
+      bgColor: 'bg-slate-50 border-slate-200',
       textColor: 'text-slate-700',
+      pctColor: 'text-slate-500',
       icon: Clock,
     },
   ];
@@ -62,34 +66,36 @@ export function InventoryOverview() {
   ];
 
   return (
-    <Card className="h-full flex flex-col justify-between border border-white/20 border-t-white/40 bg-white/[0.08] backdrop-blur-3xl rounded-[28px] shadow-[0_30px_60px_rgba(0,0,0,0.45),inset_0_1px_1px_0_rgba(255,255,255,0.25)] text-white">
-      <CardHeader className="px-5 py-4 border-b border-white/10 flex flex-row items-center justify-between">
+    <Card className="h-full flex flex-col justify-between">
+      <CardHeader className="px-5 py-4 border-b border-border flex flex-row items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/20 text-teal-300 shadow-[0_0_14px_rgba(20,184,166,0.3)]">
-            <Package className="h-5 w-5" />
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-50 text-teal-600">
+            <Package className="h-4 w-4" />
           </div>
           <div>
-            <CardTitle className="text-lg font-bold text-white">Stock Health</CardTitle>
-            <p className="text-xs text-white/70 font-medium">سٹاک کی عمومی حالت</p>
+            <CardTitle className="text-base font-semibold text-text-primary">
+              Stock Health
+            </CardTitle>
+            <p className="text-[11px] text-text-muted">سٹاک کی عمومی حالت</p>
           </div>
         </div>
-        <span className="bg-white/10 text-white border border-white/20 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-2xs">
+        <span className="bg-slate-100 text-text-secondary border border-border px-2 py-0.5 rounded-md text-[11px] font-medium">
           {inventorySummary.total} SKUs
         </span>
       </CardHeader>
 
-      <CardContent className="p-4 sm:p-5 space-y-4">
+      <CardContent className="p-4 space-y-4">
         {/* Segmented Stock Health Bar */}
         <div>
           <div className="flex justify-between items-center mb-2">
-            <span className="font-bold text-text-primary text-sm">Overall Reliability</span>
-            <span className="text-emerald-700 text-xs font-bold bg-emerald-500/15 px-3 py-0.5 rounded-full border border-emerald-400/40 backdrop-blur-md shadow-2xs">
+            <span className="font-medium text-text-primary text-sm">Overall Reliability</span>
+            <span className="text-emerald-700 text-xs font-medium bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
               {inStockPct}% Ready
             </span>
           </div>
 
           <div
-            className="h-3.5 w-full rounded-full bg-slate-200/70 flex overflow-hidden shadow-inner border border-white/60 p-0.5 backdrop-blur-md"
+            className="h-2.5 w-full rounded-full bg-slate-100 flex overflow-hidden"
             role="progressbar"
             aria-valuenow={inventorySummary.inStock}
             aria-valuemin={0}
@@ -98,7 +104,7 @@ export function InventoryOverview() {
           >
             <div
               style={{ width: `${inStockPct}%` }}
-              className="bg-gradient-to-r from-emerald-500 to-teal-400 rounded-l-full transition-all duration-500"
+              className="bg-emerald-500 rounded-l-full transition-all duration-500"
               title={`In Stock: ${inventorySummary.inStock}`}
             />
             <div
@@ -119,28 +125,31 @@ export function InventoryOverview() {
           </div>
 
           {/* Status Cards Grid */}
-          <div className="grid grid-cols-2 gap-3 mt-3.5">
+          <div className="grid grid-cols-2 gap-2.5 mt-3">
             {statusCategories.map((cat) => {
               const Icon = cat.icon;
               return (
                 <div
                   key={cat.label}
-                  className={`rounded-[22px] border border-white/15 border-t-white/30 bg-white/[0.06] hover:bg-white/[0.14] backdrop-blur-2xl p-3 sm:p-3.5 flex flex-col justify-between hover:shadow-apple-float hover:-translate-y-1 transition-all duration-300 cursor-pointer ios-press`}
+                  className={`rounded-lg border p-3 flex flex-col justify-between cursor-pointer transition-all duration-200 ease-out hover:shadow-sm hover:-translate-y-0.5 ${cat.bgColor}`}
                 >
-                  <div className="flex items-center justify-between mb-1.5">
+                  <div className="flex items-center justify-between mb-1">
                     <div className="flex items-center gap-1.5">
-                      <Icon className={`h-4 w-4 shrink-0 ${cat.textColor}`} aria-hidden="true" />
-                      <span className="font-bold text-xs sm:text-sm text-white">{cat.label}</span>
+                      <Icon
+                        className={`h-3.5 w-3.5 shrink-0 ${cat.textColor}`}
+                        aria-hidden="true"
+                      />
+                      <span className={`font-medium text-xs ${cat.textColor}`}>{cat.label}</span>
                     </div>
-                    <span className="text-[11px] font-semibold text-white/60" dir="rtl">
+                    <span className="text-[10px] text-text-muted" dir="rtl">
                       {cat.urdu}
                     </span>
                   </div>
                   <div className="flex items-baseline justify-between mt-1">
-                    <span className="text-2xl sm:text-3xl font-extrabold text-white">
+                    <span className="text-xl sm:text-2xl font-bold text-text-primary">
                       {cat.count}
                     </span>
-                    <span className="text-xs font-bold text-teal-300">{cat.pct}%</span>
+                    <span className={`text-xs font-medium ${cat.pctColor}`}>{cat.pct}%</span>
                   </div>
                 </div>
               );
@@ -149,30 +158,28 @@ export function InventoryOverview() {
         </div>
 
         {/* Top Therapeutic Groups Distribution */}
-        <div className="pt-3.5 border-t border-border">
-          <div className="flex items-center justify-between mb-2.5">
-            <h4 className="text-sm font-bold text-text-primary">Top Therapeutic Groups</h4>
+        <div className="pt-3 border-t border-border">
+          <div className="flex items-center justify-between mb-2">
+            <h4 className="text-sm font-medium text-text-primary">Top Therapeutic Groups</h4>
             <Link
               href="/inventory"
-              className="text-xs font-bold text-primary hover:underline flex items-center gap-1"
+              className="text-xs font-medium text-primary hover:text-primary-hover hover:underline flex items-center gap-1 transition-colors duration-150"
             >
               <span>View All</span>
               <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1">
             {categories.map((group) => (
               <div
                 key={group.name}
-                className="flex items-center justify-between text-xs sm:text-sm p-1.5 rounded-lg hover:bg-hover-bg transition-colors"
+                className="flex items-center justify-between text-xs p-1.5 rounded-md transition-all duration-150 hover:bg-slate-50 hover:pl-2.5"
               >
-                <span className="text-text-secondary font-medium truncate max-w-[200px]">
-                  {group.name}
-                </span>
-                <div className="flex items-center gap-2.5">
-                  <span className="font-bold text-text-primary">{group.count}</span>
-                  <span className="text-xs text-text-muted font-mono w-10 text-right font-medium">
+                <span className="text-text-secondary truncate max-w-[200px]">{group.name}</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-text-primary">{group.count}</span>
+                  <span className="text-[11px] text-text-muted font-mono w-10 text-right">
                     {group.share}
                   </span>
                 </div>

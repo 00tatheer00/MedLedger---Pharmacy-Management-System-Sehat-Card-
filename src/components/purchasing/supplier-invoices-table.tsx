@@ -132,7 +132,7 @@ export function SupplierInvoicesTable({
   return (
     <div className="space-y-4">
       {/* Search and Filters Card */}
-      <Card className="border border-border/80 shadow-xs">
+      <Card className="border border-border shadow-card">
         <CardContent className="p-4">
           <form onSubmit={handleFilterSubmit} className="flex flex-col md:flex-row gap-3">
             <div className="relative flex-1">
@@ -196,10 +196,10 @@ export function SupplierInvoicesTable({
       </Card>
 
       {/* Invoices Ledger Table */}
-      <Card className="border border-border/80 shadow-xs overflow-hidden">
+      <Card className="border border-border shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-slate-50/80">
+            <TableHeader className="bg-slate-50">
               <TableRow>
                 <TableHead className="font-semibold text-xs uppercase tracking-wider">
                   Invoice #
@@ -244,7 +244,10 @@ export function SupplierInvoicesTable({
                 </TableRow>
               ) : (
                 initialData.invoices.map((inv) => (
-                  <TableRow key={inv.id} className="hover:bg-slate-50/50">
+                  <TableRow
+                    key={inv.id}
+                    className="hover:bg-slate-50 transition-colors duration-150"
+                  >
                     <TableCell className="font-mono font-medium text-navy-deep">
                       {inv.invoice_number}
                     </TableCell>
@@ -258,7 +261,7 @@ export function SupplierInvoicesTable({
                     </TableCell>
                     <TableCell className="text-sm text-text-muted">
                       <div>{inv.invoice_date}</div>
-                      <div className="text-xs text-text-muted/80">Due: {inv.due_date}</div>
+                      <div className="text-xs text-text-muted">Due: {inv.due_date}</div>
                     </TableCell>
                     <TableCell className="text-xs text-text-muted">
                       {inv.po_number && (
@@ -273,7 +276,7 @@ export function SupplierInvoicesTable({
                         </div>
                       )}
                       {inv.grn_number && (
-                        <div className="font-mono text-text-muted/80">GRN: {inv.grn_number}</div>
+                        <div className="font-mono text-text-muted">GRN: {inv.grn_number}</div>
                       )}
                       {!inv.po_number && !inv.grn_number && 'Direct'}
                     </TableCell>

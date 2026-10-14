@@ -249,30 +249,30 @@ export function Header({
   };
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-white/15 bg-slate-950/45 backdrop-blur-3xl px-5 sm:px-6 shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
+    <header className="sticky top-0 z-20 flex h-14 w-full items-center justify-between border-b border-border bg-white px-4 sm:px-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
       {/* Left: Mobile Toggle & Page Title */}
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleMobileMenu}
-          className="lg:hidden rounded-xl p-2 text-white/70 hover:bg-white/10 hover:text-white focus-ring transition-colors"
+          className="lg:hidden rounded-lg p-2 text-text-muted hover:bg-slate-100 hover:text-text-primary focus-ring transition-all duration-150"
           aria-label="Open navigation menu"
         >
           <Menu className="h-5 w-5" />
         </button>
 
         <div className="hidden sm:flex flex-col">
-          <h1 className="text-base font-bold text-white leading-tight tracking-tight">{title}</h1>
-          <span className="text-xs text-white/70">{subtitle}</span>
+          <h1 className="text-sm font-semibold text-text-primary leading-tight">{title}</h1>
+          <span className="text-[11px] text-text-muted">{subtitle}</span>
         </div>
       </div>
 
       {/* Middle: Global Search Input / Trigger */}
       <div className="flex-1 max-w-md mx-6 hidden md:block">
         <div className="relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
           <input
             type="text"
-            placeholder="Search medicines, patients, prescriptions, batches..."
+            placeholder="Search medicines, patients, prescriptions..."
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -285,14 +285,14 @@ export function Header({
               setSearchOpen(true);
               executeSearch(searchQuery);
             }}
-            className="w-full h-10 pl-10 pr-16 rounded-full border border-white/20 bg-white/[0.08] text-xs sm:text-sm text-white placeholder:text-white/50 focus-ring transition-all hover:border-teal-400/50 hover:bg-white/[0.14] shadow-[inset_0_1px_2px_rgba(0,0,0,0.3)] backdrop-blur-xl cursor-pointer"
+            className="w-full h-9 pl-9 pr-16 rounded-lg border border-border bg-slate-50 text-sm text-text-primary placeholder:text-text-muted focus-ring transition-all duration-150 hover:border-slate-400 hover:bg-white focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary/20 cursor-pointer"
           />
           <button
             onClick={() => {
               setSearchOpen(true);
               executeSearch(searchQuery);
             }}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full border border-white/20 bg-white/10 px-2 py-0.5 text-[10px] font-mono text-white/70 shadow-2xs hover:text-white hover:bg-white/20 transition-colors cursor-pointer"
+            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md border border-border bg-white px-1.5 py-0.5 text-[10px] font-mono text-text-muted hover:text-text-primary hover:border-slate-400 transition-all duration-150 cursor-pointer"
             aria-label="Search shortcut"
           >
             Ctrl K
@@ -301,7 +301,7 @@ export function Header({
       </div>
 
       {/* Right: Notifications, User Profile, PWA Install */}
-      <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex items-center gap-2">
         <InstallButton />
         {/* Notifications Bell */}
         <div className="relative">
@@ -309,14 +309,14 @@ export function Header({
             variant="ghost"
             size="sm"
             onClick={() => setShowNotifications(!showNotifications)}
-            className="relative h-10 w-10 p-0 rounded-full text-text-secondary hover:text-text-primary hover:bg-white/40 border border-white/40 bg-white/20 backdrop-blur-md transition-all shadow-2xs"
+            className="relative h-9 w-9 p-0 rounded-lg text-text-secondary hover:text-text-primary hover:bg-slate-100 transition-all duration-150"
             aria-label="Open notifications"
           >
-            <Bell className="h-5 w-5" />
+            <Bell className="h-[18px] w-[18px]" />
             {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 flex h-3 w-3">
+              <span className="absolute top-1 right-1 flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-danger opacity-75" />
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-danger" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-danger" />
               </span>
             )}
           </Button>
@@ -329,16 +329,16 @@ export function Header({
                 onClick={() => setShowNotifications(false)}
                 aria-hidden="true"
               />
-              <div className="absolute right-0 mt-3 z-50 w-96 sm:w-[420px] rounded-[28px] border border-white/20 border-t-white/40 bg-slate-950/85 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.65)] p-5 text-white animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                  <div className="flex items-center gap-2.5">
-                    <h4 className="text-base font-bold text-white">System Alerts</h4>
+              <div className="absolute right-0 mt-2 z-50 w-[380px] rounded-xl border border-border bg-white shadow-dropdown p-4 animate-in fade-in zoom-in-95 duration-150">
+                <div className="flex items-center justify-between pb-3 border-b border-border">
+                  <div className="flex items-center gap-2">
+                    <h4 className="text-sm font-semibold text-text-primary">System Alerts</h4>
                     {unreadCount > 0 ? (
-                      <Badge variant="warning" size="sm" className="font-bold">
+                      <Badge variant="warning" size="sm">
                         {unreadCount} unread
                       </Badge>
                     ) : (
-                      <Badge variant="success" size="sm" className="font-bold">
+                      <Badge variant="success" size="sm">
                         All read
                       </Badge>
                     )}
@@ -346,20 +346,20 @@ export function Header({
                   {unreadCount > 0 && (
                     <button
                       onClick={handleMarkAllRead}
-                      className="text-sm text-teal-300 hover:underline font-bold"
+                      className="text-xs text-primary hover:underline font-medium"
                     >
                       Mark all read
                     </button>
                   )}
                 </div>
 
-                <div className="mt-4 space-y-3 max-h-96 overflow-y-auto scrollbar-thin">
+                <div className="mt-3 space-y-2 max-h-80 overflow-y-auto scrollbar-thin">
                   {notificationsList.map((alert) => (
                     <div
                       key={alert.id}
-                      className="rounded-2xl border border-white/10 bg-white/[0.05] p-4 hover:bg-white/[0.1] hover:border-teal-400/40 transition-all duration-200 cursor-pointer"
+                      className="rounded-lg border border-border p-3 hover:bg-slate-50 transition-colors duration-100 cursor-pointer"
                     >
-                      <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center justify-between mb-1.5">
                         <Badge
                           variant={
                             alert.severity === 'critical'
@@ -372,26 +372,26 @@ export function Header({
                         >
                           {alert.severity}
                         </Badge>
-                        <span className="text-xs text-text-muted font-medium">
+                        <span className="text-[11px] text-text-muted">
                           {alert.timestamp.replace('T', ' ').slice(0, 16)}
                         </span>
                       </div>
-                      <p className="text-sm font-bold text-text-primary mb-1">{alert.title}</p>
-                      <p className="text-sm text-text-secondary line-clamp-2">
+                      <p className="text-sm font-medium text-text-primary mb-0.5">{alert.title}</p>
+                      <p className="text-xs text-text-secondary line-clamp-2">
                         {alert.description}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+                <div className="mt-3 pt-3 border-t border-border flex items-center justify-between">
                   <button
                     onClick={() => setShowNotifications(false)}
-                    className="text-sm text-white/70 hover:text-white font-semibold transition-colors"
+                    className="text-xs text-text-secondary hover:text-text-primary font-medium transition-colors"
                   >
-                    Close panel
+                    Close
                   </button>
-                  <span className="text-xs text-white/50">Operational alerts</span>
+                  <span className="text-[11px] text-text-muted">Operational alerts</span>
                 </div>
               </div>
             </>
@@ -402,20 +402,20 @@ export function Header({
         <div className="relative">
           <button
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="flex items-center gap-3 pl-3 sm:pl-4 border-l border-white/20 focus-ring rounded-xl py-1.5 hover:bg-white/10 transition-colors"
+            className="flex items-center gap-2.5 pl-3 border-l border-border focus-ring rounded-lg py-1.5 hover:bg-slate-50 transition-all duration-150"
             aria-label="User profile and role menu"
             aria-expanded={showUserMenu}
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 text-white text-sm font-bold ring-2 ring-teal-400/40 shadow-sm">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-600 text-white text-xs font-semibold">
               AK
             </div>
             <div className="hidden sm:flex flex-col text-left">
-              <span className="text-sm font-bold text-white leading-tight">Dr. Ayesha Khan</span>
-              <span className="text-xs text-white/70 font-semibold">
-                {SYSTEM_ROLES[activeRole].name}
+              <span className="text-sm font-medium text-text-primary leading-tight">
+                Dr. Ayesha Khan
               </span>
+              <span className="text-[11px] text-text-muted">{SYSTEM_ROLES[activeRole].name}</span>
             </div>
-            <ChevronDown className="hidden sm:block h-4 w-4 text-white/50" />
+            <ChevronDown className="hidden sm:block h-3.5 w-3.5 text-text-muted" />
           </button>
 
           {showUserMenu && (
@@ -425,33 +425,33 @@ export function Header({
                 onClick={() => setShowUserMenu(false)}
                 aria-hidden="true"
               />
-              <div className="absolute right-0 mt-3 z-50 w-80 rounded-[28px] border border-white/20 border-t-white/40 bg-slate-950/85 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.65)] p-5 text-white animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex items-center gap-4 pb-4 border-b border-white/10">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 text-white text-base font-bold shadow-md ring-4 ring-teal/20">
+              <div className="absolute right-0 mt-2 z-50 w-72 rounded-xl border border-border bg-white shadow-dropdown p-4 animate-in fade-in zoom-in-95 duration-150">
+                <div className="flex items-center gap-3 pb-3 border-b border-border">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 text-white text-sm font-semibold">
                     AK
                   </div>
                   <div>
-                    <h4 className="text-base font-bold text-white">Dr. Ayesha Khan</h4>
-                    <p className="text-sm text-white/70">ayesha.khan@dhqkohat.test</p>
+                    <h4 className="text-sm font-semibold text-text-primary">Dr. Ayesha Khan</h4>
+                    <p className="text-xs text-text-muted">ayesha.khan@dhqkohat.test</p>
                   </div>
                 </div>
 
                 {/* Role Simulation Switcher */}
-                <div className="mt-4">
-                  <div className="flex items-center justify-between mb-2.5">
-                    <span className="text-sm font-bold text-text-primary flex items-center gap-2">
-                      <SlidersHorizontal className="h-4 w-4 text-primary" />
+                <div className="mt-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-semibold text-text-primary flex items-center gap-1.5">
+                      <SlidersHorizontal className="h-3.5 w-3.5 text-primary" />
                       Simulated Role Preview
                     </span>
-                    <Badge variant="info" size="sm" className="font-bold">
+                    <Badge variant="info" size="sm">
                       Provisional
                     </Badge>
                   </div>
-                  <p className="text-sm text-text-muted leading-snug mb-3">
+                  <p className="text-[11px] text-text-muted leading-snug mb-2.5">
                     Switch roles to evaluate permission boundaries.
                   </p>
 
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     {(Object.keys(SYSTEM_ROLES) as SystemRole[]).map((roleKey) => (
                       <button
                         key={roleKey}
@@ -459,24 +459,25 @@ export function Header({
                           setActiveRole(roleKey);
                           setShowUserMenu(false);
                         }}
-                        className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ios-press ${
+                        className={cn(
+                          'w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-100 cursor-pointer',
                           activeRole === roleKey
-                            ? 'bg-primary/10 text-primary font-bold border border-primary/30 shadow-xs'
-                            : 'text-text-secondary hover:bg-white/60 hover:text-text-primary border border-transparent'
-                        }`}
+                            ? 'bg-teal-50 text-teal-700 font-semibold border border-teal-200'
+                            : 'text-text-secondary hover:bg-slate-50 hover:text-text-primary border border-transparent',
+                        )}
                       >
                         <span>{SYSTEM_ROLES[roleKey].name}</span>
                         {activeRole === roleKey && (
-                          <CheckCircle2 className="h-5 w-5 text-primary" />
+                          <CheckCircle2 className="h-4 w-4 text-teal-600" />
                         )}
                       </button>
                     ))}
                   </div>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-border/60 flex items-center justify-between text-sm text-text-muted">
+                <div className="mt-3 pt-3 border-t border-border flex items-center justify-between text-[11px] text-text-muted">
                   <span className="flex items-center gap-1.5">
-                    <ShieldCheck className="h-4 w-4 text-emerald-500" />
+                    <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
                     Supabase RBAC
                   </span>
                   <span>DHQ Kohat</span>
@@ -489,13 +490,13 @@ export function Header({
 
       {/* Global Omni-Search Command Palette (Ctrl+K) */}
       {searchOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-10 sm:pt-16 px-3 sm:px-4 bg-slate-950/40 backdrop-blur-xl animate-in fade-in duration-150">
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-12 sm:pt-20 px-4 bg-black/40 animate-in fade-in duration-100">
           <div className="fixed inset-0" onClick={handleCloseSearch} aria-hidden="true" />
 
-          <div className="relative z-10 w-full max-w-2xl rounded-[28px] border border-white/20 border-t-white/40 bg-slate-950/85 backdrop-blur-3xl shadow-[0_30px_80px_rgba(0,0,0,0.65)] overflow-hidden flex flex-col max-h-[85vh] text-white animate-in zoom-in-95 duration-150">
+          <div className="relative z-10 w-full max-w-2xl rounded-xl border border-border bg-white shadow-dropdown overflow-hidden flex flex-col max-h-[80vh] animate-in zoom-in-95 duration-100">
             {/* Search Input Bar */}
-            <div className="flex items-center px-4 sm:px-5 py-3.5 sm:py-4 border-b border-white/10 bg-white/[0.05] gap-3 shrink-0">
-              <Search className="h-5 w-5 text-teal-300 shrink-0" />
+            <div className="flex items-center px-4 py-3 border-b border-border gap-3 shrink-0">
+              <Search className="h-4 w-4 text-text-muted shrink-0" />
               <input
                 ref={searchInputRef}
                 type="text"
@@ -503,28 +504,28 @@ export function Header({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDownInSearch}
-                className="flex-1 bg-transparent text-sm sm:text-base font-semibold text-white placeholder:text-white/50 focus:outline-hidden"
+                className="flex-1 bg-transparent text-sm text-text-primary placeholder:text-text-muted focus:outline-hidden"
               />
-              {isSearching && <Loader2 className="h-5 w-5 text-teal-300 animate-spin shrink-0" />}
+              {isSearching && <Loader2 className="h-4 w-4 text-primary animate-spin shrink-0" />}
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="text-xs text-white/60 hover:text-white px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+                  className="text-[11px] text-text-muted hover:text-text-primary px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 transition-all duration-150 cursor-pointer"
                 >
                   Clear
                 </button>
               )}
               <button
                 onClick={handleCloseSearch}
-                className="text-white/60 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
+                className="text-text-muted hover:text-text-primary p-1 rounded-md hover:bg-slate-100 transition-all duration-150 cursor-pointer"
                 aria-label="Close search"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
               </button>
             </div>
 
-            {/* Category Filter Pills Bar with Dynamic Counts */}
-            <div className="flex items-center gap-1.5 px-3 sm:px-4 py-2 border-b border-white/10 bg-slate-900/60 overflow-x-auto no-scrollbar shrink-0">
+            {/* Category Filter Pills Bar */}
+            <div className="flex items-center gap-1 px-3 py-2 border-b border-border bg-slate-50 overflow-x-auto no-scrollbar shrink-0">
               {[
                 { label: 'All', icon: Sparkles },
                 { label: 'Medicine', icon: Pill },
@@ -546,19 +547,19 @@ export function Header({
                       setSelectedIndex(0);
                     }}
                     className={cn(
-                      'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ios-press',
+                      'flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all duration-150 shrink-0 cursor-pointer',
                       isActive
-                        ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-[0_2px_12px_rgba(20,184,166,0.35)]'
-                        : 'text-text-secondary hover:text-text-primary hover:bg-slate-200/60',
+                        ? 'bg-teal-600 text-white'
+                        : 'text-text-secondary hover:text-text-primary hover:bg-slate-100',
                     )}
                   >
-                    <Icon className="h-3.5 w-3.5" />
+                    <Icon className="h-3 w-3" />
                     <span>{cat.label === 'All' ? 'All (تمام)' : cat.label}</span>
                     {count > 0 && (
                       <span
                         className={cn(
-                          'ml-0.5 text-[10px] px-1.5 py-0.2 rounded-full font-bold',
-                          isActive ? 'bg-white/25 text-white' : 'bg-slate-200 text-slate-700',
+                          'ml-0.5 text-[10px] px-1 rounded font-medium',
+                          isActive ? 'bg-teal-700 text-teal-100' : 'bg-slate-200 text-slate-600',
                         )}
                       >
                         {count}
@@ -571,9 +572,9 @@ export function Header({
 
             {/* Popular Search Suggestions when query is short */}
             {isQueryTooShort && (
-              <div className="px-3 sm:px-4 py-2.5 border-b border-border/50 bg-slate-50/50 shrink-0">
-                <div className="flex items-center gap-1.5 mb-2 text-[11px] font-bold text-text-muted uppercase tracking-wider">
-                  <Sparkles className="h-3 w-3 text-teal" />
+              <div className="px-3 py-2.5 border-b border-border bg-slate-50/50 shrink-0">
+                <div className="flex items-center gap-1.5 mb-1.5 text-[10px] font-medium text-text-muted uppercase tracking-wider">
+                  <Sparkles className="h-3 w-3 text-teal-600" />
                   <span>Popular Searches (عام تلاشیں):</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
@@ -581,7 +582,7 @@ export function Header({
                     <button
                       key={tag.label}
                       onClick={() => handleTagClick(tag.label)}
-                      className="px-3 py-1 rounded-full text-xs font-semibold bg-white/80 border border-white/80 hover:border-teal-500/50 hover:bg-teal-50 hover:text-teal transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs backdrop-blur-sm ios-press"
+                      className="px-2.5 py-1 rounded-md text-xs font-medium bg-white border border-border hover:border-teal-300 hover:bg-teal-50 hover:text-teal-700 transition-all duration-150 flex items-center gap-1 cursor-pointer"
                     >
                       <span>{tag.label}</span>
                       <span className="text-[10px] text-text-muted font-normal">({tag.type})</span>
@@ -592,10 +593,10 @@ export function Header({
             )}
 
             {/* Search Results Area */}
-            <div className="flex-1 overflow-y-auto p-2 sm:p-3 space-y-1.5 scrollbar-thin">
+            <div className="flex-1 overflow-y-auto p-2 space-y-0.5 scrollbar-thin">
               {activeResults.length > 0 ? (
                 <>
-                  <div className="px-3 py-1 flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-text-muted">
+                  <div className="px-3 py-1 flex items-center justify-between text-[10px] font-medium uppercase tracking-wider text-text-muted">
                     <span>
                       {searchQuery
                         ? `Matching Results (${activeResults.length})`
@@ -613,50 +614,50 @@ export function Header({
                         onClick={handleCloseSearch}
                         onMouseEnter={() => setSelectedIndex(idx)}
                         className={cn(
-                          'flex items-center justify-between p-3 rounded-2xl transition-all duration-150 border ios-press',
-                          isSelected
-                            ? 'bg-teal-50/80 border-teal-500/30 shadow-xs'
-                            : 'bg-white/40 border-transparent hover:bg-white/80 hover:border-white/60',
+                          'flex items-center justify-between p-2.5 rounded-lg transition-colors duration-100',
+                          isSelected ? 'bg-slate-100' : 'hover:bg-slate-50',
                         )}
                       >
                         <div className="flex items-center gap-3 min-w-0">
                           <div
                             className={cn(
-                              'h-9 w-9 rounded-2xl flex items-center justify-center border shrink-0 shadow-xs',
+                              'h-8 w-8 rounded-lg flex items-center justify-center shrink-0',
                               item.category === 'Medicine'
-                                ? 'bg-teal/15 text-teal border-teal/30'
+                                ? 'bg-teal-50 text-teal-600'
                                 : item.category === 'Patient'
-                                  ? 'bg-blue-50 text-blue-600 border-blue-200'
+                                  ? 'bg-blue-50 text-blue-600'
                                   : item.category === 'Prescription'
-                                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                    ? 'bg-emerald-50 text-emerald-600'
                                     : item.category === 'Batch'
-                                      ? 'bg-amber-50 text-amber-700 border-amber-200'
+                                      ? 'bg-amber-50 text-amber-600'
                                       : item.category === 'Supplier'
-                                        ? 'bg-purple-50 text-purple-700 border-purple-200'
+                                        ? 'bg-purple-50 text-purple-600'
                                         : item.category === 'Claim'
-                                          ? 'bg-cyan-50 text-cyan-700 border-cyan-200'
-                                          : 'bg-rose-50 text-rose-600 border-rose-200',
+                                          ? 'bg-cyan-50 text-cyan-600'
+                                          : 'bg-rose-50 text-rose-600',
                             )}
                           >
-                            {item.category === 'Medicine' && <Pill className="h-4 w-4" />}
-                            {item.category === 'Patient' && <Users className="h-4 w-4" />}
-                            {item.category === 'Prescription' && <FileText className="h-4 w-4" />}
-                            {item.category === 'Batch' && <Package className="h-4 w-4" />}
-                            {item.category === 'Supplier' && <Building2 className="h-4 w-4" />}
-                            {item.category === 'Claim' && <Receipt className="h-4 w-4" />}
-                            {item.category === 'Action' && <Zap className="h-4 w-4" />}
+                            {item.category === 'Medicine' && <Pill className="h-3.5 w-3.5" />}
+                            {item.category === 'Patient' && <Users className="h-3.5 w-3.5" />}
+                            {item.category === 'Prescription' && (
+                              <FileText className="h-3.5 w-3.5" />
+                            )}
+                            {item.category === 'Batch' && <Package className="h-3.5 w-3.5" />}
+                            {item.category === 'Supplier' && <Building2 className="h-3.5 w-3.5" />}
+                            {item.category === 'Claim' && <Receipt className="h-3.5 w-3.5" />}
+                            {item.category === 'Action' && <Zap className="h-3.5 w-3.5" />}
                           </div>
 
                           <div className="min-w-0">
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm font-bold text-text-primary truncate">
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-sm font-medium text-text-primary truncate">
                                 {item.title}
                               </span>
-                              <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-slate-100 text-slate-600 border border-slate-200 shrink-0">
+                              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-md bg-slate-100 text-slate-500 shrink-0">
                                 {item.category}
                               </span>
                             </div>
-                            <span className="text-xs text-text-secondary line-clamp-1">
+                            <span className="text-xs text-text-muted line-clamp-1">
                               {item.subtitle}
                             </span>
                           </div>
@@ -668,8 +669,8 @@ export function Header({
                           </Badge>
                           <ArrowRight
                             className={cn(
-                              'h-4 w-4 transition-transform hidden sm:block',
-                              isSelected ? 'text-teal translate-x-0.5' : 'text-text-muted/30',
+                              'h-3.5 w-3.5 transition-all duration-100 hidden sm:block',
+                              isSelected ? 'text-text-primary translate-x-0.5' : 'text-transparent',
                             )}
                           />
                         </div>
@@ -678,20 +679,20 @@ export function Header({
                   })}
                 </>
               ) : (
-                <div className="py-12 px-4 text-center space-y-3">
-                  <div className="h-12 w-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto mb-1 border border-amber-200">
-                    <Search className="h-6 w-6" />
+                <div className="py-10 px-4 text-center space-y-2">
+                  <div className="h-10 w-10 rounded-lg bg-amber-50 text-amber-500 flex items-center justify-center mx-auto">
+                    <Search className="h-5 w-5" />
                   </div>
-                  <p className="text-base font-bold text-text-primary">
-                    No hospital records found matching &ldquo;{searchQuery}&rdquo;
+                  <p className="text-sm font-medium text-text-primary">
+                    No records found matching &ldquo;{searchQuery}&rdquo;
                   </p>
-                  <p className="text-xs text-text-secondary max-w-sm mx-auto leading-relaxed">
+                  <p className="text-xs text-text-muted max-w-sm mx-auto">
                     Try searching by medicine name, generic name, patient MRN, CNIC, prescription
                     number, batch ID, or supplier name.
                   </p>
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold text-teal bg-teal-bg hover:bg-teal/20 transition-colors cursor-pointer"
+                    className="inline-flex items-center px-3 py-1 rounded-md text-xs font-medium text-teal-700 bg-teal-50 hover:bg-teal-100 transition-colors cursor-pointer"
                   >
                     Clear Search Query
                   </button>
@@ -700,28 +701,28 @@ export function Header({
             </div>
 
             {/* Modal Footer with Keyboard Shortcuts */}
-            <div className="flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3 border-t border-border bg-slate-50 text-xs text-text-muted shrink-0">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <span className="flex items-center gap-1 font-medium">
-                  <kbd className="px-1.5 py-0.5 rounded bg-card-bg border border-border text-[10px] font-mono shadow-2xs">
+            <div className="flex items-center justify-between px-4 py-2 border-t border-border bg-slate-50 text-[11px] text-text-muted shrink-0">
+              <div className="flex items-center gap-3">
+                <span className="flex items-center gap-1">
+                  <kbd className="px-1 py-0.5 rounded bg-white border border-border text-[10px] font-mono">
                     ↑↓
                   </kbd>
-                  <span className="hidden sm:inline">to navigate</span>
+                  <span className="hidden sm:inline">navigate</span>
                 </span>
-                <span className="flex items-center gap-1 font-medium">
-                  <kbd className="px-1.5 py-0.5 rounded bg-card-bg border border-border text-[10px] font-mono shadow-2xs">
+                <span className="flex items-center gap-1">
+                  <kbd className="px-1 py-0.5 rounded bg-white border border-border text-[10px] font-mono">
                     ↵
                   </kbd>
-                  <span className="hidden sm:inline">to select</span>
+                  <span className="hidden sm:inline">select</span>
                 </span>
-                <span className="flex items-center gap-1 font-medium">
-                  <kbd className="px-1.5 py-0.5 rounded bg-card-bg border border-border text-[10px] font-mono shadow-2xs">
+                <span className="flex items-center gap-1">
+                  <kbd className="px-1 py-0.5 rounded bg-white border border-border text-[10px] font-mono">
                     ESC
                   </kbd>
-                  <span className="hidden sm:inline">to close</span>
+                  <span className="hidden sm:inline">close</span>
                 </span>
               </div>
-              <span className="font-semibold text-teal text-xs">MedLedger Omni-Search</span>
+              <span className="font-medium text-text-muted text-[11px]">MedLedger Search</span>
             </div>
           </div>
         </div>

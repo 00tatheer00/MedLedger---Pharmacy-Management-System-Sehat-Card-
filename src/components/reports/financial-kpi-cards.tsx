@@ -14,13 +14,13 @@ export function FinancialKpiCards({ kpis }: FinancialKpiCardsProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* 1. Supplier Payables */}
-      <Card className="border border-border/70 shadow-xs hover:border-border transition-colors">
+      <Card className="border border-border bg-white shadow-card hover-lift transition-all duration-200 hover:border-amber-300">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-text-muted uppercase tracking-wider">
+            <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">
               Supplier Payables
             </span>
-            <div className="h-8 w-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
+            <div className="h-8 w-8 rounded-lg bg-amber-50 text-amber-700 border border-amber-100 flex items-center justify-center">
               <DollarSign className="h-4 w-4" />
             </div>
           </div>
@@ -39,13 +39,13 @@ export function FinancialKpiCards({ kpis }: FinancialKpiCardsProps) {
       </Card>
 
       {/* 2. Hospital Claim Receivables */}
-      <Card className="border border-border/70 shadow-xs hover:border-border transition-colors">
+      <Card className="border border-border bg-white shadow-card hover-lift transition-all duration-200 hover:border-blue-300">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-text-muted uppercase tracking-wider">
+            <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">
               Treasury Receivables
             </span>
-            <div className="h-8 w-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
+            <div className="h-8 w-8 rounded-lg bg-blue-50 text-blue-700 border border-blue-100 flex items-center justify-center">
               <Receipt className="h-4 w-4" />
             </div>
           </div>
@@ -64,13 +64,13 @@ export function FinancialKpiCards({ kpis }: FinancialKpiCardsProps) {
       </Card>
 
       {/* 3. Disbursed vs Reimbursements Collected */}
-      <Card className="border border-border/70 shadow-xs hover:border-border transition-colors">
+      <Card className="border border-border bg-white shadow-card hover-lift transition-all duration-200 hover:border-teal-300">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-text-muted uppercase tracking-wider">
+            <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">
               Collected vs Disbursed
             </span>
-            <div className="h-8 w-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center">
+            <div className="h-8 w-8 rounded-lg bg-teal-50 text-teal-700 border border-teal-100 flex items-center justify-center">
               <TrendingUp className="h-4 w-4" />
             </div>
           </div>
@@ -92,15 +92,21 @@ export function FinancialKpiCards({ kpis }: FinancialKpiCardsProps) {
       </Card>
 
       {/* 4. Net Financial Position */}
-      <Card className="border border-border/70 shadow-xs hover:border-border transition-colors">
+      <Card
+        className={`border border-border bg-white shadow-card hover-lift transition-all duration-200 ${
+          isHealthy ? 'hover:border-emerald-300' : 'hover:border-rose-300'
+        }`}
+      >
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-text-muted uppercase tracking-wider">
+            <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">
               Net Financial Balance
             </span>
             <div
-              className={`h-8 w-8 rounded-lg flex items-center justify-center ${
-                isHealthy ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
+              className={`h-8 w-8 rounded-lg border flex items-center justify-center ${
+                isHealthy
+                  ? 'bg-emerald-50 text-emerald-700 border-emerald-100'
+                  : 'bg-rose-50 text-rose-700 border-rose-100'
               }`}
             >
               <Scale className="h-4 w-4" />

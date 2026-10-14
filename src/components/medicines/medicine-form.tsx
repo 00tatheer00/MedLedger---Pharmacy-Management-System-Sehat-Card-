@@ -104,10 +104,10 @@ export function MedicineRegistrationForm() {
       </div>
 
       <form onSubmit={handleSubmit}>
-        <Card className="border border-border/80 shadow-xs">
-          <CardHeader className="border-b border-border/60 pb-4">
+        <Card className="border border-border shadow-card">
+          <CardHeader className="border-b border-border pb-4">
             <div className="flex items-center gap-2">
-              <div className="p-2 bg-primary/10 rounded-lg text-primary">
+              <div className="p-2 bg-teal-50 border border-teal-100 rounded-lg text-teal-700">
                 <Pill className="w-5 h-5" />
               </div>
               <div>
@@ -126,7 +126,7 @@ export function MedicineRegistrationForm() {
             )}
 
             {/* Catalogue Honesty Notice */}
-            <div className="rounded-lg p-3 bg-blue-50/70 border border-blue-200/80 text-blue-900 text-xs flex items-start gap-2.5">
+            <div className="rounded-lg p-3 bg-blue-50 border border-blue-200 text-blue-900 text-xs flex items-start gap-2.5">
               <Info className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
               <div className="leading-relaxed">
                 <span className="font-semibold">Catalogue Integrity Standard:</span> Ensure brand
@@ -220,7 +220,7 @@ export function MedicineRegistrationForm() {
             </div>
 
             {/* Formulation & Strength */}
-            <div className="border-t border-border/60 pt-5">
+            <div className="border-t border-border pt-5">
               <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">
                 2. Formulation & Packaging
               </h3>
@@ -292,7 +292,7 @@ export function MedicineRegistrationForm() {
             </div>
 
             {/* Inventory Alerts & Status */}
-            <div className="border-t border-border/60 pt-5">
+            <div className="border-t border-border pt-5">
               <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-3">
                 3. Surveillance Threshold & Status
               </h3>
@@ -339,7 +339,7 @@ export function MedicineRegistrationForm() {
             </div>
           </CardContent>
 
-          <CardFooter className="border-t border-border/60 bg-surface-muted/20 py-4 px-6 flex items-center justify-between">
+          <CardFooter className="border-t border-border bg-slate-50 py-4 px-6 flex items-center justify-between">
             <Link
               href="/medicines"
               className="text-xs text-text-muted hover:text-text-primary font-medium"

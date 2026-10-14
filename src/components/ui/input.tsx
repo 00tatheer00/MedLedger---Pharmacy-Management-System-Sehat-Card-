@@ -13,9 +13,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         disabled={disabled}
         className={cn(
-          'flex h-10 w-full rounded-xl border border-white/80 bg-white/70 backdrop-blur-md px-3.5 py-2 text-sm text-text-primary',
-          'placeholder:text-text-muted focus-ring transition-all shadow-[inset_0_1px_2px_rgba(0,0,0,0.04)]',
-          'hover:border-teal-500/40 hover:bg-white/90',
+          'flex h-10 w-full rounded-lg border border-border bg-white px-3.5 py-2 text-sm text-text-primary',
+          'placeholder:text-text-muted focus-ring transition-all duration-150',
+          'hover:border-slate-400 focus:border-primary focus:ring-1 focus:ring-primary/20',
           'disabled:cursor-not-allowed disabled:bg-hover-bg disabled:opacity-60',
           error && 'border-danger focus-visible:outline-danger',
           className,

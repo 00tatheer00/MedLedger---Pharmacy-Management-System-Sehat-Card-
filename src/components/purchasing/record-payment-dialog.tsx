@@ -161,7 +161,7 @@ export function RecordPaymentDialog({
 
       <form onSubmit={handleSubmit} className="space-y-4 pt-2">
         {/* Top Payment Inputs */}
-        <div className="p-4 rounded-xl border border-border bg-surface-muted/20 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="p-4 rounded-xl border border-border bg-slate-50 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-text-primary mb-1">
               Distributor / Payee <span className="text-rose-600">*</span>

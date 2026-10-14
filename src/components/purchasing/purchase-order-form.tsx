@@ -174,8 +174,8 @@ export function PurchaseOrderForm({
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Order Details Card */}
-        <Card className="border border-border/80 shadow-xs">
-          <CardHeader className="py-4 px-6 border-b border-border/60 bg-surface-muted/30">
+        <Card className="border border-border shadow-card">
+          <CardHeader className="py-4 px-6 border-b border-border bg-slate-50">
             <div className="flex items-center gap-2">
               <ShoppingCart className="w-4 h-4 text-primary" />
               <CardTitle className="text-base font-semibold text-text-primary">
@@ -254,8 +254,8 @@ export function PurchaseOrderForm({
         </Card>
 
         {/* Line Items Card */}
-        <Card className="border border-border/80 shadow-xs">
-          <CardHeader className="py-4 px-6 border-b border-border/60 bg-surface-muted/30 flex flex-row items-center justify-between">
+        <Card className="border border-border shadow-card">
+          <CardHeader className="py-4 px-6 border-b border-border bg-slate-50 flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-base font-semibold text-text-primary">
                 Medicine Line Items ({items.length})
@@ -287,7 +287,7 @@ export function PurchaseOrderForm({
                 return (
                   <div
                     key={item.id}
-                    className="p-3 rounded-lg border border-border bg-surface-muted/10 grid grid-cols-12 gap-3 items-center"
+                    className="p-3 rounded-lg border border-border bg-slate-50 grid grid-cols-12 gap-3 items-center"
                   >
                     <div className="col-span-1 text-center font-mono text-xs text-text-muted">
                       #{index + 1}

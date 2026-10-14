@@ -22,12 +22,12 @@ export function ClaimsKpiCards({ kpis }: ClaimsKpiCardsProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
       {/* 1. Total Submitted */}
-      <Card className="p-4 border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
+      <Card className="p-4 border-slate-200 bg-white shadow-card transition-all duration-200 hover-lift hover:border-blue-300">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
             Total Claims
           </p>
-          <div className="p-2 rounded-lg bg-blue-50 text-blue-600">
+          <div className="p-2 rounded-lg bg-blue-50 text-blue-600 border border-blue-100">
             <FileText className="w-5 h-5" />
           </div>
         </div>
@@ -43,12 +43,12 @@ export function ClaimsKpiCards({ kpis }: ClaimsKpiCardsProps) {
       </Card>
 
       {/* 2. Pending Review */}
-      <Card className="p-4 border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
+      <Card className="p-4 border-slate-200 bg-white shadow-card transition-all duration-200 hover-lift hover:border-amber-300">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
             Pending Review
           </p>
-          <div className="p-2 rounded-lg bg-amber-50 text-amber-600">
+          <div className="p-2 rounded-lg bg-amber-50 text-amber-600 border border-amber-100">
             <Clock className="w-5 h-5" />
           </div>
         </div>
@@ -61,12 +61,12 @@ export function ClaimsKpiCards({ kpis }: ClaimsKpiCardsProps) {
       </Card>
 
       {/* 3. Approved Reimbursement */}
-      <Card className="p-4 border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
+      <Card className="p-4 border-slate-200 bg-white shadow-card transition-all duration-200 hover-lift hover:border-emerald-300">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
             Approved Claims
           </p>
-          <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600">
+          <div className="p-2 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100">
             <CheckCircle2 className="w-5 h-5" />
           </div>
         </div>
@@ -82,12 +82,12 @@ export function ClaimsKpiCards({ kpis }: ClaimsKpiCardsProps) {
       </Card>
 
       {/* 4. Reimbursement Collected */}
-      <Card className="p-4 border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
+      <Card className="p-4 border-slate-200 bg-white shadow-card transition-all duration-200 hover-lift hover:border-indigo-300">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
             Paid by Treasury
           </p>
-          <div className="p-2 rounded-lg bg-indigo-50 text-indigo-600">
+          <div className="p-2 rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-100">
             <Landmark className="w-5 h-5" />
           </div>
         </div>
@@ -100,12 +100,12 @@ export function ClaimsKpiCards({ kpis }: ClaimsKpiCardsProps) {
       </Card>
 
       {/* 5. Outstanding Balance */}
-      <Card className="p-4 border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow">
+      <Card className="p-4 border-slate-200 bg-white shadow-card transition-all duration-200 hover-lift hover:border-rose-300">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
             Outstanding Balance
           </p>
-          <div className="p-2 rounded-lg bg-rose-50 text-rose-600">
+          <div className="p-2 rounded-lg bg-rose-50 text-rose-600 border border-rose-100">
             <AlertCircle className="w-5 h-5" />
           </div>
         </div>

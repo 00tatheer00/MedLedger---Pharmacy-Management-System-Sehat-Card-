@@ -14,7 +14,7 @@ interface AlertsViewProps {
 export function AlertsView({ alerts }: AlertsViewProps) {
   if (alerts.length === 0) {
     return (
-      <Card className="border border-border/80 p-8 shadow-xs">
+      <Card className="border border-border p-8 shadow-card">
         <EmptyState
           icon={Package}
           title="All inventory parameters healthy"
@@ -30,29 +30,31 @@ export function AlertsView({ alerts }: AlertsViewProps) {
 
   const renderAlertCard = (alert: InventoryAlert) => {
     let icon = <AlertTriangle className="w-4 h-4 text-amber-600" />;
-    let border = 'border-amber-200/80 bg-amber-50/30';
+    let border = 'border-amber-200 bg-amber-50 hover:border-amber-300';
     let badgeText = 'Warning';
-    let badgeStyle = 'bg-amber-100 text-amber-800 border-amber-200';
+    let badgeStyle = 'bg-amber-100 text-amber-800 border-amber-300';
 
     if (alert.severity === 'critical') {
       icon = <XCircle className="w-4 h-4 text-rose-600" />;
-      border = 'border-rose-200/80 bg-rose-50/30';
+      border = 'border-rose-200 bg-rose-50 hover:border-rose-300';
       badgeText = 'Critical Alert';
-      badgeStyle = 'bg-rose-100 text-rose-800 border-rose-200';
+      badgeStyle = 'bg-rose-100 text-rose-800 border-rose-300';
     } else if (alert.severity === 'info') {
       icon = <Clock className="w-4 h-4 text-blue-600" />;
-      border = 'border-blue-200/80 bg-blue-50/30';
+      border = 'border-blue-200 bg-blue-50 hover:border-blue-300';
       badgeText = 'FEFO Surveillance';
-      badgeStyle = 'bg-blue-100 text-blue-800 border-blue-200';
+      badgeStyle = 'bg-blue-100 text-blue-800 border-blue-300';
     }
 
     return (
       <div
         key={alert.id}
-        className={`p-4 rounded-xl border ${border} flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs`}
+        className={`p-4 rounded-xl border ${border} shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs transition-all duration-150`}
       >
         <div className="flex items-start gap-3">
-          <div className="p-2 rounded-lg bg-white shadow-2xs shrink-0 mt-0.5">{icon}</div>
+          <div className="p-2 rounded-lg bg-white border border-slate-200 shadow-2xs shrink-0 mt-0.5">
+            {icon}
+          </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
               <span
@@ -77,7 +79,7 @@ export function AlertsView({ alerts }: AlertsViewProps) {
             variant: 'outline',
             size: 'sm',
             className:
-              'h-8 px-3 text-xs font-medium gap-1 shrink-0 bg-white hover:bg-surface-muted',
+              'h-8 px-3 text-xs font-semibold gap-1 shrink-0 bg-white border-slate-200 hover:bg-slate-100 hover:border-slate-300 transition-all duration-150',
           })}
         >
           Inspect & Adjust
@@ -90,8 +92,8 @@ export function AlertsView({ alerts }: AlertsViewProps) {
   return (
     <div className="space-y-6">
       {criticalAlerts.length > 0 && (
-        <Card className="border border-rose-200/80 shadow-xs">
-          <CardHeader className="py-3 px-4 border-b border-rose-100 bg-rose-50/50">
+        <Card className="border border-rose-200 bg-white shadow-card overflow-hidden">
+          <CardHeader className="py-3 px-4 border-b border-rose-200 bg-rose-50">
             <div className="flex items-center gap-2">
               <XCircle className="w-4 h-4 text-rose-600" />
               <CardTitle className="text-sm font-semibold text-rose-900">
@@ -104,8 +106,8 @@ export function AlertsView({ alerts }: AlertsViewProps) {
       )}
 
       {warningAlerts.length > 0 && (
-        <Card className="border border-amber-200/80 shadow-xs">
-          <CardHeader className="py-3 px-4 border-b border-amber-100 bg-amber-50/50">
+        <Card className="border border-amber-200 bg-white shadow-card overflow-hidden">
+          <CardHeader className="py-3 px-4 border-b border-amber-200 bg-amber-50">
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-600" />
               <CardTitle className="text-sm font-semibold text-amber-900">
@@ -118,8 +120,8 @@ export function AlertsView({ alerts }: AlertsViewProps) {
       )}
 
       {infoAlerts.length > 0 && (
-        <Card className="border border-blue-200/80 shadow-xs">
-          <CardHeader className="py-3 px-4 border-b border-blue-100 bg-blue-50/50">
+        <Card className="border border-blue-200 bg-white shadow-card overflow-hidden">
+          <CardHeader className="py-3 px-4 border-b border-blue-200 bg-blue-50">
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-blue-600" />
               <CardTitle className="text-sm font-semibold text-blue-900">

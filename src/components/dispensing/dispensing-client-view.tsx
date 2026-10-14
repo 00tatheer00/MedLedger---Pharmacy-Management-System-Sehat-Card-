@@ -174,9 +174,9 @@ export function DispensingClientView({
               </div>
 
               {/* Right Column: Prompt & Counter Welcome */}
-              <div className="lg:col-span-7 bg-card-bg rounded-2xl border-2 border-border/80 p-6 sm:p-7 shadow-xs text-center">
+              <div className="lg:col-span-7 bg-white rounded-xl border border-border p-6 sm:p-7 shadow-card text-center">
                 <div className="max-w-md mx-auto space-y-4">
-                  <div className="h-14 w-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mx-auto shadow-xs">
+                  <div className="h-14 w-14 bg-teal-50 text-teal-700 border border-teal-100 rounded-xl flex items-center justify-center mx-auto shadow-xs">
                     <FileCheck2 className="h-7 w-7" />
                   </div>
                   <div>

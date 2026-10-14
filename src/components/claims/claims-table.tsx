@@ -112,10 +112,10 @@ export function ClaimsTable({ initialClaims }: ClaimsTableProps) {
             <button
               key={tab.key}
               onClick={() => setStatusFilter(tab.key)}
-              className={`px-3 py-1.5 rounded-lg font-medium transition-colors whitespace-nowrap ${
+              className={`px-3 py-1.5 rounded-lg font-medium transition-all duration-150 whitespace-nowrap cursor-pointer ${
                 statusFilter === tab.key
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  ? 'bg-blue-600 text-white shadow-xs font-semibold'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-800'
               }`}
             >
               {tab.label}
@@ -125,7 +125,7 @@ export function ClaimsTable({ initialClaims }: ClaimsTableProps) {
       </div>
 
       {/* Claims List Table */}
-      <Card className="overflow-hidden border-slate-200 bg-white shadow-sm">
+      <Card className="overflow-hidden border-slate-200 bg-white shadow-card">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm text-slate-700">
             <thead className="bg-slate-50 border-b border-slate-200 text-xs uppercase font-semibold text-slate-500 tracking-wider">
@@ -156,7 +156,7 @@ export function ClaimsTable({ initialClaims }: ClaimsTableProps) {
                 </tr>
               ) : (
                 filtered.map((claim) => (
-                  <tr key={claim.id} className="hover:bg-slate-50/80 transition-colors">
+                  <tr key={claim.id} className="hover:bg-slate-50 transition-colors duration-150">
                     <td className="px-4 py-3.5">
                       <Link
                         href={`/claims/${claim.id}`}

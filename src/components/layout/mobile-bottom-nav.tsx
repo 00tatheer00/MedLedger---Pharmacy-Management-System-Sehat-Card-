@@ -22,7 +22,7 @@ export function MobileBottomNav({ onOpenMenu }: MobileBottomNavProps) {
   return (
     <nav
       aria-label="Mobile Bottom Navigation"
-      className="lg:hidden fixed bottom-3 left-3 right-3 max-w-md mx-auto z-40 bg-slate-950/50 backdrop-blur-3xl border border-white/25 rounded-full px-3 py-1.5 shadow-[0_16px_50px_rgba(0,0,0,0.45)] flex items-center justify-around select-none"
+      className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-border px-2 py-1.5 flex items-center justify-around select-none"
     >
       {navItems.map((item) => {
         const Icon = item.icon;
@@ -33,20 +33,14 @@ export function MobileBottomNav({ onOpenMenu }: MobileBottomNavProps) {
             key={item.href}
             href={item.href}
             className={cn(
-              'flex flex-col items-center justify-center py-1 px-3 rounded-full transition-all duration-200 min-w-[56px] ios-press',
-              isActive ? 'text-teal-300 font-bold' : 'text-slate-400 hover:text-white',
+              'flex flex-col items-center justify-center py-1 px-3 rounded-lg transition-colors duration-100 min-w-[56px]',
+              isActive ? 'text-teal-600' : 'text-slate-400 hover:text-slate-600',
             )}
           >
-            <div
-              className={cn(
-                'flex items-center justify-center h-8 w-8 rounded-full transition-all duration-200',
-                isActive &&
-                  'bg-gradient-to-tr from-teal-500/30 to-emerald-500/30 text-teal-300 shadow-[0_0_12px_rgba(45,212,191,0.4)] border border-teal-400/40 scale-105',
-              )}
-            >
-              <Icon className="h-4.5 w-4.5" strokeWidth={isActive ? 2.5 : 2} />
-            </div>
-            <span className="text-[10px] mt-0.5 tracking-tight">{item.label}</span>
+            <Icon className="h-5 w-5" strokeWidth={isActive ? 2.2 : 1.8} />
+            <span className={cn('text-[10px] mt-0.5', isActive && 'font-semibold')}>
+              {item.label}
+            </span>
           </Link>
         );
       })}
@@ -54,13 +48,11 @@ export function MobileBottomNav({ onOpenMenu }: MobileBottomNavProps) {
       {/* Menu Drawer Trigger */}
       <button
         onClick={onOpenMenu}
-        className="flex flex-col items-center justify-center py-1 px-3 rounded-full text-slate-400 hover:text-white transition-all min-w-[56px] cursor-pointer ios-press"
+        className="flex flex-col items-center justify-center py-1 px-3 rounded-lg text-slate-400 hover:text-slate-600 transition-colors min-w-[56px] cursor-pointer"
         aria-label="Open full menu"
       >
-        <div className="flex items-center justify-center h-8 w-8 rounded-full hover:bg-white/10 transition-colors">
-          <Menu className="h-4.5 w-4.5" />
-        </div>
-        <span className="text-[10px] mt-0.5 tracking-tight">More</span>
+        <Menu className="h-5 w-5" strokeWidth={1.8} />
+        <span className="text-[10px] mt-0.5">More</span>
       </button>
     </nav>
   );

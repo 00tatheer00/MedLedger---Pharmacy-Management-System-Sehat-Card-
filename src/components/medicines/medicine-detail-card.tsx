@@ -95,10 +95,10 @@ export function MedicineDetailCard({ medicine, batches, movements }: MedicineDet
       </div>
 
       {/* Main Header & Specs Card */}
-      <Card className="border border-border/80 shadow-xs">
-        <CardHeader className="py-4 px-6 border-b border-border/60 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <Card className="border border-border shadow-card">
+        <CardHeader className="py-4 px-6 border-b border-border flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <div className="p-2.5 bg-primary/10 rounded-xl text-primary mt-1">
+            <div className="p-2.5 bg-teal-50 rounded-lg text-teal-700 border border-teal-100 mt-1">
               <Pill className="w-6 h-6" />
             </div>
             <div>
@@ -106,7 +106,7 @@ export function MedicineDetailCard({ medicine, batches, movements }: MedicineDet
                 <CardTitle className="text-xl font-bold text-text-primary">
                   {medicine.name}
                 </CardTitle>
-                <span className="inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-medium bg-surface-muted text-text-secondary border border-border/60">
+                <span className="inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
                   {medicine.category}
                 </span>
                 {medicine.is_active ? (
@@ -138,7 +138,7 @@ export function MedicineDetailCard({ medicine, batches, movements }: MedicineDet
 
         <CardContent className="p-6 space-y-6">
           {/* Key Specifications Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-xl bg-surface-muted/30 border border-border/50 text-xs">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs">
             <div>
               <span className="text-text-muted font-medium block">Dosage Form</span>
               <span className="font-semibold text-text-primary text-sm mt-0.5 block">
@@ -171,8 +171,8 @@ export function MedicineDetailCard({ medicine, batches, movements }: MedicineDet
               Inventory Balance Breakdown
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3.5 rounded-xl border border-emerald-200/80 bg-emerald-50/40 text-emerald-950">
-                <span className="text-xs font-medium text-emerald-700 block">
+              <div className="p-3.5 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-950 transition-all duration-150 hover:border-emerald-300">
+                <span className="text-xs font-semibold text-emerald-700 block">
                   Available for Dispensing
                 </span>
                 <span className="text-2xl font-bold font-mono mt-1 block">
@@ -181,16 +181,18 @@ export function MedicineDetailCard({ medicine, batches, movements }: MedicineDet
                 <span className="text-[11px] text-emerald-600 mt-0.5 block">Approved stock</span>
               </div>
 
-              <div className="p-3.5 rounded-xl border border-amber-200/80 bg-amber-50/40 text-amber-950">
-                <span className="text-xs font-medium text-amber-700 block">Quarantined Stock</span>
+              <div className="p-3.5 rounded-xl border border-amber-200 bg-amber-50 text-amber-950 transition-all duration-150 hover:border-amber-300">
+                <span className="text-xs font-semibold text-amber-700 block">
+                  Quarantined Stock
+                </span>
                 <span className="text-2xl font-bold font-mono mt-1 block">
                   {medicine.quarantined_stock}
                 </span>
                 <span className="text-[11px] text-amber-600 mt-0.5 block">Held for inspection</span>
               </div>
 
-              <div className="p-3.5 rounded-xl border border-rose-200/80 bg-rose-50/40 text-rose-950">
-                <span className="text-xs font-medium text-rose-700 block">Expired Stock</span>
+              <div className="p-3.5 rounded-xl border border-rose-200 bg-rose-50 text-rose-950 transition-all duration-150 hover:border-rose-300">
+                <span className="text-xs font-semibold text-rose-700 block">Expired Stock</span>
                 <span className="text-2xl font-bold font-mono mt-1 block">
                   {medicine.expired_stock}
                 </span>
@@ -199,8 +201,8 @@ export function MedicineDetailCard({ medicine, batches, movements }: MedicineDet
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl border border-border bg-surface-muted/40 text-text-primary">
-                <span className="text-xs font-medium text-text-muted block">
+              <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 text-text-primary transition-all duration-150 hover:border-slate-300">
+                <span className="text-xs font-semibold text-text-muted block">
                   Total Units on Hand
                 </span>
                 <span className="text-2xl font-bold font-mono mt-1 block">
@@ -233,10 +235,10 @@ export function MedicineDetailCard({ medicine, batches, movements }: MedicineDet
                 above to initialize stock.
               </div>
             ) : (
-              <div className="border border-border/80 rounded-xl overflow-hidden">
+              <div className="border border-border rounded-xl overflow-hidden shadow-card">
                 <Table>
                   <TableHeader>
-                    <TableRow className="bg-surface-muted/30">
+                    <TableRow className="bg-slate-50">
                       <TableHead className="text-xs font-semibold uppercase tracking-wider">
                         Batch #
                       </TableHead>
@@ -259,7 +261,10 @@ export function MedicineDetailCard({ medicine, batches, movements }: MedicineDet
                   </TableHeader>
                   <TableBody>
                     {batches.map((batch) => (
-                      <TableRow key={batch.id} className="hover:bg-surface-muted/30">
+                      <TableRow
+                        key={batch.id}
+                        className="hover:bg-slate-50 transition-colors duration-150"
+                      >
                         <TableCell className="font-mono text-xs font-bold text-text-primary">
                           {batch.batch_number}
                         </TableCell>
@@ -290,7 +295,7 @@ export function MedicineDetailCard({ medicine, batches, movements }: MedicineDet
           </div>
 
           {/* Stock Movements Ledger for this medicine */}
-          <div className="space-y-3 pt-4 border-t border-border/60">
+          <div className="space-y-3 pt-4 border-t border-border">
             <div className="flex items-center gap-2">
               <History className="w-4 h-4 text-primary" />
               <h3 className="text-xs font-semibold text-text-secondary uppercase tracking-wider">
@@ -303,10 +308,10 @@ export function MedicineDetailCard({ medicine, batches, movements }: MedicineDet
                 No stock movements logged for this medicine yet.
               </div>
             ) : (
-              <div className="border border-border/80 rounded-xl overflow-hidden">
+              <div className="border border-border rounded-xl overflow-hidden shadow-card">
                 <Table>
                   <TableHeader>
-                    <TableRow className="bg-surface-muted/30">
+                    <TableRow className="bg-slate-50">
                       <TableHead className="text-xs font-semibold uppercase tracking-wider">
                         Timestamp
                       </TableHead>
@@ -329,7 +334,10 @@ export function MedicineDetailCard({ medicine, batches, movements }: MedicineDet
                   </TableHeader>
                   <TableBody>
                     {movements.map((mov) => (
-                      <TableRow key={mov.id} className="hover:bg-surface-muted/30 text-xs">
+                      <TableRow
+                        key={mov.id}
+                        className="hover:bg-slate-50 transition-colors duration-150 text-xs"
+                      >
                         <TableCell className="font-mono text-text-muted">
                           {new Date(mov.performed_at).toLocaleDateString()}{' '}
                           {new Date(mov.performed_at).toLocaleTimeString([], {

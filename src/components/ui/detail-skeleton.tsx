@@ -41,7 +41,7 @@ export function DetailSkeleton({ title = 'Record Detail' }: DetailSkeletonProps)
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* Left Column: Metadata & Patient Info */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="rounded-2xl border border-border bg-card-bg p-5 space-y-4 shadow-xs">
+          <div className="rounded-xl border border-border bg-white p-5 space-y-4 shadow-card">
             <div className="flex items-center gap-3">
               <Skeleton className="h-12 w-12 rounded-full" />
               <div className="space-y-1.5">
@@ -49,7 +49,7 @@ export function DetailSkeleton({ title = 'Record Detail' }: DetailSkeletonProps)
                 <Skeleton className="h-3.5 w-24" />
               </div>
             </div>
-            <div className="divide-y divide-border/60 pt-2 space-y-3">
+            <div className="divide-y divide-border pt-2 space-y-3">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="pt-3 flex justify-between items-center">
                   <Skeleton className="h-3.5 w-24" />
@@ -62,7 +62,7 @@ export function DetailSkeleton({ title = 'Record Detail' }: DetailSkeletonProps)
 
         {/* Right Column: Order Items / History */}
         <div className="lg:col-span-8 space-y-4">
-          <div className="rounded-2xl border border-border bg-card-bg p-5 space-y-4 shadow-xs">
+          <div className="rounded-xl border border-border bg-white p-5 space-y-4 shadow-card">
             <div className="flex items-center justify-between">
               <Skeleton className="h-5 w-36" />
               <Skeleton className="h-5 w-20 rounded-full" />
@@ -73,7 +73,7 @@ export function DetailSkeleton({ title = 'Record Detail' }: DetailSkeletonProps)
                 <Skeleton className="h-3.5 w-28" />
                 <Skeleton className="h-3.5 w-16" />
               </div>
-              <div className="divide-y divide-border/60">
+              <div className="divide-y divide-border">
                 {[1, 2, 3].map((i) => (
                   <div key={i} className="p-4 flex justify-between items-center">
                     <div className="space-y-1.5">

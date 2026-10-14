@@ -64,8 +64,8 @@ export function SupplierDetailCard({ supplier, orders }: SupplierDetailCardProps
   return (
     <div className="space-y-6">
       {/* Overview Card */}
-      <Card className="border border-border/80 shadow-xs">
-        <CardHeader className="py-4 px-6 border-b border-border/60 bg-surface-muted/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <Card className="border border-border shadow-card">
+        <CardHeader className="py-4 px-6 border-b border-border bg-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-3">
               <h1 className="text-xl font-bold text-text-primary tracking-tight">
@@ -120,7 +120,7 @@ export function SupplierDetailCard({ supplier, orders }: SupplierDetailCardProps
         <CardContent className="p-6">
           {/* 4 Financial & Operational KPIs */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="p-4 rounded-xl border border-border bg-surface-muted/20">
+            <div className="p-4 rounded-xl border border-border bg-slate-50 hover:border-slate-300 transition-colors duration-150">
               <span className="text-xs text-text-muted font-medium block mb-1">
                 Total Orders Placed
               </span>
@@ -128,7 +128,7 @@ export function SupplierDetailCard({ supplier, orders }: SupplierDetailCardProps
                 {supplier.total_orders_count}
               </span>
             </div>
-            <div className="p-4 rounded-xl border border-border bg-surface-muted/20">
+            <div className="p-4 rounded-xl border border-border bg-slate-50 hover:border-slate-300 transition-colors duration-150">
               <span className="text-xs text-text-muted font-medium block mb-1">
                 Total Invoiced Value
               </span>
@@ -136,7 +136,7 @@ export function SupplierDetailCard({ supplier, orders }: SupplierDetailCardProps
                 {formatPKR(supplier.total_invoiced_pkr)}
               </span>
             </div>
-            <div className="p-4 rounded-xl border border-border bg-surface-muted/20">
+            <div className="p-4 rounded-xl border border-border bg-slate-50 hover:border-slate-300 transition-colors duration-150">
               <span className="text-xs text-text-muted font-medium block mb-1">
                 Total Payments Settled
               </span>
@@ -144,7 +144,7 @@ export function SupplierDetailCard({ supplier, orders }: SupplierDetailCardProps
                 {formatPKR(supplier.total_paid_pkr)}
               </span>
             </div>
-            <div className="p-4 rounded-xl border border-border bg-surface-muted/20">
+            <div className="p-4 rounded-xl border border-border bg-slate-50 hover:border-slate-300 transition-colors duration-150">
               <span className="text-xs text-text-muted font-medium block mb-1">
                 Outstanding Balance
               </span>
@@ -159,7 +159,7 @@ export function SupplierDetailCard({ supplier, orders }: SupplierDetailCardProps
           </div>
 
           {/* Contact Details Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-border/60">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-border">
             <div className="space-y-3">
               <h3 className="text-xs font-semibold uppercase tracking-wider text-text-muted">
                 Contact & Communication
@@ -214,8 +214,8 @@ export function SupplierDetailCard({ supplier, orders }: SupplierDetailCardProps
       </Card>
 
       {/* Purchase Orders Table */}
-      <Card className="border border-border/80 shadow-xs overflow-hidden">
-        <CardHeader className="py-3 px-4 border-b border-border/60 bg-surface-muted/30 flex flex-row items-center justify-between">
+      <Card className="border border-border shadow-card overflow-hidden">
+        <CardHeader className="py-3 px-4 border-b border-border bg-slate-50 flex flex-row items-center justify-between">
           <div className="flex items-center gap-2">
             <FileText className="w-4 h-4 text-primary" />
             <CardTitle className="text-sm font-semibold text-text-primary">
@@ -231,7 +231,7 @@ export function SupplierDetailCard({ supplier, orders }: SupplierDetailCardProps
           ) : (
             <Table>
               <TableHeader>
-                <TableRow className="bg-surface-muted/20">
+                <TableRow className="bg-slate-50">
                   <TableHead>PO Number</TableHead>
                   <TableHead>Order Date</TableHead>
                   <TableHead>Items Count</TableHead>
@@ -242,7 +242,10 @@ export function SupplierDetailCard({ supplier, orders }: SupplierDetailCardProps
               </TableHeader>
               <TableBody>
                 {orders.map((po) => (
-                  <TableRow key={po.id}>
+                  <TableRow
+                    key={po.id}
+                    className="hover:bg-slate-50 transition-colors duration-150"
+                  >
                     <TableCell className="font-mono font-semibold text-primary">
                       <Link href={`/purchases/${po.id}`} className="hover:underline">
                         {po.po_number}

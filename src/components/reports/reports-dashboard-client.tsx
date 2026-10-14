@@ -117,7 +117,7 @@ export function ReportsDashboardClient({
 
       {activeTab === 'cashflow' && (
         <section aria-label="Cash Flow Transactions" className="space-y-4">
-          <Card className="border border-border/70 shadow-xs">
+          <Card className="border border-border shadow-card">
             <CardHeader className="pb-3 pt-4 px-4">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                 <div>
@@ -140,7 +140,7 @@ export function ReportsDashboardClient({
               <div className="border border-border rounded-md overflow-hidden">
                 <Table>
                   <TableHeader>
-                    <TableRow className="bg-surface-secondary">
+                    <TableRow className="bg-slate-50">
                       <TableHead className="text-xs font-semibold py-2.5">Voucher / Ref</TableHead>
                       <TableHead className="text-xs font-semibold py-2.5">Flow Type</TableHead>
                       <TableHead className="text-xs font-semibold py-2.5">Counterparty</TableHead>
@@ -162,7 +162,10 @@ export function ReportsDashboardClient({
                       </TableRow>
                     ) : (
                       transactions.map((tx) => (
-                        <TableRow key={tx.id} className="hover:bg-hover-bg/40 text-xs">
+                        <TableRow
+                          key={tx.id}
+                          className="hover:bg-slate-50 transition-colors duration-150 text-xs"
+                        >
                           <TableCell className="font-mono font-medium text-text-primary">
                             {tx.voucher_or_ref}
                           </TableCell>

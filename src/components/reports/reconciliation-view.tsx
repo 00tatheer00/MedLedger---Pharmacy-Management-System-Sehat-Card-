@@ -188,7 +188,7 @@ export function ReconciliationView({ initialAudit }: ReconciliationViewProps) {
 
       {/* 2. Audit Statistics Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-        <Card className="border border-border/70 p-3 shadow-xs">
+        <Card className="border border-border p-3 shadow-card bg-white hover-lift transition-all duration-150 hover:border-slate-300">
           <p className="text-xs text-text-muted font-medium">Analyzed</p>
           <p className="text-xl font-bold font-mono text-text-primary mt-1">
             {auditReport.total_transactions_analyzed}
@@ -196,23 +196,23 @@ export function ReconciliationView({ initialAudit }: ReconciliationViewProps) {
           <span className="text-[11px] text-text-secondary">Total transactions</span>
         </Card>
 
-        <Card className="border border-border/70 p-3 shadow-xs bg-emerald-50/20">
-          <p className="text-xs text-emerald-700 font-medium">Fully Allocated</p>
+        <Card className="border border-emerald-200 p-3 shadow-card bg-emerald-50 hover-lift transition-all duration-150 hover:border-emerald-300">
+          <p className="text-xs text-emerald-800 font-semibold">Fully Allocated</p>
           <p className="text-xl font-bold font-mono text-emerald-700 mt-1">
             {auditReport.fully_allocated_count}
           </p>
-          <span className="text-[11px] text-emerald-600">100% matched</span>
+          <span className="text-[11px] text-emerald-700 font-medium">100% matched</span>
         </Card>
 
-        <Card className="border border-border/70 p-3 shadow-xs bg-amber-50/20">
-          <p className="text-xs text-amber-700 font-medium">Partially Allocated</p>
+        <Card className="border border-amber-200 p-3 shadow-card bg-amber-50 hover-lift transition-all duration-150 hover:border-amber-300">
+          <p className="text-xs text-amber-800 font-semibold">Partially Allocated</p>
           <p className="text-xl font-bold font-mono text-amber-700 mt-1">
             {auditReport.partially_allocated_count}
           </p>
-          <span className="text-[11px] text-amber-600">Pending balance</span>
+          <span className="text-[11px] text-amber-700 font-medium">Pending balance</span>
         </Card>
 
-        <Card className="border border-border/70 p-3 shadow-xs">
+        <Card className="border border-border p-3 shadow-card bg-white hover-lift transition-all duration-150 hover:border-slate-300">
           <p className="text-xs text-text-muted font-medium">Unallocated</p>
           <p className="text-xl font-bold font-mono text-text-secondary mt-1">
             {auditReport.unallocated_count}
@@ -221,22 +221,22 @@ export function ReconciliationView({ initialAudit }: ReconciliationViewProps) {
         </Card>
 
         <Card
-          className={`border p-3 shadow-xs ${
+          className={`border p-3 shadow-card hover-lift transition-all duration-150 ${
             auditReport.discrepancy_count > 0
-              ? 'border-red-300 bg-red-50/50 text-red-700'
-              : 'border-border/70'
+              ? 'border-rose-300 bg-rose-50 text-rose-800'
+              : 'border-border bg-white hover:border-slate-300'
           }`}
         >
           <p
-            className={`text-xs font-medium ${
-              auditReport.discrepancy_count > 0 ? 'text-red-700' : 'text-text-muted'
+            className={`text-xs font-semibold ${
+              auditReport.discrepancy_count > 0 ? 'text-rose-800' : 'text-text-muted'
             }`}
           >
             Discrepancies
           </p>
           <p
             className={`text-xl font-bold font-mono mt-1 ${
-              auditReport.discrepancy_count > 0 ? 'text-red-700' : 'text-text-primary'
+              auditReport.discrepancy_count > 0 ? 'text-rose-700' : 'text-text-primary'
             }`}
           >
             {auditReport.discrepancy_count}
@@ -244,7 +244,7 @@ export function ReconciliationView({ initialAudit }: ReconciliationViewProps) {
           <span className="text-[11px] text-text-secondary">Integrity violations</span>
         </Card>
 
-        <Card className="border border-border/70 p-3 shadow-xs">
+        <Card className="border border-border p-3 shadow-card bg-white hover-lift transition-all duration-150 hover:border-slate-300">
           <p className="text-xs text-text-muted font-medium">Unallocated Cash</p>
           <p className="text-lg font-bold font-mono text-text-primary mt-1">
             Rs. {auditReport.total_unallocated_amount.toLocaleString('en-PK')}
@@ -254,7 +254,7 @@ export function ReconciliationView({ initialAudit }: ReconciliationViewProps) {
       </div>
 
       {/* 3. Filter and Search Controls */}
-      <Card className="border border-border/70 shadow-xs">
+      <Card className="border border-border shadow-card">
         <CardHeader className="pb-3 pt-4 px-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
@@ -333,7 +333,7 @@ export function ReconciliationView({ initialAudit }: ReconciliationViewProps) {
           <div className="border border-border rounded-md overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow className="bg-surface-secondary">
+                <TableRow className="bg-slate-50">
                   <TableHead className="text-xs font-semibold py-2.5">
                     Reference / Voucher
                   </TableHead>
@@ -362,7 +362,10 @@ export function ReconciliationView({ initialAudit }: ReconciliationViewProps) {
                   </TableRow>
                 ) : (
                   filteredItems.map((item) => (
-                    <TableRow key={item.id} className="hover:bg-hover-bg/40 text-xs">
+                    <TableRow
+                      key={item.id}
+                      className="hover:bg-slate-50 transition-colors duration-150 text-xs"
+                    >
                       <TableCell className="font-mono font-medium text-text-primary">
                         {item.reference}
                       </TableCell>

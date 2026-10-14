@@ -124,10 +124,10 @@ export function PatientDetailCard({ patient }: PatientDetailCardProps) {
 
           {/* Demographic Detail Badges Grid */}
           <div className="mt-5 pt-4 border-t border-border grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-            <div className="flex items-center gap-2 p-2 rounded-lg bg-page-bg/80 border border-border/60">
+            <div className="flex items-center gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors duration-150">
               <CreditCard className="h-4 w-4 text-primary shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[10px] text-text-muted uppercase font-medium">
+                <span className="text-[10px] text-text-muted uppercase font-semibold">
                   CNIC Number
                 </span>
                 <span className="font-mono font-medium text-text-primary">
@@ -136,10 +136,10 @@ export function PatientDetailCard({ patient }: PatientDetailCardProps) {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 p-2 rounded-lg bg-page-bg/80 border border-border/60">
+            <div className="flex items-center gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors duration-150">
               <Phone className="h-4 w-4 text-primary shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[10px] text-text-muted uppercase font-medium">
+                <span className="text-[10px] text-text-muted uppercase font-semibold">
                   Contact Phone
                 </span>
                 <span className="font-medium text-text-primary">
@@ -148,10 +148,10 @@ export function PatientDetailCard({ patient }: PatientDetailCardProps) {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 p-2 rounded-lg bg-page-bg/80 border border-border/60">
+            <div className="flex items-center gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors duration-150">
               <MapPin className="h-4 w-4 text-primary shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[10px] text-text-muted uppercase font-medium">
+                <span className="text-[10px] text-text-muted uppercase font-semibold">
                   Residential Area
                 </span>
                 <span
@@ -163,10 +163,10 @@ export function PatientDetailCard({ patient }: PatientDetailCardProps) {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 p-2 rounded-lg bg-page-bg/80 border border-border/60">
+            <div className="flex items-center gap-2.5 p-2.5 rounded-lg bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors duration-150">
               <Clock className="h-4 w-4 text-primary shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[10px] text-text-muted uppercase font-medium">
+                <span className="text-[10px] text-text-muted uppercase font-semibold">
                   Registered Since
                 </span>
                 <span className="font-medium text-text-primary">

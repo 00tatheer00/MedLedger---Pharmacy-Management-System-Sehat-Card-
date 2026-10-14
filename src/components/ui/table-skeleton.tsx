@@ -113,7 +113,7 @@ export function TableSkeleton({ title, subtitle, actionText, rowCount = 6 }: Tab
         </div>
 
         {/* Table Footer / Pagination Skeleton */}
-        <div className="px-5 py-3.5 bg-slate-50/70 border-t border-border flex items-center justify-between">
+        <div className="px-5 py-3.5 bg-slate-50 border-t border-border flex items-center justify-between">
           <Skeleton className="h-3.5 w-44" />
           <div className="flex items-center gap-1.5">
             <Skeleton className="h-8 w-16 rounded-lg" />

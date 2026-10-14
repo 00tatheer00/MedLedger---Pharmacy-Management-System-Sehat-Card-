@@ -26,59 +26,54 @@ export function WelcomeBanner({ isLiveDatabase = true }: WelcomeBannerProps) {
   const formattedDate = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   return (
-    <div className="relative overflow-hidden rounded-[28px] border border-white/20 border-t-white/40 bg-gradient-to-br from-teal-500/20 via-emerald-600/15 to-slate-950/45 px-5 py-5 sm:px-6 sm:py-6 shadow-[0_30px_60px_rgba(0,0,0,0.45),inset_0_1px_1px_rgba(255,255,255,0.25)] text-white backdrop-blur-3xl">
-      {/* Decorative radiant ambient lights */}
-      <div className="absolute top-0 right-0 w-72 h-72 bg-cyan-400/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-      <div className="absolute bottom-0 left-1/3 w-56 h-56 bg-emerald-400/20 rounded-full blur-2xl translate-y-1/3 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-white/10 pointer-events-none" />
-
-      <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div className="space-y-2.5">
+    <div className="rounded-xl border border-teal-200 bg-teal-700 px-5 py-5 sm:px-6 sm:py-5 text-white">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="space-y-2">
           {/* Hospital & Status badges */}
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-white/20 border border-white/30 px-3.5 py-1 rounded-full text-white backdrop-blur-xl shadow-xs">
-              <Building2 className="h-3.5 w-3.5 text-emerald-200" />
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-medium bg-teal-800 px-2.5 py-0.5 rounded-md text-teal-100 border border-teal-600">
+              <Building2 className="h-3 w-3 text-teal-300" />
               DHQ Hospital Kohat • مرکزی فارمیسی
             </span>
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-emerald-400/25 border border-emerald-300/40 px-3.5 py-1 rounded-full text-emerald-100 backdrop-blur-xl shadow-xs">
-              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-300" />
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-medium bg-emerald-800 px-2.5 py-0.5 rounded-md text-emerald-100 border border-emerald-600">
+              <CheckCircle2 className="h-3 w-3 text-emerald-300" />
               {isLiveDatabase ? 'Live Supabase Connected' : 'Live Counter Active'}
             </span>
           </div>
 
           {/* Heading */}
           <div>
-            <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white flex items-center gap-2.5">
-              Welcome back, Dr. Ayesha Khan 👋
+            <h2 className="text-lg sm:text-xl font-semibold tracking-tight text-white">
+              Welcome back, Dr. Ayesha Khan
             </h2>
-            <p className="text-xs sm:text-sm text-emerald-50/90 font-medium mt-0.5 max-w-xl">
-              Central Hospital Dispensary & Inventory Control — Managing OPD/IPD stock, Sehat Card,
-              and claims.
+            <p className="text-xs text-teal-200 font-normal mt-0.5 max-w-xl">
+              Central Hospital Dispensary &amp; Inventory Control — Managing OPD/IPD stock, Sehat
+              Card, and claims.
             </p>
           </div>
 
           {/* Quick Info Tags */}
-          <div className="flex items-center gap-2.5 pt-0.5 flex-wrap text-xs">
-            <span className="inline-flex items-center gap-1.5 font-semibold bg-white/15 px-3 py-1 rounded-full border border-white/25 backdrop-blur-md">
-              <HeartPulse className="h-3.5 w-3.5 text-emerald-300" />
-              OPD & Emergency Ready
+          <div className="flex items-center gap-2 pt-0.5 flex-wrap text-[11px]">
+            <span className="inline-flex items-center gap-1 font-medium bg-teal-800 px-2.5 py-0.5 rounded-md text-teal-200 border border-teal-600">
+              <HeartPulse className="h-3 w-3 text-teal-300" />
+              OPD &amp; Emergency Ready
             </span>
-            <span className="inline-flex items-center gap-1.5 font-semibold bg-white/15 px-3 py-1 rounded-full border border-white/25 backdrop-blur-md">
-              <ShieldCheck className="h-3.5 w-3.5 text-teal-200" />
+            <span className="inline-flex items-center gap-1 font-medium bg-teal-800 px-2.5 py-0.5 rounded-md text-teal-200 border border-teal-600">
+              <ShieldCheck className="h-3 w-3 text-teal-300" />
               KP Sehat Sahulat Program
             </span>
           </div>
         </div>
 
         {/* Date / Calendar Widget */}
-        <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-1 shrink-0 rounded-[22px] bg-white/15 backdrop-blur-2xl px-4.5 py-3.5 border border-white/25 shadow-inner">
-          <div className="flex items-center gap-1.5 text-emerald-200">
-            <Calendar className="h-4 w-4" />
-            <span className="text-[11px] uppercase font-bold tracking-wider">
+        <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-1 shrink-0 rounded-lg bg-teal-800 px-4 py-3 border border-teal-600">
+          <div className="flex items-center gap-1.5 text-teal-300">
+            <Calendar className="h-3.5 w-3.5" />
+            <span className="text-[10px] uppercase font-medium tracking-wider">
               Today&apos;s Shift
             </span>
           </div>
-          <div className="text-sm sm:text-base font-bold text-white text-right">
+          <div className="text-sm font-medium text-white text-right">
             {formattedDate || 'DHQ Kohat Central Pharmacy'}
           </div>
         </div>

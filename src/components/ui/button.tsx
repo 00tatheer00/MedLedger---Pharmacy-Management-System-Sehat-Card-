@@ -6,22 +6,21 @@ export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-primary text-white hover:bg-primary-hover active:bg-primary-dark shadow-[0_4px_16px_rgba(13,148,136,0.3)] hover:shadow-[0_6px_24px_rgba(13,148,136,0.45)] font-bold border border-white/20 backdrop-blur-md ios-press',
+    'bg-primary text-white font-semibold shadow-sm hover:bg-primary-hover hover:shadow-md active:bg-primary-dark active:shadow-sm',
   secondary:
-    'bg-navy text-white hover:bg-navy-light active:bg-navy-dark shadow-[0_4px_16px_rgba(15,23,42,0.25)] hover:shadow-lg font-bold border border-white/10 ios-press',
+    'bg-navy text-white font-semibold shadow-sm hover:bg-navy-light hover:shadow-md active:bg-navy-dark active:shadow-sm',
   outline:
-    'border border-white/80 bg-white/70 backdrop-blur-xl text-text-primary hover:bg-white hover:border-teal-500/40 active:bg-white/90 shadow-2xs font-semibold ios-press',
-  ghost:
-    'text-text-secondary hover:bg-white/60 hover:text-text-primary active:bg-white/80 backdrop-blur-sm ios-press',
+    'border border-border bg-white text-text-primary font-medium hover:bg-slate-50 hover:border-slate-400 hover:text-text-primary active:bg-slate-100',
+  ghost: 'text-text-secondary hover:bg-slate-100 hover:text-text-primary active:bg-slate-200',
   destructive:
-    'bg-danger text-white hover:bg-red-600 active:bg-red-700 shadow-[0_4px_16px_rgba(239,68,68,0.3)] font-bold border border-white/20 ios-press',
+    'bg-danger text-white font-semibold shadow-sm hover:bg-red-600 hover:shadow-md active:bg-red-700 active:shadow-sm',
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'h-9 px-4 text-sm gap-2 rounded-full',
-  md: 'h-11 px-5 text-base gap-2.5 rounded-full',
-  lg: 'h-12 px-6 text-lg gap-3 rounded-full',
-  xl: 'h-14 px-8 text-xl gap-3 rounded-2xl',
+  sm: 'h-8 px-3 text-xs gap-1.5 rounded-md',
+  md: 'h-9 px-4 text-sm gap-2 rounded-lg',
+  lg: 'h-10 px-5 text-sm gap-2 rounded-lg',
+  xl: 'h-11 px-6 text-base gap-2.5 rounded-lg',
 };
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -35,10 +34,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(
-          'inline-flex items-center justify-center font-medium transition-all duration-200 ease-out',
-          'focus-ring',
+          'inline-flex items-center justify-center font-medium',
+          'transition-all duration-150 ease-out',
+          'focus-ring cursor-pointer',
           'disabled:pointer-events-none disabled:opacity-50',
-          'active:scale-[0.97]',
+          'active:scale-[0.98]',
           variantStyles[variant],
           sizeStyles[size],
           className,
@@ -63,7 +63,7 @@ export function buttonVariants({
   className?: string;
 } = {}): string {
   return cn(
-    'inline-flex items-center justify-center font-medium transition-all duration-200 ease-out focus-ring disabled:pointer-events-none disabled:opacity-50 active:scale-[0.97]',
+    'inline-flex items-center justify-center font-medium transition-all duration-150 ease-out focus-ring disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]',
     variantStyles[variant],
     sizeStyles[size],
     className,

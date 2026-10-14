@@ -158,13 +158,17 @@ export function PrescriptionDetailCard({ prescription }: PrescriptionDetailCardP
           <div className="mt-5 pt-4 border-t border-border grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
             <Link
               href={`/patients/${prescription.patient_id}`}
-              className="p-3 rounded-lg bg-page-bg/80 border border-border/60 hover:border-primary transition-colors focus-ring"
+              className="p-3 rounded-lg bg-slate-50 border border-slate-200 hover:border-teal-400 hover:bg-teal-50/50 transition-all duration-150 focus-ring group"
             >
-              <div className="flex items-center gap-2">
-                <User className="h-4 w-4 text-primary shrink-0" />
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-md bg-white border border-slate-200 text-primary shrink-0 group-hover:border-teal-200 transition-colors">
+                  <User className="h-4 w-4" />
+                </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] text-text-muted uppercase font-medium">Patient</span>
-                  <span className="font-semibold text-text-primary">
+                  <span className="text-[10px] text-text-muted uppercase font-semibold">
+                    Patient
+                  </span>
+                  <span className="font-semibold text-text-primary group-hover:text-teal-700 transition-colors">
                     {prescription.patient.full_name}
                   </span>
                   <span className="font-mono text-[11px] text-primary">
@@ -174,11 +178,13 @@ export function PrescriptionDetailCard({ prescription }: PrescriptionDetailCardP
               </div>
             </Link>
 
-            <div className="p-3 rounded-lg bg-page-bg/80 border border-border/60">
-              <div className="flex items-center gap-2">
-                <BedDouble className="h-4 w-4 text-primary shrink-0" />
+            <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-md bg-white border border-slate-200 text-primary shrink-0">
+                  <BedDouble className="h-4 w-4" />
+                </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] text-text-muted uppercase font-medium">
+                  <span className="text-[10px] text-text-muted uppercase font-semibold">
                     Hospital Care Setting
                   </span>
                   {prescription.admission ? (
@@ -205,11 +211,13 @@ export function PrescriptionDetailCard({ prescription }: PrescriptionDetailCardP
               </div>
             </div>
 
-            <div className="p-3 rounded-lg bg-page-bg/80 border border-border/60">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-primary shrink-0" />
+            <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-md bg-white border border-slate-200 text-primary shrink-0">
+                  <Clock className="h-4 w-4" />
+                </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] text-text-muted uppercase font-medium">
+                  <span className="text-[10px] text-text-muted uppercase font-semibold">
                     Order Log
                   </span>
                   <span className="font-semibold text-text-primary">

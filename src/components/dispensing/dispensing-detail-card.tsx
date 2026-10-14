@@ -86,7 +86,7 @@ export function DispensingDetailCard({ initialRecord }: DispensingDetailCardProp
               dispensed quantities were returned to on-hand inventory.
             </p>
             {record.notes && (
-              <p className="font-mono text-slate-600 mt-1 bg-white/60 p-1.5 rounded">
+              <p className="font-mono text-slate-600 mt-1 bg-slate-50 p-1.5 rounded border border-slate-200">
                 Audit Log: {record.notes}
               </p>
             )}

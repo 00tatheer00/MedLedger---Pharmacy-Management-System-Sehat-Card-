@@ -25,7 +25,7 @@ export const TableHeader = forwardRef<
 >(({ className, ...props }, ref) => (
   <thead
     ref={ref}
-    className={cn('[&_tr]:border-b border-border/50 bg-white/40 backdrop-blur-md', className)}
+    className={cn('[&_tr]:border-b border-border bg-slate-50', className)}
     {...props}
   />
 ));
@@ -46,7 +46,7 @@ export const TableFooter = forwardRef<
   <tfoot
     ref={ref}
     className={cn(
-      'border-t border-border/50 bg-white/40 backdrop-blur-md font-medium [&>tr]:last:border-b-0',
+      'border-t border-border bg-slate-50 font-medium [&>tr]:last:border-b-0',
       className,
     )}
     {...props}
@@ -59,7 +59,7 @@ export const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTable
     <tr
       ref={ref}
       className={cn(
-        'border-b border-border/40 transition-colors duration-150 hover:bg-white/60 data-[state=selected]:bg-white/80',
+        'border-b border-border transition-colors duration-100 hover:bg-slate-50 data-[state=selected]:bg-slate-100',
         className,
       )}
       {...props}
@@ -73,7 +73,7 @@ export const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLT
     <th
       ref={ref}
       className={cn(
-        'h-12 px-5 text-left align-middle text-sm font-bold uppercase tracking-wider text-text-secondary [&:has([role=checkbox])]:pr-0',
+        'h-10 px-4 text-left align-middle text-xs font-semibold uppercase tracking-wider text-text-muted [&:has([role=checkbox])]:pr-0',
         className,
       )}
       {...props}
@@ -87,7 +87,7 @@ export const TableCell = forwardRef<HTMLTableCellElement, TdHTMLAttributes<HTMLT
     <td
       ref={ref}
       className={cn(
-        'p-5 align-middle text-sm text-text-primary [&:has([role=checkbox])]:pr-0',
+        'px-4 py-3 align-middle text-sm text-text-primary [&:has([role=checkbox])]:pr-0',
         className,
       )}
       {...props}

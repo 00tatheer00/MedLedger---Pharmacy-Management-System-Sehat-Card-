@@ -30,29 +30,29 @@ export function RecentActivityTable() {
     switch (type) {
       case 'receipt':
         return (
-          <Badge variant="info" size="sm" className="gap-1.5 font-bold">
-            <ArrowDownLeft className="h-3.5 w-3.5" />
+          <Badge variant="info" size="sm" className="gap-1">
+            <ArrowDownLeft className="h-3 w-3" />
             Receipt
           </Badge>
         );
       case 'dispensing':
         return (
-          <Badge variant="success" size="sm" className="gap-1.5 font-bold">
-            <ArrowUpRight className="h-3.5 w-3.5" />
+          <Badge variant="success" size="sm" className="gap-1">
+            <ArrowUpRight className="h-3 w-3" />
             Dispensed
           </Badge>
         );
       case 'adjustment':
         return (
-          <Badge variant="warning" size="sm" className="gap-1.5 font-bold">
-            <RefreshCw className="h-3.5 w-3.5" />
+          <Badge variant="warning" size="sm" className="gap-1">
+            <RefreshCw className="h-3 w-3" />
             Adjustment
           </Badge>
         );
       case 'return':
         return (
-          <Badge variant="default" size="sm" className="gap-1.5 font-bold">
-            <FileText className="h-3.5 w-3.5" />
+          <Badge variant="default" size="sm" className="gap-1">
+            <FileText className="h-3 w-3" />
             Return
           </Badge>
         );
@@ -63,19 +63,19 @@ export function RecentActivityTable() {
     switch (status) {
       case 'completed':
         return (
-          <Badge variant="success" size="sm" className="font-bold">
+          <Badge variant="success" size="sm">
             ✓ Done
           </Badge>
         );
       case 'pending':
         return (
-          <Badge variant="warning" size="sm" className="font-bold">
+          <Badge variant="warning" size="sm">
             ⏳ Pending
           </Badge>
         );
       case 'cancelled':
         return (
-          <Badge variant="danger" size="sm" className="font-bold">
+          <Badge variant="danger" size="sm">
             ✕ Cancelled
           </Badge>
         );
@@ -84,27 +84,29 @@ export function RecentActivityTable() {
 
   return (
     <Card>
-      <CardHeader className="px-5 sm:px-6 py-4 sm:py-5 border-b border-border/80 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-light">
-            <Activity className="h-5 w-5 text-primary" />
+      <CardHeader className="px-5 py-4 border-b border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-light">
+            <Activity className="h-4 w-4 text-primary" />
           </div>
-          <CardTitle className="text-lg font-bold text-text-primary">Recent Activity</CardTitle>
+          <CardTitle className="text-base font-semibold text-text-primary">
+            Recent Activity
+          </CardTitle>
         </div>
 
         {/* Filter tabs */}
         <Tabs defaultValue="all" value={filter} onValueChange={setFilter}>
-          <TabsList className="h-10">
-            <TabsTrigger value="all" className="text-sm px-4 py-1.5 font-semibold">
+          <TabsList className="h-8">
+            <TabsTrigger value="all" className="text-xs px-3 py-1">
               All ({recentActivity.length})
             </TabsTrigger>
-            <TabsTrigger value="dispensing" className="text-sm px-4 py-1.5 font-semibold">
+            <TabsTrigger value="dispensing" className="text-xs px-3 py-1">
               Dispensing
             </TabsTrigger>
-            <TabsTrigger value="receipt" className="text-sm px-4 py-1.5 font-semibold">
+            <TabsTrigger value="receipt" className="text-xs px-3 py-1">
               Receipts
             </TabsTrigger>
-            <TabsTrigger value="adjustment" className="text-sm px-4 py-1.5 font-semibold">
+            <TabsTrigger value="adjustment" className="text-xs px-3 py-1">
               Adjustments
             </TabsTrigger>
           </TabsList>
@@ -115,44 +117,38 @@ export function RecentActivityTable() {
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="border-b border-white/40 bg-white/30 backdrop-blur-md">
-                <TableHead className="w-[140px] py-3.5 px-5 text-sm font-bold">
-                  Reference #
-                </TableHead>
-                <TableHead className="w-[150px] py-3.5 px-5 text-sm font-bold">
-                  Activity Type
-                </TableHead>
-                <TableHead className="py-3.5 px-5 text-sm font-bold">Summary</TableHead>
-                <TableHead className="w-[120px] py-3.5 px-5 text-sm font-bold">Date</TableHead>
-                <TableHead className="w-[110px] py-3.5 px-5 text-right text-sm font-bold">
-                  Status
-                </TableHead>
+              <TableRow className="border-b border-border bg-slate-50 hover:bg-slate-50">
+                <TableHead className="w-[130px] py-2.5 px-4 text-xs">Reference #</TableHead>
+                <TableHead className="w-[130px] py-2.5 px-4 text-xs">Activity Type</TableHead>
+                <TableHead className="py-2.5 px-4 text-xs">Summary</TableHead>
+                <TableHead className="w-[100px] py-2.5 px-4 text-xs">Date</TableHead>
+                <TableHead className="w-[100px] py-2.5 px-4 text-right text-xs">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredItems.map((item) => (
                 <TableRow
                   key={item.id}
-                  className="hover:bg-hover-bg transition-colors duration-150 cursor-default"
+                  className="transition-colors duration-100 hover:bg-slate-50 cursor-default"
                 >
-                  <TableCell className="font-mono text-sm font-bold text-text-primary py-4 px-5">
+                  <TableCell className="font-mono text-xs font-medium text-text-primary py-3 px-4">
                     {item.refNumber}
                   </TableCell>
-                  <TableCell className="py-4 px-5">{getTypeBadge(item.type)}</TableCell>
-                  <TableCell className="text-sm text-text-secondary max-w-md truncate py-4 px-5">
+                  <TableCell className="py-3 px-4">{getTypeBadge(item.type)}</TableCell>
+                  <TableCell className="text-sm text-text-secondary max-w-md truncate py-3 px-4">
                     {item.summary}
                   </TableCell>
-                  <TableCell className="text-sm text-text-secondary whitespace-nowrap py-4 px-5">
+                  <TableCell className="text-xs text-text-muted whitespace-nowrap py-3 px-4">
                     {item.date}
                   </TableCell>
-                  <TableCell className="text-right py-4 px-5">
+                  <TableCell className="text-right py-3 px-4">
                     {getStatusBadge(item.status)}
                   </TableCell>
                 </TableRow>
               ))}
               {filteredItems.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center py-10 text-sm text-text-muted">
+                  <TableCell colSpan={5} className="text-center py-8 text-sm text-text-muted">
                     No transactions match the selected filter.
                   </TableCell>
                 </TableRow>
@@ -162,14 +158,12 @@ export function RecentActivityTable() {
         </div>
 
         {/* Pagination Footer */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-t border-border bg-page-bg/40 text-sm text-text-secondary">
-          <span>
+        <div className="flex items-center justify-between px-4 py-3 border-t border-border bg-slate-50 text-sm text-text-secondary">
+          <span className="text-xs">
             Showing <strong className="text-text-primary">{filteredItems.length}</strong> of{' '}
             <strong className="text-text-primary">{recentActivity.length}</strong> activities
           </span>
-          <span className="text-xs text-text-muted font-mono font-bold">
-            Page 1 of 1 • Journal View
-          </span>
+          <span className="text-[11px] text-text-muted font-mono">Page 1 of 1 • Journal View</span>
         </div>
       </CardContent>
     </Card>

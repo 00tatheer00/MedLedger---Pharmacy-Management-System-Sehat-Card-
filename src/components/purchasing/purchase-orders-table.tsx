@@ -113,7 +113,7 @@ export function PurchaseOrdersTable({
   return (
     <div className="space-y-4">
       {/* Controls */}
-      <Card className="border border-border/80 shadow-xs">
+      <Card className="border border-border shadow-card">
         <CardContent className="p-4">
           <form
             onSubmit={handleSearchSubmit}
@@ -168,8 +168,8 @@ export function PurchaseOrdersTable({
       </Card>
 
       {/* PO Table */}
-      <Card className="border border-border/80 shadow-xs overflow-hidden">
-        <CardHeader className="py-3 px-4 border-b border-border/60 bg-surface-muted/30 flex flex-row items-center justify-between">
+      <Card className="border border-border shadow-card overflow-hidden">
+        <CardHeader className="py-3 px-4 border-b border-border bg-slate-50 flex flex-row items-center justify-between">
           <div className="flex items-center gap-2">
             <ShoppingCart className="w-4 h-4 text-primary" />
             <CardTitle className="text-sm font-semibold text-text-primary">
@@ -202,7 +202,7 @@ export function PurchaseOrdersTable({
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow className="bg-surface-muted/20">
+                  <TableRow className="bg-slate-50">
                     <TableHead className="w-[140px]">PO Number</TableHead>
                     <TableHead>Distributor / Supplier</TableHead>
                     <TableHead>Order Date</TableHead>
@@ -221,7 +221,10 @@ export function PurchaseOrdersTable({
                       totalOrdered > 0 ? Math.round((totalReceived / totalOrdered) * 100) : 0;
 
                     return (
-                      <TableRow key={po.id} className="hover:bg-surface-muted/30 transition-colors">
+                      <TableRow
+                        key={po.id}
+                        className="hover:bg-slate-50 transition-colors duration-150"
+                      >
                         <TableCell className="font-mono font-semibold text-primary">
                           <Link href={`/purchases/${po.id}`} className="hover:underline">
                             {po.po_number}
@@ -294,7 +297,7 @@ export function PurchaseOrdersTable({
 
           {/* Pagination */}
           {initialData.totalPages > 1 && (
-            <div className="py-3 px-4 border-t border-border/60 bg-surface-muted/10 flex items-center justify-between text-xs text-text-muted">
+            <div className="py-3 px-4 border-t border-border bg-slate-50 flex items-center justify-between text-xs text-text-muted">
               <span>
                 Showing {(initialData.currentPage - 1) * initialData.pageSize + 1}–
                 {Math.min(initialData.currentPage * initialData.pageSize, initialData.totalRecords)}{' '}

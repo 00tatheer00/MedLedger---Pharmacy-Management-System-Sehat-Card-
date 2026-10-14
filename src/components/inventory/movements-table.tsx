@@ -120,7 +120,7 @@ export function MovementsTable({
   return (
     <div className="space-y-4">
       {/* Search and Filters */}
-      <Card className="border border-border/80 shadow-xs">
+      <Card className="border border-border shadow-card">
         <CardContent className="p-4">
           <form
             onSubmit={handleSearchSubmit}
@@ -165,8 +165,8 @@ export function MovementsTable({
       </Card>
 
       {/* Movements Table Card */}
-      <Card className="border border-border/80 shadow-xs overflow-hidden">
-        <CardHeader className="py-3 px-4 border-b border-border/60 bg-surface-muted/30 flex flex-row items-center justify-between">
+      <Card className="border border-border shadow-card overflow-hidden">
+        <CardHeader className="py-3 px-4 border-b border-border bg-slate-50 flex flex-row items-center justify-between">
           <div className="flex items-center gap-2">
             <History className="w-4 h-4 text-primary" />
             <CardTitle className="text-sm font-semibold text-text-primary">
@@ -195,7 +195,7 @@ export function MovementsTable({
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow className="bg-surface-muted/20">
+                  <TableRow className="bg-slate-50">
                     <TableHead className="w-[140px] text-xs font-semibold uppercase tracking-wider">
                       Timestamp
                     </TableHead>
@@ -226,7 +226,7 @@ export function MovementsTable({
                   {initialData.movements.map((mov) => (
                     <TableRow
                       key={mov.id}
-                      className="hover:bg-surface-muted/40 transition-colors text-xs"
+                      className="hover:bg-slate-50 transition-colors duration-150 text-xs"
                     >
                       <TableCell className="font-mono text-text-muted whitespace-nowrap">
                         {new Date(mov.performed_at).toLocaleDateString()}{' '}
@@ -283,7 +283,7 @@ export function MovementsTable({
 
           {/* Pagination Controls */}
           {initialData.totalPages > 1 && (
-            <div className="py-3 px-4 border-t border-border/60 bg-surface-muted/10 flex items-center justify-between text-xs text-text-muted">
+            <div className="py-3 px-4 border-t border-border bg-slate-50 flex items-center justify-between text-xs text-text-muted">
               <span>
                 Showing {(initialData.currentPage - 1) * initialData.pageSize + 1}–
                 {Math.min(initialData.currentPage * initialData.pageSize, initialData.totalRecords)}{' '}

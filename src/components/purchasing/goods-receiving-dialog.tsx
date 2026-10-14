@@ -200,7 +200,7 @@ export function GoodsReceivingDialog({ order, open, onOpenChange }: GoodsReceivi
 
       <form onSubmit={handleSubmit} className="space-y-4 pt-2">
         {/* Top delivery details */}
-        <div className="p-4 rounded-xl border border-border bg-surface-muted/20 grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="p-4 rounded-xl border border-border bg-slate-50 grid grid-cols-1 md:grid-cols-3 gap-3">
           <div>
             <label className="block text-xs font-semibold text-text-primary mb-1">
               Receipt Date <span className="text-rose-600">*</span>
@@ -265,7 +265,7 @@ export function GoodsReceivingDialog({ order, open, onOpenChange }: GoodsReceivi
               key={item.purchase_order_item_id}
               className="p-3 rounded-lg border border-border bg-white shadow-2xs space-y-3"
             >
-              <div className="flex items-center justify-between border-b border-border/40 pb-2">
+              <div className="flex items-center justify-between border-b border-border pb-2">
                 <div>
                   <span className="font-semibold text-sm text-text-primary">
                     {item.medicine_name}

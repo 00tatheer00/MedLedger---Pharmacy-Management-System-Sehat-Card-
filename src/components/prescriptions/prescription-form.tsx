@@ -286,7 +286,7 @@ export function PrescriptionTranscriptionForm({
             </div>
 
             {/* Patient & Care Setting Row */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 p-3.5 rounded-xl bg-page-bg/80 border border-border">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
               {/* Patient Selector */}
               <div className="space-y-1">
                 <label

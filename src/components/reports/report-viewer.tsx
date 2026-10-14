@@ -153,7 +153,7 @@ export function ReportViewer({ initialReport }: ReportViewerProps) {
   return (
     <div className="space-y-6">
       {/* 1. Report Selector & Category Switcher */}
-      <Card className="border border-border/80 shadow-xs">
+      <Card className="border border-border shadow-card">
         <CardHeader className="pb-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
@@ -213,10 +213,10 @@ export function ReportViewer({ initialReport }: ReportViewerProps) {
                   key={meta.id}
                   type="button"
                   onClick={() => handleSelectReport(meta.id)}
-                  className={`text-left p-3 rounded-lg border transition-all ${
+                  className={`text-left p-3 rounded-lg border transition-all duration-150 ${
                     isSelected
-                      ? 'border-primary bg-primary/5 text-primary shadow-xs'
-                      : 'border-border/70 hover:border-border hover:bg-surface-muted/50 text-text-primary'
+                      ? 'border-teal-600 bg-teal-50 text-teal-800 shadow-xs font-semibold'
+                      : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-text-primary'
                   }`}
                 >
                   <div className="flex items-center justify-between text-xs font-medium">
@@ -236,8 +236,8 @@ export function ReportViewer({ initialReport }: ReportViewerProps) {
       </Card>
 
       {/* 2. Active Report Header & Controls Bar */}
-      <Card className="border border-border/80 shadow-xs">
-        <CardHeader className="pb-3 border-b border-border/50">
+      <Card className="border border-border shadow-card">
+        <CardHeader className="pb-3 border-b border-border">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
@@ -290,7 +290,7 @@ export function ReportViewer({ initialReport }: ReportViewerProps) {
         </CardHeader>
 
         {/* Filters Toolbar */}
-        <div className="p-4 bg-surface-muted/40 border-b border-border/60">
+        <div className="p-4 bg-slate-50 border-b border-border">
           <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
             <div className="flex flex-1 flex-col sm:flex-row gap-2">
               {/* Search */}
@@ -347,12 +347,12 @@ export function ReportViewer({ initialReport }: ReportViewerProps) {
 
         {/* 3. Summary Stats Pills */}
         {reportData.summary_stats.length > 0 && (
-          <div className="p-4 bg-card-bg border-b border-border/60">
+          <div className="p-4 bg-white border-b border-border">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {reportData.summary_stats.map((stat, idx) => (
                 <div
                   key={idx}
-                  className="bg-surface-muted/50 p-3 rounded-lg border border-border/60"
+                  className="bg-slate-50 p-3 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors duration-150"
                 >
                   <span className="text-[11px] font-medium text-text-muted block">
                     {stat.label}
@@ -382,7 +382,7 @@ export function ReportViewer({ initialReport }: ReportViewerProps) {
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow className="bg-surface-muted/60">
+                  <TableRow className="bg-slate-50">
                     {reportData.metadata.columns.map((col) => (
                       <TableHead
                         key={col.key}
@@ -401,7 +401,10 @@ export function ReportViewer({ initialReport }: ReportViewerProps) {
                 </TableHeader>
                 <TableBody>
                   {reportData.rows.map((row, rIdx) => (
-                    <TableRow key={rIdx} className="hover:bg-surface-muted/30">
+                    <TableRow
+                      key={rIdx}
+                      className="hover:bg-slate-50 transition-colors duration-150"
+                    >
                       {reportData.metadata.columns.map((col) => (
                         <TableCell
                           key={col.key}
@@ -424,7 +427,7 @@ export function ReportViewer({ initialReport }: ReportViewerProps) {
           )}
 
           {/* Table Footer Meta */}
-          <div className="px-4 py-3 bg-surface-muted/30 border-t border-border flex items-center justify-between text-xs text-text-muted">
+          <div className="px-4 py-3 bg-slate-50 border-t border-border flex items-center justify-between text-xs text-text-muted">
             <span>
               Total records:{' '}
               <strong className="text-text-primary">{reportData.total_records}</strong>

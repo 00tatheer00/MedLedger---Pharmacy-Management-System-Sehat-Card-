@@ -203,7 +203,7 @@ export function EditMedicineDialog({ medicine }: EditMedicineDialogProps) {
             </label>
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-4 border-t border-border/60">
+          <div className="flex items-center justify-end gap-2 pt-4 border-t border-border">
             <Button type="button" variant="outline" size="sm" onClick={() => setIsOpen(false)}>
               Cancel
             </Button>

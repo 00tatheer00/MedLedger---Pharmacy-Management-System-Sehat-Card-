@@ -39,7 +39,7 @@ export function InstallButton({ className = '', variant = 'header' }: InstallBut
   return (
     <button
       onClick={promptInstall}
-      className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 text-xs font-bold transition-all shadow-xs cursor-pointer ${className}`}
+      className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-700 border border-teal-200 hover:border-teal-300 text-xs font-semibold transition-all duration-150 shadow-2xs cursor-pointer ${className}`}
       aria-label="Install MedLedger PWA"
     >
       <Download className="h-3.5 w-3.5" />

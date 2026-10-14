@@ -104,8 +104,8 @@ export function SupplierForm({ initialSupplier, isEditing = false }: SupplierFor
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <Card className="border border-border/80 shadow-xs">
-          <CardHeader className="py-4 px-6 border-b border-border/60 bg-surface-muted/30">
+        <Card className="border border-border shadow-card">
+          <CardHeader className="py-4 px-6 border-b border-border bg-slate-50">
             <div className="flex items-center gap-2">
               <Building2 className="w-4 h-4 text-primary" />
               <CardTitle className="text-base font-semibold text-text-primary">
@@ -221,7 +221,7 @@ export function SupplierForm({ initialSupplier, isEditing = false }: SupplierFor
 
             {/* Active Status (if editing) */}
             {isEditing && (
-              <div className="pt-2 border-t border-border/60 flex items-center gap-3">
+              <div className="pt-2 border-t border-border flex items-center gap-3">
                 <input
                   type="checkbox"
                   id="is_active"

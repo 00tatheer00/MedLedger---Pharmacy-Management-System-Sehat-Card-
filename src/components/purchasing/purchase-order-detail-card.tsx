@@ -158,7 +158,7 @@ export function PurchaseOrderDetailCard({
       </div>
 
       {order.notes && (
-        <Card className="border border-border/80 bg-surface-muted/20 shadow-2xs">
+        <Card className="border border-border bg-slate-50 shadow-card">
           <CardContent className="p-3 text-xs text-text-secondary">
             <span className="font-semibold text-text-primary">Order Instructions: </span>
             {order.notes}
@@ -167,8 +167,8 @@ export function PurchaseOrderDetailCard({
       )}
 
       {/* Line Items Table */}
-      <Card className="border border-border/80 shadow-xs overflow-hidden">
-        <CardHeader className="py-3 px-4 border-b border-border/60 bg-surface-muted/30">
+      <Card className="border border-border shadow-card overflow-hidden">
+        <CardHeader className="py-3 px-4 border-b border-border bg-slate-50">
           <CardTitle className="text-sm font-semibold text-text-primary">
             Contracted Line Items ({order.items.length})
           </CardTitle>
@@ -180,7 +180,7 @@ export function PurchaseOrderDetailCard({
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow className="bg-surface-muted/20">
+              <TableRow className="bg-slate-50">
                 <TableHead>Medicine Item</TableHead>
                 <TableHead>Specs / Form</TableHead>
                 <TableHead className="text-right">Unit Price</TableHead>
@@ -196,7 +196,10 @@ export function PurchaseOrderDetailCard({
                 const isComplete = item.quantity_received >= item.quantity_ordered;
 
                 return (
-                  <TableRow key={item.id} className="hover:bg-surface-muted/30">
+                  <TableRow
+                    key={item.id}
+                    className="hover:bg-slate-50 transition-colors duration-150"
+                  >
                     <TableCell className="font-medium text-text-primary">
                       <Link
                         href={`/medicines/${item.medicine_id}`}
@@ -239,8 +242,8 @@ export function PurchaseOrderDetailCard({
       </Card>
 
       {/* Related Goods Receipts (GRN) */}
-      <Card className="border border-border/80 shadow-xs overflow-hidden">
-        <CardHeader className="py-3 px-4 border-b border-border/60 bg-surface-muted/30">
+      <Card className="border border-border shadow-card overflow-hidden">
+        <CardHeader className="py-3 px-4 border-b border-border bg-slate-50">
           <CardTitle className="text-sm font-semibold text-text-primary">
             Goods Receipt Notes Recorded Against this Order ({receipts.length})
           </CardTitle>
@@ -254,7 +257,7 @@ export function PurchaseOrderDetailCard({
           ) : (
             <Table>
               <TableHeader>
-                <TableRow className="bg-surface-muted/20">
+                <TableRow className="bg-slate-50">
                   <TableHead>GRN Number</TableHead>
                   <TableHead>Received Date</TableHead>
                   <TableHead>Challan / Ref</TableHead>
@@ -299,8 +302,8 @@ export function PurchaseOrderDetailCard({
 
       {/* Related Supplier Invoices */}
       {invoices.length > 0 && (
-        <Card className="border border-border/80 shadow-xs overflow-hidden">
-          <CardHeader className="py-3 px-4 border-b border-border/60 bg-surface-muted/30">
+        <Card className="border border-border shadow-card overflow-hidden">
+          <CardHeader className="py-3 px-4 border-b border-border bg-slate-50">
             <CardTitle className="text-sm font-semibold text-text-primary">
               Supplier Invoices & Payables Linked to this Order ({invoices.length})
             </CardTitle>
@@ -308,7 +311,7 @@ export function PurchaseOrderDetailCard({
           <CardContent className="p-0">
             <Table>
               <TableHeader>
-                <TableRow className="bg-surface-muted/20">
+                <TableRow className="bg-slate-50">
                   <TableHead>Invoice #</TableHead>
                   <TableHead>Date / Due</TableHead>
                   <TableHead className="text-right">Total (PKR)</TableHead>
