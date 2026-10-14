@@ -1,10 +1,13 @@
 /**
- * MedLedger — Finance Module
+ * MedLedger — Finance & Reconciliation Module
  *
- * Financial operations: supplier payments, claim payments,
- * and financial summaries.
- *
- * Implementation: Phase 11
+ * Unified financial tracking for supplier payables, hospital claim receivables,
+ * payment allocations, reconciliation audits, and cash flow transactions.
  */
 
-export {};
+export * from './types';
+export * from './reconciliation';
+export * from './prototype-store';
+export * from './validation';
+export * from './server-queries';
+export * from './actions';

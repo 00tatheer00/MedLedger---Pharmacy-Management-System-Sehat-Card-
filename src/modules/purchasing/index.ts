@@ -1,9 +1,9 @@
 /**
- * MedLedger — Purchasing Module
- *
- * Purchase orders, goods receiving, supplier invoices, and payments.
- *
- * Implementation: Phase 9
+ * MedLedger — Purchasing Module Public Interface
  */
 
-export {};
+export * from './types';
+export * from './validation';
+export * from './prototype-store';
+export * from './server-queries';
+export * from './actions';

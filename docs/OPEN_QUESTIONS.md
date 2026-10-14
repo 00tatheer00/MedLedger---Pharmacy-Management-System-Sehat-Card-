@@ -48,14 +48,15 @@ Each open question has:
 
 ### OQ-003: Final Role Definitions and Permissions
 
-| Field                  | Detail                                                                                                                                                                                               |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Priority**           | 🔴 Critical                                                                                                                                                                                          |
-| **Status**             | Open                                                                                                                                                                                                 |
-| **Blocking Phase**     | Phase 4 (Auth & RLS) — can start with preliminary roles, but must be finalized before Phase 10.                                                                                                      |
-| **Question**           | What are the final user roles? What specific actions can each role perform? Can a user have multiple roles? Are there any actions that require dual authorization (two people to approve)?           |
-| **Why It Matters**     | Roles drive RLS policies, UI visibility, and server-side authorization. Getting this wrong means rebuilding security policies.                                                                       |
-| **Default Assumption** | Five roles as documented in `SECURITY_PLAN.md`: System Administrator, Pharmacy Manager, Pharmacist, Purchasing Staff, Finance Staff. Users have exactly one role. No dual authorization requirement. |
+| Field                  | Detail                                                                                                                                                                                              |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Priority**           | 🔴 Critical                                                                                                                                                                                         |
+| **Status**             | In Discussion (Provisional Model Implemented in Phase 3)                                                                                                                                            |
+| **Blocking Phase**     | Production Deployment (Provisional roles active in Phase 3)                                                                                                                                         |
+| **Question**           | What are the final user roles? What specific actions can each role perform? Can a user have multiple roles? Are there any actions that require dual authorization (two people to approve)?          |
+| **Why It Matters**     | Roles drive RLS policies, UI visibility, and server-side authorization. Getting this wrong means rebuilding security policies.                                                                      |
+| **Default Assumption** | Five provisional roles implemented in Phase 3: System Administrator, Pharmacy Manager, Pharmacist, Purchasing Staff, Finance Staff. User-to-role assignment is database-backed and can be adjusted. |
+| **Phase 3 Status**     | **Implemented provisionally:** RLS policies and server authorization guards enforce the 5 roles with default-deny semantics. Final hospital sign-off needed before production launch.               |
 
 ---
 

@@ -1,8 +1,8 @@
-# MedLedger — Architecture
+# MedLedger — Architecture Specification
 
-> **Version:** 0.1.0 (Phase 1 — Planning)
+> **Version:** 0.3.0 (Phase 3: Database, Authentication & Security Foundation)
 > **Last Updated:** 2026-10-13
-> **Status:** Draft — Awaiting Review
+> **Status:** Active (Phase 3 Core Architecture Implemented)
 
 ---
 

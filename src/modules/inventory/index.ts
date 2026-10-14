@@ -1,10 +1,6 @@
-/**
- * MedLedger — Inventory Module
- *
- * Batch tracking, stock movements, expiry management, stock
- * adjustments, and stock level queries.
- *
- * Implementation: Phase 8
- */
-
-export {};
+export * from './types';
+export * from './validation';
+export * from './alerts';
+export * from './prototype-store';
+export * from './server-queries';
+export * from './actions';

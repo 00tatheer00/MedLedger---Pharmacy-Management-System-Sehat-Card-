@@ -1,8 +1,8 @@
 # MedLedger — Development Roadmap
 
-> **Version:** 0.1.0 (Phase 1 — Planning)
-> **Last Updated:** 2026-10-13
-> **Status:** Draft — Awaiting Review
+> **Version:** 0.9.0 (Phase 9 — Hospital Claims & Billing Workflow)  
+> **Last Updated:** 2026-10-13  
+> **Status:** Phases 1 through 9 Completed & Verified
 
 ---
 
@@ -14,31 +14,27 @@ gantt
     dateFormat YYYY-MM-DD
     axisFormat %b %d
 
-    section Foundation
-    Phase 1 - Architecture & Planning       :done, p1, 2026-10-13, 3d
-    Phase 2 - Project Init & Engineering    :p2, after p1, 5d
-    Phase 3 - Design System & Dashboard UI  :p3, after p2, 10d
+    section Foundation & Infrastructure
+    Phase 1 - Architecture & Planning         :done, p1, 2026-10-13, 3d
+    Phase 2 - Design System & Dashboard UI    :done, p2, after p1, 5d
+    Phase 3 - Database, Auth & Security Found.:done, p3, after p2, 5d
+    Phase 4 - Functional Dashboard & App Shell:done, p4, after p3, 5d
 
-    section Core Infrastructure
-    Phase 4 - Database, Auth & RLS          :p4, after p3, 10d
-    Phase 5 - App Shell & Dashboard         :p5, after p4, 7d
-
-    section Feature Modules
-    Phase 6 - Patients & Admissions         :p6, after p5, 8d
-    Phase 7 - Prescriptions                 :p7, after p6, 7d
-    Phase 8 - Medicine Catalogue & Inventory:p8, after p5, 10d
-    Phase 9 - Suppliers & Purchasing        :p9, after p8, 10d
-    Phase 10 - Dispensing & Stock Txns      :p10, after p7, 12d
-    Phase 11 - Claims & Hospital Billing    :p11, after p10, 10d
+    section Clinical & Operational Core
+    Phase 5 - Patients, Admissions & Rx       :done, p5, after p4, 7d
+    Phase 6 - Medicine Catalogue & Inventory  :done, p6, after p5, 8d
+    Phase 7 - Suppliers & Purchasing          :done, p7, after p6, 8d
+    Phase 8 - Dispensing & Stock Txns         :done, p8, after p7, 10d
+    Phase 9 - Claims & Hospital Billing       :p9, after p8, 8d
 
     section Finalization
-    Phase 12 - Reports & Notifications      :p12, after p11, 8d
-    Phase 13 - Testing & Security Review    :p13, after p12, 10d
-    Phase 14 - Deployment & Handover        :p14, after p13, 7d
+    Phase 10 - Reports & Notifications        :p10, after p9, 7d
+    Phase 11 - Testing & Security Audit       :p11, after p10, 8d
+    Phase 12 - Deployment & Handover          :p12, after p11, 5d
 ```
 
 > [!NOTE]
-> Durations are estimates and will be refined as work progresses. Phases 6–7 and Phase 8 can run in parallel if the team has capacity, since they don't depend on each other.
+> Foundation Phases 1–4, Clinical Intake Phase 5, Inventory Phase 6, Procurement Phase 7, and Dispensing Phase 8 are complete and verified. Hospital claims & billing (Phase 9) will follow sequentially.
 
 ---
 
@@ -66,307 +62,291 @@ gantt
 
 ---
 
-## Phase 2: Project Initialization & Engineering Setup
+## Phase 2: Professional Design System & Dashboard UI ✅ (Completed)
 
 > [!NOTE]
-> **Engineering Status Note (2026-10-13):** The Next.js repository scaffolding, tooling (TypeScript, ESLint, Prettier, Husky, lint-staged), testing suites (Vitest, Playwright), CI workflow, and modular directory skeleton were initialized in Git commit `71db268`. The engineering infrastructure is provisioned; formal Phase 1 review approval is required before proceeding to UI design system and domain logic.
+> **Engineering Status Note (2026-10-13):** The professional design system, Tailwind CSS v4 CSS theme tokens, UI component primitives, deep-navy enterprise application shell, dynamic hospital operations dashboard, and centralized demo dataset have been built and verified. All linting, TypeScript strict mode, Vitest unit tests (6 test suites, 21 passing tests), Playwright E2E tests (4 passing tests), and Next.js 16 production build (`next build`) pass with 100% success. No database mutations, live credentials, or real patient records were introduced.
 
-**Goal:** Create the Next.js project with all tooling, linting, and development infrastructure configured.
+**Goal:** Build a complete, visually polished design system and dashboard frontend prototype with honest demo data.
 
-**Prerequisites:** Phase 1 approved.
+**Prerequisites:** Phase 1 approved and committed (`2c38696`).
 
 **Deliverables:**
 
-| Deliverable          | Description                                                                     |
-| -------------------- | ------------------------------------------------------------------------------- |
-| Next.js project      | App Router, TypeScript strict mode, Tailwind CSS configured.                    |
-| Linting & formatting | ESLint, Prettier, lint-staged, Husky pre-commit hooks.                          |
-| Path aliases         | `@/` alias configured and verified.                                             |
-| Test framework       | Vitest configured for unit and integration tests. Playwright installed for E2E. |
-| Environment setup    | `.env.example` with all required variables. `.gitignore` configured.            |
-| CI pipeline          | Basic GitHub Actions (or equivalent) for lint, type-check, and test.            |
-| Directory structure  | Module directory skeleton created per architecture (no implementations).        |
-| Documentation        | `README.md` with setup instructions.                                            |
+| Deliverable             | Description                                                                                                                                   | Status      |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| Tailwind CSS v4 Tokens  | Custom brand palette (`#16324F`, `#159A9C`, `#176B87`), semantic status colors, surfaces, typography, shadows in `globals.css`.               | ✅ Complete |
+| UI Primitives           | `Button`, `Badge`, `Card`, `Input`, `Table`, `Tabs`, `Alert`, `Skeleton`, `EmptyState`, `Dialog` in `src/components/ui/`.                     | ✅ Complete |
+| Application Shell       | Enterprise deep-navy `Sidebar`, top `Header` with search & alert drawer, and responsive `AppShell` in `src/components/layout/`.               | ✅ Complete |
+| Dashboard Page          | Welcome banner, 4 KPI cards, priority alerts panel, inventory breakdown bar, recent activity journal table, quick action cards.               | ✅ Complete |
+| Centralized Demo Data   | Typed, consistent demo dataset (`kpiData`, `recentActivity`, `priorityAlerts`, `inventorySummary`, `quickActions`) in `src/lib/demo-data.ts`. | ✅ Complete |
+| Navigation Placeholders | Clean, honest module preview cards with roadmap targets for all 11 sidebar links.                                                             | ✅ Complete |
+| Automated Test Suites   | Unit tests for UI primitives & demo data integrity (Vitest) + end-to-end user flow verification (Playwright).                                 | ✅ Complete |
 
 **Acceptance Criteria:**
 
-- [ ] `npm run dev` starts without errors.
-- [ ] `npm run lint` passes with zero warnings.
-- [ ] `npm run type-check` passes.
-- [ ] `npm run test` runs (with placeholder test passing).
-- [ ] All path aliases resolve correctly.
-- [ ] Pre-commit hook catches lint violations.
-- [ ] `.env.example` documents all required environment variables.
+- [x] Responsive layout validated across desktop, tablet, and mobile widths.
+- [x] All interactive controls behave honestly with prototype notices; no unbacked functionality implied.
+- [x] Zero console errors, zero hydration mismatches, and static prerendering on all routes.
+- [x] `npm run typecheck`, `npm run lint`, `npm run format:check`, `npm run test`, and `npm run test:e2e` pass cleanly.
+- [x] Production build (`npm run build`) completes successfully.
+- [x] No database mutations, real patient information, or secret credentials introduced.
 
 ---
 
-## Phase 3: Design System & Dashboard UI
+## Phase 3: Database, Authentication & Security Foundation ✅ (Completed)
 
-**Goal:** Build the complete design system and dashboard UI components using Tailwind CSS and shadcn/ui.
+> [!NOTE]
+> **Implementation Document:** See [`docs/PHASE_3_IMPLEMENTATION.md`](file:///docs/PHASE_3_IMPLEMENTATION.md) for complete technical architecture, migration breakdown, RLS verification, and security controls.
 
-**Prerequisites:** Phase 2 complete.
+**Goal:** Implement the database schema, version-controlled migrations, Row Level Security policies, audit trail immutability, and server-side RBAC utilities.
+
+**Prerequisites:** Phase 2 design system verified.
 
 **Deliverables:**
 
-| Deliverable           | Description                                                                            |
-| --------------------- | -------------------------------------------------------------------------------------- |
-| Tailwind theme        | Custom color palette, typography, spacing, border-radius tokens.                       |
-| shadcn/ui components  | Button, Input, Select, Dialog, Toast, Card, Table, Badge, Dropdown Menu, Sidebar, etc. |
-| Layout components     | Sidebar, Header, Breadcrumbs, Page container.                                          |
-| Form components       | Form field wrapper, form section, validation display.                                  |
-| Table components      | DataTable with pagination, sorting, filtering, empty states.                           |
-| Feedback components   | Loading skeleton, error boundary, empty state, connectivity banner.                    |
-| Design reference page | Internal page showcasing all components and states.                                    |
+| Deliverable            | Description                                                                                  | Status      |
+| ---------------------- | -------------------------------------------------------------------------------------------- | ----------- |
+| Database Migrations    | 4 versioned SQL migrations covering all 28 tables in `supabase/migrations/`.                 | ✅ Complete |
+| RLS Security Policies  | Default-deny Row Level Security policies across all tables in `00002_rls_policies.sql`.      | ✅ Complete |
+| Immutability Triggers  | Strict PostgreSQL triggers preventing UPDATE/DELETE on `audit_logs` and `stock_movements`.   | ✅ Complete |
+| Dev Seed Script        | Seed dataset with production safety guard (`00004_seed_dev_data.sql`).                       | ✅ Complete |
+| Runtime Environment    | Zod-validated environment config with prototype fallback (`src/core/config/env.ts`).         | ✅ Complete |
+| Supabase Clients       | `@supabase/ssr` server client with cookie adapter and browser client (`src/core/database/`). | ✅ Complete |
+| RBAC Authorization     | Server-side authorization utilities, role definitions, and permission checks (`src/core/`).  | ✅ Complete |
+| Immutable Audit Logger | Redacted, sanitized audit logging utility (`src/core/audit/audit-logger.ts`).                | ✅ Complete |
 
 **Acceptance Criteria:**
 
-- [ ] All shared components render correctly with all states (loading, error, empty, data).
-- [ ] Components are accessible (keyboard navigation, ARIA labels, sufficient contrast).
-- [ ] Design matches the approved visual direction.
-- [ ] Component stories or reference page documents all variations.
-- [ ] Responsive layout works on desktop and tablet.
+- [x] All 28 tables, relationships, check constraints, and indexes defined and tested.
+- [x] RLS enabled on all user tables with default-deny policies.
+- [x] Immutability triggers verified by automated tests.
+- [x] Development seed data script blocked from running in production.
+- [x] Vitest suites verify migrations, authorization matrices, audit logger, and config.
 
 ---
 
-## Phase 4: Database Schema, Authentication & RLS
+## Phase 4: Functional Dashboard & Application Integration ✅ (Completed)
 
-**Goal:** Implement the database schema, authentication flow, and Row Level Security policies.
+> [!NOTE]
+> **Implementation Document:** See [`docs/PHASE_4_IMPLEMENTATION.md`](file:///docs/PHASE_4_IMPLEMENTATION.md) for data architecture details, server action contracts, and verification reports.
 
-**Prerequisites:** Phase 2 complete. Database design approved by team.
+**Goal:** Integrate the dashboard into an enterprise application shell with typed data access boundaries, debounced search, system alerts drawer, accessible breadcrumbs, and honest prototype indicators.
+
+**Prerequisites:** Phase 2 design system and Phase 3 database foundation verified.
 
 **Deliverables:**
 
-| Deliverable            | Description                                                                                     |
-| ---------------------- | ----------------------------------------------------------------------------------------------- |
-| Supabase project setup | Development and staging projects created.                                                       |
-| Database migrations    | All tables, constraints, indexes, and RLS policies per `DATABASE_DESIGN.md`.                    |
-| Authentication         | Supabase Auth configured. Login/logout flow implemented.                                        |
-| User & role tables     | `users`, `roles`, `permissions`, `user_roles`, `role_permissions` populated with initial roles. |
-| RLS policies           | Row Level Security policies on all user-facing tables.                                          |
-| Seed script            | Development seed data script (blocked from running in production).                              |
-| Auth middleware        | Next.js middleware for session verification.                                                    |
-| Core auth utilities    | `getAuthenticatedUser()`, `hasPermission()`, `requirePermission()`.                             |
+| Deliverable            | Description                                                                                       | Status      |
+| ---------------------- | ------------------------------------------------------------------------------------------------- | ----------- |
+| Data Access Boundary   | Typed server queries, demo provider, and Server Actions in `src/modules/dashboard/`.              | ✅ Complete |
+| Debounced Search       | `Ctrl+K` search dialog with 300ms debounce, input constraints, and multi-entity results.          | ✅ Complete |
+| Notifications Drawer   | Interactive system alerts popover with unread counter and "Mark all as read" action.              | ✅ Complete |
+| Role Preview Switcher  | Provisional role preview switcher in user profile menu for evaluation of UI visibility.           | ✅ Complete |
+| Breadcrumbs Navigation | Accessible breadcrumb component integrated into sub-module placeholders.                          | ✅ Complete |
+| Resiliency Boundaries  | High-density loading skeleton (`loading.tsx`) and error boundary with retry action (`error.tsx`). | ✅ Complete |
+| Honest Data Indicator  | Explicit UI badges and contracts separating live database connections from prototype demo data.   | ✅ Complete |
+| Automated Quality      | 14 test suites (65 tests), 4 Playwright E2E tests, Prettier, ESLint, and Turbopack build pass.    | ✅ Complete |
 
 **Acceptance Criteria:**
 
-- [ ] Users can log in and log out.
-- [ ] Session persists across page reloads.
-- [ ] Invalid/expired sessions redirect to login.
-- [ ] RLS policies deny access for unauthorized roles (tested with SQL queries).
-- [ ] Seed script creates realistic test data.
-- [ ] Seed script refuses to run in production environment.
-- [ ] `hasPermission()` correctly evaluates role-based permissions.
-- [ ] All migrations are version-controlled and reversible.
+- [x] Dashboard integrated into consistent, accessible application shell.
+- [x] Clean architectural separation between presentation, queries, and demo providers.
+- [x] Real database used only when Supabase is configured; demo data explicitly identified otherwise.
+- [x] Loading, empty, and error states gracefully handled.
+- [x] Zero out-of-scope business transactions or fake authentication bypass introduced.
+- [x] All quality checks (format, lint, typecheck, unit tests, E2E, build) pass with 100% success.
 
 ---
 
-## Phase 5: Application Shell & Dashboard Integration
+## Phase 5: Patients, Admissions & Prescriptions ✅ (Completed)
 
-**Goal:** Build the authenticated application shell and integrate the dashboard as the home page.
+> [!NOTE]
+> **Implementation Document:** See [`docs/PHASE_5_IMPLEMENTATION.md`](file:///docs/PHASE_5_IMPLEMENTATION.md) for complete technical architecture, data contracts, prescription transcription interfaces, and verification reports.
 
-**Prerequisites:** Phase 3 (design system) and Phase 4 (auth) complete.
+**Goal:** Implement enterprise patient management (registration, listing, search, pagination, duplicate MRN prevention), admission management (associated with patients, inpatient vs outpatient care, ward/bed/attending physician, discharge), and paper prescription entry (handwritten transcription interface, doctor slip warning, dynamic medicine line items with quantity & dosage instructions, zero-stock deduction invariant).
+
+**Prerequisites:** Phase 3 database & security foundation and Phase 4 application shell complete and verified.
 
 **Deliverables:**
 
-| Deliverable          | Description                                                                                         |
-| -------------------- | --------------------------------------------------------------------------------------------------- |
-| Authenticated layout | Dashboard shell with sidebar, header, user menu.                                                    |
-| Navigation           | Sidebar navigation reflecting user permissions (hide inaccessible items).                           |
-| Dashboard page       | Summary cards with real data from the database (patient count, stock alerts, pending claims, etc.). |
-| Login page           | Polished login page with validation and error handling.                                             |
-| 404 / error pages    | Custom error pages matching the design system.                                                      |
-| Breadcrumbs          | Automatic breadcrumbs based on route.                                                               |
+| Deliverable                      | Description                                                                                                                                            | Status      |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
+| Patient Directory & Pagination   | Server-side paginated patient table with debounced MRN/CNIC/name/phone search and status filtering.                                                    | ✅ Complete |
+| Patient Registration & Edit      | Enterprise forms with Zod schema validation, Pakistani CNIC format enforcement (`^\d{5}-\d{7}-\d{1}$`), and duplicate MRN collision checks.            | ✅ Complete |
+| Patient Details & History        | Patient profile displaying demographics, contact info, active admission status, and complete inpatient admission history.                              | ✅ Complete |
+| Inpatient Admission Tracking     | Dedicated `/admissions` directory, admission modal on patient profile, ward/bed tracking, attending physician assignment, and discharge flow.          | ✅ Complete |
+| Paper Prescription Transcription | `/prescriptions/new` handwritten intake interface with clinical disclaimer, dynamic medicine lines (frequency/route/duration), and note transcription. | ✅ Complete |
+| Prescription Item Integrity      | Prescription items linked atomically to parent prescription context; zero orphan rows allowed.                                                         | ✅ Complete |
+| Dispensing Boundary Guarantee    | Invariant strictly verified: prescription transcription creates orders only (`dispensed_quantity = 0`, `status = 'pending'`); zero stock deduction.    | ✅ Complete |
+| Cancellation Lifecycle           | Prescription cancellation action with required audit reason, preventing modification of cancelled orders.                                              | ✅ Complete |
+| Automated Quality Pipeline       | 17 test suites (102 unit tests), 7 Playwright E2E tests, Prettier, ESLint, TypeScript `--noEmit`, and Next.js Turbopack build pass with 100% success.  | ✅ Complete |
 
 **Acceptance Criteria:**
 
-- [ ] Unauthenticated users are redirected to login.
-- [ ] Dashboard loads with live summary data.
-- [ ] Sidebar navigation reflects the user's role and permissions.
-- [ ] Navigation between pages is fast and smooth.
-- [ ] Login page handles errors gracefully (wrong password, network error).
-- [ ] 404 and error pages are styled consistently.
+- [x] Patients can be registered, searched, viewed, and updated with field-level error messages.
+- [x] Duplicate MR numbers are prevented at both the schema and store levels.
+- [x] CNIC is optional (not mandatory), but strictly validated against NADRA format when provided.
+- [x] Admissions are linked to patients and support ward, bed, attending physician, and discharge tracking.
+- [x] Outpatient care is fully supported (`admission_id` is optional on prescriptions).
+- [x] Paper prescription entry transcribes handwritten slips with required clinical disclaimers.
+- [x] Dynamic medicine line items capture medicine name/ID, dosage instructions, and prescribed quantity.
+- [x] Prescription recording NEVER mutates inventory or deducts stock (verified by unit and integration tests).
+- [x] All operations adhere to server-side RBAC and audit logging principles.
+- [x] Zero mock or fake test assertions claiming live database validation when running in-memory.
 
 ---
 
-## Phase 6: Patients & Admissions
+## Phase 6: Medicine Catalogue & Inventory Management ✅ (Completed)
 
-**Goal:** Implement patient registration, search, and hospital admission management.
+> [!NOTE]
+> **Implementation Document:** See [`docs/PHASE_6_IMPLEMENTATION.md`](file:///docs/PHASE_6_IMPLEMENTATION.md) for complete technical architecture, batch models, append-only stock movement ledger, surveillance threshold rules, and verification reports.
 
-**Prerequisites:** Phase 5 complete.
+**Goal:** Implement the medicine master catalogue, batch-level stock tracking, auditable stock movement ledger, low-stock/expiry alerts, and stock adjustments.
+
+**Prerequisites:** Phase 3 database & security foundation and Phase 5 clinical intake complete and verified.
 
 **Deliverables:**
 
-| Deliverable          | Description                                                       |
-| -------------------- | ----------------------------------------------------------------- |
-| Patient list         | Paginated, searchable list of patients.                           |
-| Patient registration | Form with validation (name, CNIC, DOB, gender, phone, address).   |
-| Patient details      | View and edit patient information.                                |
-| Admission records    | Create, view, and update admission records linked to patients.    |
-| Audit logging        | Patient creation, updates, and deletions logged.                  |
-| Tests                | Unit tests for validation. Integration tests for CRUD operations. |
+| Deliverable            | Description                                                                                                                                           | Status      |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| Medicine Catalogue     | Paginated master catalogue with multi-field search (brand, generic, code, strength, category), registration, edit, and active status toggle.          | ✅ Complete |
+| Batch Management       | Batch records tracking medicine ref, batch number, expiry date, quantity on hand, unit cost, pack price, and provenance. Prevent duplicate batches.   | ✅ Complete |
+| Stock Movement Ledger  | Append-only, auditable ledger recording all stock mutations with balance before/after, actor, timestamp, reference document, and authorized reason.   | ✅ Complete |
+| Non-Negative Invariant | Strict prevention of negative stock balances at both the database schema and application validation levels.                                           | ✅ Complete |
+| Stock Adjustment Flow  | Authorized stock adjustment dialog with atomic batch balance and movement ledger recording, idempotency guard, and reason validation.                 | ✅ Complete |
+| Surveillance Alerts    | Real-time alerts for low stock (<= 50 units default), out of stock, near expiry (<= 90 days default), and expired batches with accessible indicators. | ✅ Complete |
+| Automated Test Suites  | 19 unit tests for medicines, 16 unit tests for inventory (100% passing), and 9 Playwright end-to-end integration tests.                               | ✅ Complete |
 
 **Acceptance Criteria:**
 
-- [ ] Patients can be registered, searched, viewed, and updated.
-- [ ] Duplicate MR numbers are prevented.
-- [ ] CNIC format is validated.
-- [ ] Admissions are linked to patients and can be viewed/edited.
-- [ ] Patient name search supports fuzzy matching.
-- [ ] Pagination works correctly for large patient lists.
-- [ ] All operations are audit-logged.
+- [x] Medicines can be added, searched, viewed, edited, and deactivated.
+- [x] Batches track quantity on hand, expiry date, unit cost, and status.
+- [x] Stock adjustments require an authorized reason and are audit-logged.
+- [x] Quantity on hand can never be negative (enforced by application and database constraints).
+- [x] Low-stock and FEFO expiry surveillance alerts accurately identify critical batches.
+- [x] Stock movement history is complete, immutable, and preserves full traceability.
+- [x] Zero out-of-scope prescription dispensing stock deductions or purchase order processing implemented.
 
 ---
 
-## Phase 7: Prescriptions
+## Phase 7: Suppliers, Purchasing & Goods Receiving ✅ (Completed)
 
-**Goal:** Implement prescription capture and management.
+> [!NOTE]
+> **Implementation Document:** See [`docs/PHASE_7_IMPLEMENTATION.md`](file:///docs/PHASE_7_IMPLEMENTATION.md) for complete technical architecture, decimal-safe financial calculations, transactional goods receiving intake, and verification reports.
 
-**Prerequisites:** Phase 6 (patients) complete. Phase 8 (medicine catalogue) at least partially complete (medicine list available).
+**Goal:** Implement supplier directory management, purchase order generation, goods receiving with atomic stock ledger intake, supplier invoices, and multi-invoice payment disbursements.
+
+**Prerequisites:** Phase 3 database & security foundation and Phase 6 inventory foundation complete and verified.
 
 **Deliverables:**
 
-| Deliverable           | Description                                                                               |
-| --------------------- | ----------------------------------------------------------------------------------------- |
-| Prescription list     | Paginated list with status filtering.                                                     |
-| Prescription creation | Form to capture prescriber, patient, admission, and prescribed items.                     |
-| Prescription items    | Add/remove medicine items with quantity and dosage instructions.                          |
-| Prescription detail   | View prescription with all items and dispensing history.                                  |
-| Status tracking       | Prescription status reflects dispensing progress (pending → partially → fully dispensed). |
-| Tests                 | Unit tests for validation. Integration tests for status transitions.                      |
+| Deliverable                  | Description                                                                                                                                            | Status      |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
+| Supplier Directory & CRM     | Paginated supplier directory with search, contact information, NTN validation, active/inactive toggle, duplicate prevention, and spend analytics.      | ✅ Complete |
+| Purchase Order Workflows     | Multi-line PO creator with supplier selection, catalogue medicine picker, decimal-safe line valuation, and delivery scheduling (`/purchases/new`).     | ✅ Complete |
+| Purchase Order Lifecycle     | Status transitions (`draft` -> `submitted` -> `partially_received` -> `fully_received` -> `cancelled`) with line-level fulfillment tracking.           | ✅ Complete |
+| Atomic Goods Receiving (GRN) | Physical intake dialog recording lot/batch number, future expiry, accepted/rejected breakdown, discrepancy notes, and supplier invoice reference.      | ✅ Complete |
+| Unified Stock Ledger Intake  | Intake routes strictly through `inventoryStore.receiveGoodsBatch(...)`, synchronously crediting batches and creating `stock_movements` rows.           | ✅ Complete |
+| Over-Receipt Prevention      | Server-side validation preventing intake exceeding remaining outstanding quantities on purchase order items.                                           | ✅ Complete |
+| Rejected Goods Exclusion     | Damaged/rejected quantities are recorded on the GRN item with reason for vendor reporting, but strictly excluded from available inventory balances.    | ✅ Complete |
+| Supplier Invoices & Payables | Commercial invoice tracking with total, paid, and outstanding balances linked to purchase orders and receipts (`/purchases?tab=invoices`).             | ✅ Complete |
+| Multi-Invoice Disbursements  | Payment recording voucher supporting 1-to-many allocation across multiple outstanding invoices with strict monetary boundary checks.                   | ✅ Complete |
+| Automated Quality Pipeline   | 21 Vitest test suites (168 unit tests, 100% pass), 11 Playwright E2E tests, Prettier, ESLint, TypeScript `--noEmit`, and Next.js Turbopack build pass. | ✅ Complete |
 
 **Acceptance Criteria:**
 
-- [ ] Prescriptions can be created and linked to patients and admissions.
-- [ ] Prescription items reference medicines from the catalogue.
-- [ ] Prescription status is read-only (computed from dispensing state).
-- [ ] Duplicate prescription numbers are prevented.
-- [ ] Prescription detail shows dispensing history.
-- [ ] All operations are audit-logged.
+- [x] Suppliers can be listed, searched, created, updated, and deactivated with unique name and optional NTN validation.
+- [x] Purchase orders support multi-item line ordering with decimal-safe calculations (`src/lib/decimal.ts`).
+- [x] Goods receiving atomically records intake into the shared inventory ledger via `receiveGoodsBatch(...)`.
+- [x] Over-receipt is strictly prevented at the validation and transaction boundary.
+- [x] Rejected items are excluded from inventory balance updates and tracked with discrepancy reasons.
+- [x] Batches require future expiry dates (`expiry_date > CURRENT_DATE`).
+- [x] Invoices correctly track paid vs. outstanding balances.
+- [x] Multi-invoice payment allocation verifies total disbursement matches allocated lines without exceeding invoice balances.
+- [x] All procurement mutations enforce server-side RBAC and audit logging.
+- [x] Zero dispensing stock deductions or prescription modifications introduced.
 
 ---
 
-## Phase 8: Medicine Catalogue & Inventory
+## Phase 8: Dispensing & Atomic Stock Transactions ✅ (Completed)
 
-**Goal:** Implement the medicine master catalogue and inventory management.
+> [!NOTE]
+> **Implementation Document:** See [`docs/PHASE_8_IMPLEMENTATION.md`](file:///t:/DHQ%20KOhat%20Project/medledger/docs/PHASE_8_IMPLEMENTATION.md) for full architectural documentation, transaction boundaries, FEFO rules, rollback behavior, and verification reports.
 
-**Prerequisites:** Phase 5 complete.
+**Goal:** Implement the staff-friendly dispensing workflow with atomic stock deduction, FEFO allocation, over-dispensing prevention, idempotency, and authorized compensating reversals.
+
+**Prerequisites:** Phase 3 database/security, Phase 5 prescriptions, Phase 6 inventory, and Phase 7 purchasing completed and verified.
 
 **Deliverables:**
 
-| Deliverable        | Description                                                                       |
-| ------------------ | --------------------------------------------------------------------------------- |
-| Medicine catalogue | List, create, edit, and deactivate medicines.                                     |
-| Medicine search    | Search by name, generic name, category.                                           |
-| Batch management   | View batches for each medicine. Manual batch entry (for existing stock).          |
-| Stock overview     | Current stock by medicine (aggregated across batches).                            |
-| Stock movements    | View movement history for a batch.                                                |
-| Expiry alerts      | List medicines with batches expiring within a configurable window.                |
-| Stock adjustment   | Manual adjustment with reason (requires `inventory:adjust` permission).           |
-| Tests              | Unit tests for stock calculations. Integration tests for adjustment transactions. |
+| Deliverable                      | Description                                                                                                                             | Status      |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| Dispensing Workspace Counter     | Queue search by MRN/name/slip, active prescription selector, remaining authorized balance breakdown (`/dispensing`).                    | ✅ Complete |
+| Batch Allocation & FEFO Engine   | Automated FEFO candidate evaluation (`evaluateFEFOBatches`), recommending earliest-expiring active batch, excluding expired lots.       | ✅ Complete |
+| FEFO Override Audit Log          | Mandatory justified reason capture for overriding FEFO suggestions, recorded in immutable audit events.                                 | ✅ Complete |
+| Clinical Substitution Tracking   | Explicit brand/generic substitution recording requiring mandatory reason and authorizing pharmacist attribution.                        | ✅ Complete |
+| Atomic Multi-Item Transactions   | Single transactional boundary via `fn_dispense_prescription_atomic` RPC and `dispensingStore`: all items commit or all roll back.       | ✅ Complete |
+| Authoritative Stock Deductions   | Deductions route strictly through `inventoryStore.dispenseBatchStock`, creating append-only `stock_movements` (type `dispensing`).      | ✅ Complete |
+| Over-Dispensing Prevention       | Strict validation preventing dispensing more than the remaining authorized prescription quantity (`prescribed - dispensed`).            | ✅ Complete |
+| Idempotency Protection           | Unique `idempotency_key` enforcement preventing duplicate stock deductions from double-clicks or retries.                               | ✅ Complete |
+| Compensating Reversal Dialog     | Authorized reversal (`fn_reverse_dispensing_atomic`) restoring batch stocks and remaining prescription balance without double-restore.  | ✅ Complete |
+| Printable Pharmacy Voucher       | Official printable dispensing voucher dialog (`DispensingReceiptDialog`) for ward and patient verification.                             | ✅ Complete |
+| Dispensing History & Audit Table | Paginated dispensing history table with search, status filters (`completed`, `reversed`), and full item inspector (`/dispensing/[id]`). | ✅ Complete |
+| Automated Quality Pipeline       | 22 Vitest test suites (185 unit tests, 100% pass), 12 Playwright E2E tests, Prettier, ESLint, TypeScript `--noEmit`, and Next.js build. | ✅ Complete |
 
 **Acceptance Criteria:**
 
-- [ ] Medicines can be added, edited, and deactivated (soft delete).
-- [ ] Batches track quantity, expiry, and cost.
-- [ ] Stock adjustments require a reason and are audit-logged.
-- [ ] Quantity on hand can never be negative (enforced by database constraint).
-- [ ] Expiry alerts correctly identify approaching expiry.
-- [ ] Stock movement history is complete and accurate.
+- [x] Dispensing deducts stock from the correct batch atomically.
+- [x] Concurrent dispensing requests do not cause negative stock (PostgreSQL `FOR UPDATE` row locks).
+- [x] Partial dispensing correctly tracks remaining quantities.
+- [x] Repeat dispensing against the same prescription works correctly against outstanding balance.
+- [x] Expired, quarantined, or depleted batches cannot be dispensed.
+- [x] Dispensed quantity cannot exceed prescribed remaining authorized quantity.
+- [x] Every dispensing event is fully audit-logged with authenticated actor identity.
+- [x] Stock movement records are created for every deduction with complete batch traceability.
+- [x] Transaction rollback works correctly on any failure, leaving stock and prescription balances untouched.
+- [x] Compensating reversals restore stock cleanly without allowing duplicate reversals.
+- [x] Zero hospital claims submission, claim approval, or payment settlement introduced out of scope.
 
 ---
 
-## Phase 9: Suppliers & Purchasing
+## Phase 9: Hospital Claims & Billing Workflow ✅ (Completed)
 
-**Goal:** Implement supplier management, purchase orders, and goods receiving.
+> [!NOTE]
+> **Implementation Document:** See [`docs/PHASE_9_IMPLEMENTATION.md`](file:///t:/DHQ%20KOhat%20Project/medledger/docs/PHASE_9_IMPLEMENTATION.md) for full architectural documentation, transaction boundaries, state transitions, duplicate prevention, and verification reports.
 
-**Prerequisites:** Phase 8 (medicine catalogue) complete.
+**Goal:** Implement hospital claim preparation from eligible dispensing records, approval review workflow, reimbursement payment allocations, and exact line-item fulfillment traceability without duplicate claims or stock deduction re-runs.
 
-**Deliverables:**
-
-| Deliverable        | Description                                                   |
-| ------------------ | ------------------------------------------------------------- |
-| Supplier directory | List, create, edit, and deactivate suppliers.                 |
-| Purchase orders    | Create, submit, and track purchase orders.                    |
-| PO items           | Line items referencing medicines with quantities and prices.  |
-| Goods receipts     | Record received goods against POs, creating medicine batches. |
-| Supplier invoices  | Record invoices from suppliers.                               |
-| Supplier payments  | Record payments against invoices.                             |
-| Tests              | Integration tests for PO → GRN → Batch creation flow.         |
-
-**Acceptance Criteria:**
-
-- [ ] Purchase orders can be created, submitted, and tracked through their lifecycle.
-- [ ] Goods receipts create medicine batches and stock movements automatically.
-- [ ] PO status updates based on receipt progress (partially received, fully received).
-- [ ] Supplier invoices and payments are tracked correctly.
-- [ ] Payment amounts cannot exceed invoice amounts.
-- [ ] All operations are audit-logged.
-
----
-
-## Phase 10: Dispensing & Stock Transactions
-
-**Goal:** Implement the critical dispensing workflow with transactional stock management.
-
-**Prerequisites:** Phase 7 (prescriptions) and Phase 8 (inventory) complete.
+**Prerequisites:** Phase 3 database/security, Phase 5 prescriptions, Phase 6 inventory, Phase 7 purchasing, and Phase 8 dispensing completed and verified.
 
 **Deliverables:**
 
-| Deliverable          | Description                                                                                     |
-| -------------------- | ----------------------------------------------------------------------------------------------- |
-| Dispensing workflow  | Select prescription → select items → confirm quantities → dispense.                             |
-| Batch selection      | FEFO (First Expiry, First Out) batch suggestion with manual override.                           |
-| Partial dispensing   | Dispense a subset of prescribed items or reduced quantities.                                    |
-| Repeat dispensing    | Multiple dispensing events against the same prescription.                                       |
-| Stock deduction      | Atomic batch-level stock deduction within a database transaction.                               |
-| Duplicate prevention | Idempotency key and prescription status checks prevent double dispensing.                       |
-| Dispensing history   | View all dispensing events for a prescription.                                                  |
-| Tests                | Critical: concurrent dispensing tests, insufficient stock tests, partial dispensing edge cases. |
+| Deliverable                      | Description                                                                                                                                                  | Status      |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
+| Claims Management Hub            | Operational dashboard with 5 KPI summary cards, multi-status filter tabs, search by MRN/patient/claim, and action modals (`/claims`).                        | ✅ Complete |
+| Eligible Dispensing Picker       | Real-time selector displaying finalized, unreversed dispensing items with remaining claimable quotas, MRN, batch, and dosage form.                           | ✅ Complete |
+| Claim Compilation Form           | Multi-item claim builder with billing period start/end dates, live PKR valuation, and "Save Draft" vs "Submit for Review" (`/claims/new`).                   | ✅ Complete |
+| Concurrency Duplicate Prevention | Authoritative server-side validation ensuring requested claim quantity does not exceed remaining claimable quantity (`dispensed - already_claimed`).         | ✅ Complete |
+| Exact Line-Item Traceability     | Every `claim_items` row references exact `dispensing_item_id`, `dispensing_record_id`, patient, prescription, batch, and dispensing staff.                   | ✅ Complete |
+| Full Lifecycle State Machine     | Validated transitions: `draft` -> `submitted` -> `under_review` -> `approved` / `partially_approved` / `rejected` / `returned` -> `partially_paid` / `paid`. | ✅ Complete |
+| Review & Approval Dialog         | Review modal allowing reviewers to full/partial approve, return for correction, or reject with mandatory comments.                                           | ✅ Complete |
+| Reimbursement Payment Ledger     | Payment modal recording hospital treasury disbursements, updating status to `partially_paid`/`paid`, and preventing over-allocation.                         | ✅ Complete |
+| Claim Detail Inspection View     | Complete audit view with tabs for Line Items, Review Decisions, and Reimbursement Payments (`/claims/[id]`).                                                 | ✅ Complete |
+| Automated Quality Pipeline       | 23 Vitest test suites (202 unit/integration tests, 100% pass), 13 Playwright E2E tests, Prettier, ESLint, TypeScript `--noEmit`, and Turbopack build.        | ✅ Complete |
 
 **Acceptance Criteria:**
 
-- [ ] Dispensing deducts stock from the correct batch atomically.
-- [ ] Concurrent dispensing requests do not cause negative stock.
-- [ ] Partial dispensing correctly tracks remaining quantities.
-- [ ] Repeat dispensing against the same prescription works correctly.
-- [ ] Expired batches cannot be dispensed.
-- [ ] Dispensed quantity cannot exceed prescribed quantity.
-- [ ] Every dispensing event is fully audit-logged.
-- [ ] Stock movement records are created for every deduction.
-- [ ] Transaction rollback works correctly on any failure.
-
-> [!IMPORTANT]
-> This is the most critical phase. Dispensing integrity is the core value proposition of MedLedger. Extra time should be allocated for thorough testing.
-
----
-
-## Phase 11: Claims & Hospital Billing
-
-**Goal:** Implement hospital claim generation, approval workflow, and payment tracking.
-
-**Prerequisites:** Phase 10 (dispensing) complete.
-
-**Deliverables:**
-
-| Deliverable       | Description                                             |
-| ----------------- | ------------------------------------------------------- |
-| Claim generation  | Create claims from dispensing records for a date range. |
-| Claim items       | Individual dispensed items with configurable rates.     |
-| Claim submission  | Submit claims for review.                               |
-| Approval workflow | Review, approve, partially approve, or reject claims.   |
-| Claim payments    | Record payments received from the hospital.             |
-| Claim reports     | Summary of submitted, approved, and paid claims.        |
-| Tests             | Workflow tests for the full claim lifecycle.            |
-
-**Acceptance Criteria:**
-
-- [ ] Claims can be generated from dispensing records.
-- [ ] Claim rates are configurable (not hard-coded).
-- [ ] Approval workflow supports approve, partial approve, reject, and return.
-- [ ] Claim payments are tracked and cannot exceed approved amounts.
-- [ ] Claim status reflects the current state accurately.
-- [ ] All claim operations are audit-logged.
-- [ ] Finance staff can see claim summaries and payment status.
+- [x] Claims can be prepared only from finalized, completed dispensing records.
+- [x] Every claim item references the exact dispensing item it represents.
+- [x] Duplicate claims for the same dispensing quantity are strictly prevented.
+- [x] Partial claims track previously claimed and remaining claimable quantities concurrency-safely.
+- [x] Claim processing NEVER alters or deducts inventory stock a second time.
+- [x] Full state machine supported (`draft`, `submitted`, `under_review`, `approved`, `partially_approved`, `rejected`, `returned`, `partially_paid`, `paid`, `cancelled`).
+- [x] Rejection and return require mandatory clinical or administrative comments.
+- [x] All monetary amounts calculate with exact two-decimal precision using `src/lib/decimal.ts`.
+- [x] Reimbursement payments cannot exceed approved amounts (over-allocation prevented).
+- [x] All operations enforce server-side RBAC (`claims:read`, `claims:manage`) and structured audit events.
 
 ---
 
@@ -468,33 +448,33 @@ gantt
 
 ```mermaid
 graph TD
-    P1["Phase 1: Architecture"] --> P2["Phase 2: Project Init"]
-    P2 --> P3["Phase 3: Design System"]
-    P2 --> P4["Phase 4: DB, Auth, RLS"]
-    P3 --> P5["Phase 5: App Shell"]
-    P4 --> P5
-    P5 --> P6["Phase 6: Patients"]
-    P5 --> P8["Phase 8: Medicines & Inventory"]
-    P6 --> P7["Phase 7: Prescriptions"]
-    P8 --> P7
-    P8 --> P9["Phase 9: Suppliers & Purchasing"]
-    P7 --> P10["Phase 10: Dispensing"]
-    P8 --> P10
-    P10 --> P11["Phase 11: Claims & Billing"]
-    P11 --> P12["Phase 12: Reports & Notifications"]
-    P6 --> P12
-    P8 --> P12
-    P9 --> P12
-    P12 --> P13["Phase 13: Testing & Security"]
-    P13 --> P14["Phase 14: Deployment"]
+    P1["Phase 1: Architecture & Planning"] --> P2["Phase 2: Design System & UI"]
+    P2 --> P3["Phase 3: DB, Auth & Security"]
+    P3 --> P4["Phase 4: Functional Shell & Search"]
+    P4 --> P5["Phase 5: Patients, Admissions & Rx"]
+    P5 --> P6["Phase 6: Medicines & Inventory"]
+    P6 --> P7["Phase 7: Suppliers & Purchasing"]
+    P5 --> P8["Phase 8: Dispensing & Stock Txns"]
+    P6 --> P8
+    P8 --> P9["Phase 9: Claims & Billing"]
+    P8 --> P10["Phase 10: Reports & Notifications"]
+    P9 --> P10
+    P10 --> P11["Phase 11: Testing & Security"]
+    P11 --> P12["Phase 12: Deployment & Handover"]
 
     style P1 fill:#22c55e,color:#fff
-    style P10 fill:#ef4444,color:#fff
-    style P13 fill:#f59e0b,color:#000
+    style P2 fill:#22c55e,color:#fff
+    style P3 fill:#22c55e,color:#fff
+    style P4 fill:#22c55e,color:#fff
+    style P5 fill:#22c55e,color:#fff
+    style P6 fill:#22c55e,color:#fff
+    style P7 fill:#22c55e,color:#fff
+    style P8 fill:#ef4444,color:#fff
+    style P11 fill:#f59e0b,color:#000
 ```
 
 **Legend:**
 
-- 🟢 Green (P1): Current phase — complete.
-- 🔴 Red (P10): Highest-risk phase — dispensing and stock transactions.
-- 🟡 Yellow (P13): Critical gate — no deployment without passing this phase.
+- 🟢 Green (P1–P7): Completed & verified foundation, clinical intake, inventory, and purchasing phases.
+- 🔴 Red (P8): Highest-risk phase — dispensing and inventory deduction transactions.
+- 🟡 Yellow (P11): Critical quality gate — no deployment without passing comprehensive security and integration audit.

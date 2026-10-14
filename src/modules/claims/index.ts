@@ -1,10 +1,14 @@
 /**
- * MedLedger — Claims Module
+ * MedLedger — Claims & Billing Module
  *
  * Hospital claim generation, submission, approval workflow,
- * and payment tracking.
+ * and reimbursement payment tracking.
  *
- * Implementation: Phase 11
+ * Implementation: Phase 9
  */
 
-export {};
+export * from './types';
+export * from './validation';
+export * from './prototype-store';
+export * from './server-queries';
+export * from './actions';

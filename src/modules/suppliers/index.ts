@@ -1,9 +1,9 @@
 /**
- * MedLedger — Suppliers Module
- *
- * Supplier directory management.
- *
- * Implementation: Phase 9
+ * MedLedger — Suppliers Module Public Interface
  */
 
-export {};
+export * from './types';
+export * from './validation';
+export * from './prototype-store';
+export * from './server-queries';
+export * from './actions';

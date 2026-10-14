@@ -1,9 +1,9 @@
-# MedLedger — Preliminary Database Design
+# MedLedger — Database Design & Schema Specification
 
-> **Version:** 0.1.0 (Phase 1 — Planning)
+> **Version:** 0.9.0 (Phase 9: Hospital Claims & Billing Workflow)
 > **Last Updated:** 2026-10-13
-> **Status:** Conceptual — No migrations or tables created
-> **Purpose:** Identify entities, relationships, constraints, and integrity considerations for the database phase.
+> **Status:** Implemented (Schema & Migrations Active in `supabase/migrations/`, Application Modules in `src/modules/`)
+> **Purpose:** 28-table relational PostgreSQL schema, constraints, partial unique indexes, RLS policies, immutability triggers, procurement/payables lifecycle, atomic dispensing RPCs, and hospital reimbursement claims engine for DHQ Hospital Kohat central pharmacy.
 
 ---
 
@@ -101,33 +101,58 @@ erDiagram
 | **dispensing_records** | A dispensing event against a prescription. Multiple records support partial/repeat dispensing. | `id`, `dispensing_number` (unique), `prescription_id` (FK), `dispensed_by` (FK to users), `dispensed_at`, `notes`, `created_at`             |
 | **dispensing_items**   | Individual items dispensed in a dispensing event.                                              | `id`, `dispensing_record_id` (FK), `prescription_item_id` (FK), `medicine_batch_id` (FK), `quantity_dispensed`, `unit_price`, `total_price` |
 
-### 3.5 Medicine Catalogue & Inventory
+### 3.5 Medicine Catalogue & Inventory (Phase 6 Implementation)
 
-| Entity               | Purpose                                                                 | Key Fields                                                                                                                                                                                                                                                                                                       |
-| -------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **medicines**        | Master catalogue of medicines.                                          | `id`, `name`, `generic_name`, `dosage_form` (tablet/capsule/syrup/etc.), `strength`, `unit_of_measure`, `category`, `is_active`, `created_at`, `deleted_at`                                                                                                                                                      |
-| **medicine_batches** | Batch-level inventory. Each batch has its own expiry date and quantity. | `id`, `medicine_id` (FK), `batch_number`, `expiry_date`, `quantity_on_hand`, `quantity_received`, `unit_cost`, `supplier_id` (FK, nullable), `goods_receipt_item_id` (FK, nullable), `status` (available/expired/recalled/depleted), `created_at`                                                                |
-| **stock_movements**  | Immutable log of every stock change.                                    | `id`, `medicine_batch_id` (FK), `movement_type` (receipt/dispensing/adjustment/return/expired_write_off), `quantity` (positive for additions, negative for deductions), `reference_type` (dispensing_item/goods_receipt_item/adjustment), `reference_id`, `reason`, `performed_by` (FK to users), `performed_at` |
+| Entity               | Purpose                                                              | Key Fields                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| -------------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **medicines**        | Master catalogue of medicines. Enforces `UNIQUE(name, strength)`.    | `id`, `catalogue_code`, `name` (brand), `generic_name`, `dosage_form` (tablet/capsule/syrup/suspension/injection/infusion/topical/drops/inhaler/suppository), `strength`, `unit_of_measure`, `category`, `manufacturer`, `package_size`, `dispensing_unit`, `min_threshold`, `max_threshold`, `shelf_location`, `storage_conditions`, `is_active`, `created_at`                                                                           |
+| **medicine_batches** | Batch-level inventory. Enforces `UNIQUE(medicine_id, batch_number)`. | `id`, `medicine_id` (FK), `batch_number`, `expiry_date`, `quantity_on_hand`, `quantity_received`, `unit_cost`, `pack_purchase_price`, `supplier_id` (FK, nullable), `receipt_reference`, `status` (`active`/`quarantined`/`expired`/`depleted`), `created_at`                                                                                                                                                                             |
+| **stock_movements**  | Append-only immutable ledger of every stock mutation.                | `id`, `medicine_batch_id` (FK), `medicine_id` (FK), `movement_type` (`opening_balance`/`goods_receipt`/`dispensing`/`adjustment_increase`/`adjustment_decrease`/`quarantine`/`write_off`/`return`), `quantity` (positive for credit, negative for debit), `balance_before`, `balance_after`, `reference_type`, `reference_id`, `reason`, `notes`, `performed_by` (FK to users), `performed_by_name`, `client_mutation_id`, `performed_at` |
 
 > [!IMPORTANT]
-> `medicine_batches.quantity_on_hand` is the authoritative stock level. It is updated only within transactions that also write to `stock_movements`. The sum of all movements for a batch should always equal the current `quantity_on_hand`. This invariant can be verified by a reconciliation query.
+> **Authoritative Inventory Invariants (Phase 6):**
+>
+> 1. `medicine_batches.quantity_on_hand` is the authoritative balance. It is updated **only** within transactional operations that synchronously append a corresponding row to `stock_movements`.
+> 2. `quantity_on_hand >= 0` is strictly enforced at both schema constraint and application levels; deductions exceeding on-hand quantities are rejected.
+> 3. Batches with distinct expiry dates, costs, or origins are never merged.
+> 4. Expired batches (`expiry_date <= CURRENT_DATE`) are excluded from available dispensing quantities and must undergo authorized quarantine or write-off workflows.
+> 5. Stock adjustments require an authorized business reason (`physical_count_variance`, `damaged_in_storage`, `expired_stock`, `spillage_breakage`, `data_entry_correction`, `other`) and are audit logged.
+> 6. Idempotency keys (`client_mutation_id`) protect against duplicate submissions.
 
-### 3.6 Suppliers & Purchasing
+### 3.6 Suppliers & Purchasing (Phase 7 Implementation)
 
-| Entity                   | Purpose                                                         | Key Fields                                                                                                                                                                                                          |
-| ------------------------ | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **suppliers**            | Supplier directory.                                             | `id`, `name`, `contact_person`, `phone`, `email`, `address`, `ntn_number`, `is_active`, `created_at`, `deleted_at`                                                                                                  |
-| **purchase_orders**      | Orders placed with suppliers.                                   | `id`, `po_number` (unique), `supplier_id` (FK), `order_date`, `expected_delivery_date`, `status` (draft/submitted/partially_received/fully_received/cancelled), `total_amount`, `notes`, `created_by`, `created_at` |
-| **purchase_order_items** | Line items on a purchase order.                                 | `id`, `purchase_order_id` (FK), `medicine_id` (FK), `quantity_ordered`, `quantity_received` (running total), `unit_price`, `total_price`                                                                            |
-| **goods_receipts**       | Record of goods received against a purchase order.              | `id`, `grn_number` (unique, Goods Receipt Note), `purchase_order_id` (FK), `supplier_id` (FK), `received_date`, `received_by` (FK to users), `notes`, `created_at`                                                  |
-| **goods_receipt_items**  | Items received in a GRN, creating or updating medicine batches. | `id`, `goods_receipt_id` (FK), `purchase_order_item_id` (FK, nullable), `medicine_id` (FK), `batch_number`, `expiry_date`, `quantity_received`, `unit_cost`, `total_cost`                                           |
+| Entity                   | Purpose                                                                          | Key Fields                                                                                                                                                                                                                                                         |
+| ------------------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **suppliers**            | Master distributor directory with contact and tax credentials.                   | `id`, `name` (unique), `contact_person`, `phone`, `email`, `address`, `ntn_number` (unique, nullable), `is_active`, `created_at`, `updated_at`, `deleted_at`                                                                                                       |
+| **purchase_orders**      | Orders issued to pharmaceutical distributors.                                    | `id`, `po_number` (unique), `supplier_id` (FK), `supplier_name`, `order_date`, `expected_delivery_date`, `status` (`draft`/`submitted`/`partially_received`/`fully_received`/`cancelled`), `total_amount` (numeric), `notes`, `created_by` (FK), `created_at`      |
+| **purchase_order_items** | Line items on a purchase order with agreed unit costs.                           | `id`, `purchase_order_id` (FK), `medicine_id` (FK), `medicine_name`, `medicine_strength`, `quantity_ordered`, `quantity_received` (running total), `unit_cost` (numeric), `total_cost` (numeric)                                                                   |
+| **goods_receipts**       | Physical intake ledger (Goods Receipt Notes) against purchase orders.            | `id`, `grn_number` (unique), `purchase_order_id` (FK), `purchase_order_number`, `supplier_id` (FK), `supplier_name`, `received_date`, `received_by` (FK), `received_by_name`, `delivery_challan_number`, `supplier_invoice_number`, `notes`, `created_at`          |
+| **goods_receipt_items**  | Individual medicine intake lines with lot, expiry, accepted/rejected quantities. | `id`, `goods_receipt_id` (FK), `purchase_order_item_id` (FK), `medicine_id` (FK), `medicine_name`, `batch_number`, `expiry_date`, `quantity_received`, `quantity_accepted`, `quantity_rejected`, `rejection_reason`, `unit_cost` (numeric), `total_cost` (numeric) |
 
-### 3.7 Supplier Payables
+> [!IMPORTANT]
+> **Goods Receiving & Stock Intake Invariants (Phase 7):**
+>
+> 1. Goods receiving intake routes **exclusively** through the shared `inventoryStore.receiveGoodsBatch(...)` transactional mechanism. Direct stock table manipulation is strictly forbidden.
+> 2. Every accepted intake atomically credits the batch on-hand quantity and synchronously creates an append-only `stock_movements` record of type `goods_receipt`.
+> 3. Rejected quantities (`quantity_rejected > 0`) are recorded on the GRN item along with the rejection reason for vendor discrepancy tracking, but are **strictly excluded** from stock increments.
+> 4. Over-receipt protection prevents receiving quantities that exceed the outstanding quantity on the purchase order line (`quantity_received <= quantity_ordered - existing_received`).
+> 5. Expiry enforcement requires `expiry_date > CURRENT_DATE`. Past-dated batches are rejected at validation.
 
-| Entity                | Purpose                                  | Key Fields                                                                                                                                                                               |
-| --------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **supplier_invoices** | Invoices received from suppliers.        | `id`, `invoice_number`, `supplier_id` (FK), `goods_receipt_id` (FK, nullable), `invoice_date`, `due_date`, `total_amount`, `status` (pending/partially_paid/paid/disputed), `created_at` |
-| **supplier_payments** | Payments made against supplier invoices. | `id`, `supplier_invoice_id` (FK), `payment_date`, `amount`, `payment_method`, `reference_number`, `notes`, `approved_by` (FK to users), `created_at`                                     |
+### 3.7 Supplier Payables & Multi-Invoice Allocations (Phase 7 Implementation)
+
+| Entity                           | Purpose                                                               | Key Fields                                                                                                                                                                                                                                                                                                                                            |
+| -------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **supplier_invoices**            | Commercial invoices received from suppliers against GRNs or POs.      | `id`, `invoice_number`, `supplier_id` (FK), `supplier_name`, `purchase_order_id` (FK, nullable), `purchase_order_number`, `goods_receipt_id` (FK, nullable), `goods_receipt_number`, `invoice_date`, `due_date`, `total_amount`, `paid_amount`, `outstanding_balance`, `status` (`pending`/`partially_paid`/`paid`/`disputed`), `notes`, `created_at` |
+| **supplier_payments**            | Payment disbursement vouchers issued to suppliers.                    | `id`, `voucher_number` (unique), `supplier_id` (FK), `supplier_name`, `payment_date`, `total_amount` (numeric), `payment_method` (`bank_transfer`/`cheque`/`cash`/`online`), `reference_number`, `notes`, `recorded_by` (FK), `recorded_by_name`, `created_at`                                                                                        |
+| **supplier_payment_allocations** | 1-to-many allocation distributing a payment across multiple invoices. | `id`, `payment_id` (FK), `invoice_id` (FK), `invoice_number`, `allocated_amount` (numeric), `created_at`                                                                                                                                                                                                                                              |
+
+> [!NOTE]
+> **Financial & Allocation Rules:**
+>
+> 1. Monetary calculations are executed via `src/lib/decimal.ts` (`roundMoney`, `multiplyMoney`, `addMoney`, `subtractMoney`) using 2-decimal fixed precision. Binary floating-point arithmetic is never used for authoritative ledger totals.
+> 2. A single disbursement voucher may settle or partially settle multiple outstanding invoices from the same supplier.
+> 3. Payment allocation validation enforces that the sum of line allocations matches the total payment amount, and no line allocation exceeds the invoice's remaining outstanding balance.
+> 4. Invoice balances and status (`pending` -> `partially_paid` -> `paid`) are updated atomically with voucher creation.
 
 ### 3.8 Hospital Claims & Billing
 
@@ -278,3 +303,63 @@ When the database phase begins:
 4. Destructive migrations (column drops, type changes) require explicit approval.
 5. Seed data is separate from schema migrations.
 6. A rollback plan will accompany every migration.
+
+---
+
+## 10. Phase 8: Atomic Dispensing RPCs & Concurrency Locking
+
+Migration: [`supabase/migrations/20261013000005_dispensing_rpc.sql`](file:///t:/DHQ%20KOhat%20Project/medledger/supabase/migrations/20261013000005_dispensing_rpc.sql)
+
+### 10.1 `fn_dispense_prescription_atomic`
+
+- **Execution Boundary:** Single PostgreSQL transaction enclosing prescription item validation, batch availability checks, stock deduction, append-only `stock_movements` creation, and prescription status transition.
+- **Concurrency Mechanism:** Executes `SELECT quantity_on_hand, status, expiry_date FROM medicine_batches WHERE id = ... FOR UPDATE;` and `SELECT prescribed_quantity, dispensed_quantity FROM prescription_items WHERE id = ... FOR UPDATE;` to prevent race conditions across parallel dispensary counters.
+- **Strict Invariants:**
+  1. `quantity_on_hand >= p_quantity` (never negative stock).
+  2. `status = 'available'` and `expiry_date > CURRENT_DATE` (quarantined or expired stock rejected at DB level).
+  3. `dispensed_quantity + p_quantity <= prescribed_quantity` (over-dispensing rejected).
+  4. Automatic rollback (`EXCEPTION WHEN OTHERS THEN RAISE;`) ensures that if any line in a multi-item prescription fails, zero stock is deducted and zero records are committed.
+
+### 10.2 `fn_reverse_dispensing_atomic`
+
+- **Execution Boundary:** Authorized compensating transaction that restores deducted stock back to the specific batch lots.
+- **Double-Reversal Guard:** Re-verifies `dispensing_records.deleted_at IS NULL` under `FOR UPDATE` lock; raises exception if already reversed.
+- **Traceability:** Creates compensating `stock_movements` rows with `movement_type = 'adjustment'`, `reference_type = 'dispensing_reversal'`, storing the audit reason, operator identity, and restoring prescription remaining balances.
+
+---
+
+## 11. Phase 9: Hospital Claims & Reimbursement RPCs
+
+Migration: [`supabase/migrations/20261013000006_claims_rpc.sql`](file:///t:/DHQ%20KOhat%20Project/medledger/supabase/migrations/20261013000006_claims_rpc.sql)
+
+### 11.1 Full Lifecycle Status State Machine
+
+The `claims.status` check constraint supports the complete hospital reimbursement lifecycle:
+`'draft' | 'submitted' | 'under_review' | 'approved' | 'partially_approved' | 'rejected' | 'returned' | 'partially_paid' | 'paid' | 'cancelled'`
+
+- `draft`: Claim prepared and saved by pharmacy finance staff; can be edited or deleted.
+- `submitted`: Finalized and transmitted for DHQ Hospital review; locks line items.
+- `under_review`: Actively under evaluation by the hospital Medical Superintendent / Finance review committee.
+- `approved`: Formally authorized for full reimbursement; approves all claim lines.
+- `partially_approved`: Authorized with specific line-item adjustments or rejections.
+- `rejected`: Fully rejected by hospital review committee; requires mandatory justification reason.
+- `returned`: Returned to pharmacy billing staff for clinical or administrative clarification; allows revision and re-submission.
+- `partially_paid`: Initial installment received from DHQ District Treasury (`paid_amount < approved_amount`).
+- `paid`: Full approved reimbursement received (`paid_amount == approved_amount`, `outstanding_balance == 0`).
+- `cancelled`: Revoked draft or returned claim.
+
+### 11.2 `fn_create_claim_atomic`
+
+- **Execution Boundary:** Single PostgreSQL transaction verifying that every line item references an exact, completed (not reversed) dispensing item (`dispensing_items.id`).
+- **Duplicate Claim Safeguard:** Calculates total claimed quantity across active claims (`status NOT IN ('cancelled', 'rejected')`) under `FOR UPDATE` lock on `dispensing_items`. Throws exception if requested claim quantity exceeds remaining claimable quota (`quantity_dispensed - already_claimed`).
+- **CRITICAL INVARIANT:** Claim creation and approval **NEVER** deducts inventory or touches `stock_movements`. Physical inventory was deducted strictly during the dispensing event.
+
+### 11.3 `fn_review_claim_atomic`
+
+- **Execution Boundary:** Atomic transition recording reviewer decision, approved amounts, line-item approvals/rejections, and entry in `claim_approvals`.
+- **Audit Mandate:** Requires non-empty clinical/administrative comments for rejections, returns, or partial approvals.
+
+### 11.4 `fn_record_claim_payment_atomic`
+
+- **Execution Boundary:** Atomic payment recording in `claim_payments` with automatic transition to `partially_paid` or `paid`.
+- **Over-Allocation Prevention:** Validates that `total_already_paid + p_amount <= claim.approved_amount` under row lock on `claims`. Prevents recording payments in excess of approved reimbursement.

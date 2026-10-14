@@ -1,10 +1,10 @@
 /**
- * MedLedger — Reports Module
+ * MedLedger — Reporting & Audit Module
  *
- * Operational and financial reports: stock status, dispensing history,
- * purchase summaries, claim summaries, expiry reports.
- *
- * Implementation: Phase 12
+ * Operational and financial reports, RFC 4180 CSV exports, and compliance audit trail.
  */
 
-export {};
+export * from './types';
+export * from './csv-exporter';
+export * from './generators';
+export * from './actions';
