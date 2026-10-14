@@ -88,6 +88,13 @@ function getStandaloneServerSnapshot(): boolean {
   return false;
 }
 
+if (typeof window !== 'undefined') {
+  (window as unknown as { __triggerUpdateAvailable?: () => void }).__triggerUpdateAvailable =
+    () => {
+      window.dispatchEvent(new CustomEvent('medledger:update-available'));
+    };
+}
+
 export function PWAProvider({ children }: { children: ReactNode }) {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstallable, setIsInstallable] = useState(false);
