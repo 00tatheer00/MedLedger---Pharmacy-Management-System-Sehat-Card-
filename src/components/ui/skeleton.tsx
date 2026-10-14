@@ -2,5 +2,13 @@ import { type HTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
 
 export function Skeleton({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('animate-pulse rounded-md bg-hover-bg/80', className)} {...props} />;
+  return (
+    <div
+      className={cn(
+        'animate-pulse rounded-lg bg-slate-200/90 dark:bg-slate-700/80 shadow-2xs',
+        className,
+      )}
+      {...props}
+    />
+  );
 }
