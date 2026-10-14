@@ -49,7 +49,7 @@ export function TabsList({ children, className }: { children: ReactNode; classNa
     <div
       role="tablist"
       className={cn(
-        'inline-flex h-11 items-center justify-center rounded-xl bg-hover-bg p-1.5 text-text-secondary border border-border/60',
+        'inline-flex h-11 items-center justify-center rounded-full bg-slate-200/50 backdrop-blur-xl p-1 text-text-secondary border border-white/60 shadow-[inset_0_1px_2px_rgba(0,0,0,0.04)]',
         className,
       )}
     >
@@ -77,10 +77,10 @@ export function TabsTrigger({
       aria-selected={isActive}
       onClick={() => setActiveTab(value)}
       className={cn(
-        'inline-flex items-center justify-center whitespace-nowrap rounded-lg px-4 py-1.5 text-sm font-semibold transition-all duration-200 focus-ring',
+        'inline-flex items-center justify-center whitespace-nowrap rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold transition-all duration-200 focus-ring ios-press',
         isActive
-          ? 'bg-card-bg text-text-primary shadow-sm font-bold'
-          : 'text-text-secondary hover:text-text-primary hover:bg-card-bg/50',
+          ? 'bg-white text-text-primary shadow-[0_2px_10px_rgba(0,0,0,0.06),inset_0_1px_1px_rgba(255,255,255,0.95)] font-bold'
+          : 'text-text-secondary hover:text-text-primary hover:bg-white/40',
         className,
       )}
     >

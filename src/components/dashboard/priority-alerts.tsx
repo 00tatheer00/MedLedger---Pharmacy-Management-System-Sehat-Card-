@@ -61,10 +61,10 @@ export function PriorityAlerts() {
 
   return (
     <>
-      <Card className="h-full border-2 border-border/80 shadow-sm">
-        <CardHeader className="px-5 py-4 border-b border-border/80 flex flex-row items-center justify-between">
+      <Card className="h-full border border-white/70 bg-white/75 backdrop-blur-2xl rounded-[28px] shadow-[0_10px_32px_0_rgba(15,23,42,0.04),inset_0_1px_1px_0_rgba(255,255,255,0.95)]">
+        <CardHeader className="px-5 py-4 border-b border-border/50 flex flex-row items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-rose-100 text-rose-700 shadow-xs">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-500/15 text-rose-600 shadow-[0_0_14px_rgba(244,63,94,0.25)]">
               <ShieldAlert className="h-5 w-5" />
             </div>
             <div>
@@ -76,7 +76,7 @@ export function PriorityAlerts() {
               </p>
             </div>
           </div>
-          <span className="bg-rose-100 text-rose-800 border border-rose-200 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+          <span className="bg-rose-500/12 text-rose-800 border border-rose-400/40 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-2xs">
             {priorityAlerts.length} Flagged
           </span>
         </CardHeader>
@@ -88,7 +88,7 @@ export function PriorityAlerts() {
             return (
               <div
                 key={alert.id}
-                className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 sm:p-4 rounded-xl border-2 bg-card-bg shadow-xs transition-all duration-300 ease-out group hover:-translate-y-0.5 hover:shadow-md cursor-pointer ${config.border}`}
+                className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[20px] border bg-white/60 backdrop-blur-xl shadow-xs transition-all duration-300 ease-out group hover:-translate-y-1 hover:bg-white/85 hover:shadow-apple-float cursor-pointer ios-press ${config.border}`}
                 onClick={() => setSelectedAlert(alert)}
                 role="button"
                 tabIndex={0}
@@ -101,14 +101,14 @@ export function PriorityAlerts() {
               >
                 <div className="flex items-start gap-3">
                   <div
-                    className={`flex h-10 w-10 items-center justify-center rounded-lg ${config.iconBg} ${config.iconColor} shrink-0 mt-0.5 shadow-xs`}
+                    className={`flex h-11 w-11 items-center justify-center rounded-2xl ${config.iconBg} ${config.iconColor} shrink-0 mt-0.5 shadow-xs group-hover:scale-105 transition-transform`}
                   >
                     <Icon className="h-5 w-5" strokeWidth={2.2} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <span
-                        className={`text-[11px] font-bold px-2 py-0.5 rounded-full border ${config.badgeClass}`}
+                        className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border backdrop-blur-md shadow-2xs ${config.badgeClass}`}
                       >
                         {config.badge}
                       </span>
@@ -133,7 +133,7 @@ export function PriorityAlerts() {
                       e.stopPropagation();
                       setSelectedAlert(alert);
                     }}
-                    className="font-bold text-xs h-8.5 px-3 rounded-lg border hover:border-primary"
+                    className="font-bold text-xs h-8.5 px-3.5 rounded-full border hover:border-primary shadow-2xs"
                   >
                     Details
                   </Button>

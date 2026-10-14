@@ -26,20 +26,21 @@ export function WelcomeBanner({ isLiveDatabase = true }: WelcomeBannerProps) {
   const formattedDate = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border-2 border-teal-600/30 bg-gradient-to-r from-teal-800 via-teal-700 to-emerald-800 px-5 py-5 sm:px-6 sm:py-5.5 shadow-lg text-white">
-      {/* Decorative ambient background */}
-      <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-      <div className="absolute bottom-0 left-1/3 w-36 h-36 bg-emerald-400/10 rounded-full blur-xl translate-y-1/3 pointer-events-none" />
+    <div className="relative overflow-hidden rounded-[28px] border border-white/40 bg-gradient-to-br from-teal-900/95 via-teal-800/90 to-emerald-950/95 px-5 py-5 sm:px-6 sm:py-6 shadow-[0_16px_50px_rgba(13,148,136,0.22)] text-white backdrop-blur-3xl">
+      {/* Decorative radiant ambient lights */}
+      <div className="absolute top-0 right-0 w-72 h-72 bg-cyan-400/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+      <div className="absolute bottom-0 left-1/3 w-56 h-56 bg-emerald-400/20 rounded-full blur-2xl translate-y-1/3 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-white/10 pointer-events-none" />
 
       <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           {/* Hospital & Status badges */}
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-white/20 border border-white/30 px-3 py-1 rounded-full text-white backdrop-blur-md shadow-sm">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-white/20 border border-white/30 px-3.5 py-1 rounded-full text-white backdrop-blur-xl shadow-xs">
               <Building2 className="h-3.5 w-3.5 text-emerald-200" />
               DHQ Hospital Kohat • مرکزی فارمیسی
             </span>
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-emerald-400/25 border border-emerald-300/40 px-3 py-1 rounded-full text-emerald-100 backdrop-blur-md">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-emerald-400/25 border border-emerald-300/40 px-3.5 py-1 rounded-full text-emerald-100 backdrop-blur-xl shadow-xs">
               <CheckCircle2 className="h-3.5 w-3.5 text-emerald-300" />
               {isLiveDatabase ? 'Live Supabase Connected' : 'Live Counter Active'}
             </span>
@@ -58,11 +59,11 @@ export function WelcomeBanner({ isLiveDatabase = true }: WelcomeBannerProps) {
 
           {/* Quick Info Tags */}
           <div className="flex items-center gap-2.5 pt-0.5 flex-wrap text-xs">
-            <span className="inline-flex items-center gap-1 font-semibold bg-white/15 px-2.5 py-1 rounded-lg border border-white/20">
+            <span className="inline-flex items-center gap-1.5 font-semibold bg-white/15 px-3 py-1 rounded-full border border-white/25 backdrop-blur-md">
               <HeartPulse className="h-3.5 w-3.5 text-emerald-300" />
               OPD & Emergency Ready
             </span>
-            <span className="inline-flex items-center gap-1 font-semibold bg-white/15 px-2.5 py-1 rounded-lg border border-white/20">
+            <span className="inline-flex items-center gap-1.5 font-semibold bg-white/15 px-3 py-1 rounded-full border border-white/25 backdrop-blur-md">
               <ShieldCheck className="h-3.5 w-3.5 text-teal-200" />
               KP Sehat Sahulat Program
             </span>
@@ -70,7 +71,7 @@ export function WelcomeBanner({ isLiveDatabase = true }: WelcomeBannerProps) {
         </div>
 
         {/* Date / Calendar Widget */}
-        <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-1 shrink-0 rounded-xl bg-white/15 backdrop-blur-md px-4 py-3 border border-white/20 shadow-inner">
+        <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-1 shrink-0 rounded-[22px] bg-white/15 backdrop-blur-2xl px-4.5 py-3.5 border border-white/25 shadow-inner">
           <div className="flex items-center gap-1.5 text-emerald-200">
             <Calendar className="h-4 w-4" />
             <span className="text-[11px] uppercase font-bold tracking-wider">

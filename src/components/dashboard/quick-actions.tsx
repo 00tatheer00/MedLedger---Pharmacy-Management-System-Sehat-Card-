@@ -87,10 +87,10 @@ const actions: ActionItem[] = [
 
 export function QuickActions() {
   return (
-    <Card className="border-2 border-border/80 shadow-sm">
-      <CardHeader className="px-5 py-4 border-b border-border/80 flex flex-row items-center justify-between">
+    <Card className="border border-white/70 bg-white/75 backdrop-blur-2xl rounded-[28px] shadow-[0_10px_32px_0_rgba(15,23,42,0.04),inset_0_1px_1px_0_rgba(255,255,255,0.95)]">
+      <CardHeader className="px-5 py-4 border-b border-border/50 flex flex-row items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/15 text-teal shadow-[0_0_14px_rgba(20,184,166,0.25)]">
             <span className="text-base">⚡</span>
           </div>
           <div>
@@ -115,18 +115,18 @@ export function QuickActions() {
               <Link
                 key={action.id}
                 href={action.href}
-                className={`flex flex-col justify-between p-4 sm:p-5 rounded-xl border-2 bg-card-bg shadow-xs transition-all duration-300 ease-out group cursor-pointer hover:-translate-y-1 hover:shadow-lg active:scale-[0.98] ${action.borderColor} ${action.hoverGlow}`}
+                className={`flex flex-col justify-between p-4.5 sm:p-5 rounded-[22px] border bg-white/60 backdrop-blur-xl shadow-xs transition-all duration-300 ease-out group cursor-pointer hover:-translate-y-1.5 hover:bg-white/85 hover:shadow-apple-float ios-press ${action.borderColor} ${action.hoverGlow}`}
               >
                 <div>
                   {/* Icon & Badge Header */}
                   <div className="flex items-center justify-between w-full mb-3.5">
                     <div
-                      className={`flex h-12 w-12 items-center justify-center rounded-xl ${action.iconBg} ${action.iconColor} group-hover:scale-105 transition-transform duration-300 shadow-xs`}
+                      className={`flex h-12 w-12 items-center justify-center rounded-2xl ${action.iconBg} ${action.iconColor} group-hover:scale-105 transition-transform duration-300 shadow-xs`}
                     >
                       <Icon className="h-6 w-6" strokeWidth={2.2} />
                     </div>
                     <span
-                      className={`${action.badgeBg} px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide`}
+                      className={`${action.badgeBg} px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wide border border-white/40 backdrop-blur-md shadow-2xs`}
                     >
                       {action.badge}
                     </span>
@@ -150,7 +150,7 @@ export function QuickActions() {
 
                 {/* Direct action button */}
                 <div
-                  className={`w-full py-2 px-3 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors ${action.buttonColor}`}
+                  className={`w-full py-2.5 px-3.5 rounded-full font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors ios-press ${action.buttonColor}`}
                 >
                   <span>Open Workflow</span>
                   <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />

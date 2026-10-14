@@ -48,7 +48,7 @@ export function Dialog({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/60 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-xl animate-in fade-in duration-200"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -59,12 +59,12 @@ export function Dialog({
       <div
         ref={dialogRef}
         className={cn(
-          'relative w-full max-w-lg rounded-2xl border border-border bg-card-bg p-6 sm:p-8 shadow-dropdown',
+          'relative w-full max-w-lg rounded-[28px] border border-white/70 bg-white/85 backdrop-blur-3xl p-6 sm:p-8 shadow-[0_25px_70px_rgba(15,23,42,0.22),inset_0_1px_1px_0_rgba(255,255,255,0.95)]',
           'animate-in zoom-in-95 duration-200',
           className,
         )}
       >
-        <div className="flex items-start justify-between gap-4 pb-5 border-b border-border">
+        <div className="flex items-start justify-between gap-4 pb-5 border-b border-border/50">
           <div>
             <h3 id="dialog-title" className="text-xl font-bold text-text-primary">
               {title}
@@ -77,7 +77,7 @@ export function Dialog({
             variant="ghost"
             size="sm"
             onClick={onClose}
-            className="h-10 w-10 p-0 text-text-muted hover:text-text-primary rounded-xl"
+            className="h-10 w-10 p-0 text-text-muted hover:text-text-primary rounded-full hover:bg-white/60"
             aria-label="Close dialog"
           >
             <X className="h-5 w-5" />

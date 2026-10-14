@@ -25,7 +25,7 @@ export const TableHeader = forwardRef<
 >(({ className, ...props }, ref) => (
   <thead
     ref={ref}
-    className={cn('[&_tr]:border-b border-border bg-page-bg/60', className)}
+    className={cn('[&_tr]:border-b border-border/50 bg-white/40 backdrop-blur-md', className)}
     {...props}
   />
 ));
@@ -46,7 +46,7 @@ export const TableFooter = forwardRef<
   <tfoot
     ref={ref}
     className={cn(
-      'border-t border-border bg-page-bg/50 font-medium [&>tr]:last:border-b-0',
+      'border-t border-border/50 bg-white/40 backdrop-blur-md font-medium [&>tr]:last:border-b-0',
       className,
     )}
     {...props}
@@ -59,7 +59,7 @@ export const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTable
     <tr
       ref={ref}
       className={cn(
-        'border-b border-border transition-colors duration-150 hover:bg-hover-bg data-[state=selected]:bg-hover-bg',
+        'border-b border-border/40 transition-colors duration-150 hover:bg-white/60 data-[state=selected]:bg-white/80',
         className,
       )}
       {...props}

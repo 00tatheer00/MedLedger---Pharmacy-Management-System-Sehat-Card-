@@ -249,12 +249,12 @@ export function Header({
   };
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-border bg-card-bg/98 px-5 sm:px-6 backdrop-blur-sm">
+    <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-white/40 bg-white/70 backdrop-blur-2xl px-5 sm:px-6 shadow-[0_4px_24px_rgba(0,0,0,0.03)]">
       {/* Left: Mobile Toggle & Page Title */}
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleMobileMenu}
-          className="lg:hidden rounded-lg p-2 text-text-secondary hover:bg-hover-bg hover:text-text-primary focus-ring transition-colors"
+          className="lg:hidden rounded-xl p-2 text-text-secondary hover:bg-white/60 hover:text-text-primary focus-ring transition-colors"
           aria-label="Open navigation menu"
         >
           <Menu className="h-5 w-5" />
@@ -287,14 +287,14 @@ export function Header({
               setSearchOpen(true);
               executeSearch(searchQuery);
             }}
-            className="w-full h-10 pl-10 pr-16 rounded-xl border border-border bg-page-bg/60 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus-ring transition-all hover:border-primary/40 focus:border-primary cursor-pointer"
+            className="w-full h-10 pl-10 pr-16 rounded-full border border-white/80 bg-white/60 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus-ring transition-all hover:border-teal-500/40 hover:bg-white/85 shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] backdrop-blur-md cursor-pointer"
           />
           <button
             onClick={() => {
               setSearchOpen(true);
               executeSearch(searchQuery);
             }}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md border border-border bg-card-bg px-2 py-0.5 text-[10px] font-mono text-text-muted shadow-xs hover:text-text-primary transition-colors cursor-pointer"
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full border border-white/60 bg-white/80 px-2 py-0.5 text-[10px] font-mono text-text-muted shadow-2xs hover:text-text-primary hover:bg-white transition-colors cursor-pointer"
             aria-label="Search shortcut"
           >
             Ctrl K
@@ -311,7 +311,7 @@ export function Header({
             variant="ghost"
             size="sm"
             onClick={() => setShowNotifications(!showNotifications)}
-            className="relative h-11 w-11 p-0 rounded-xl text-text-secondary hover:text-text-primary hover:bg-hover-bg"
+            className="relative h-10 w-10 p-0 rounded-full text-text-secondary hover:text-text-primary hover:bg-white/60 backdrop-blur-sm transition-all"
             aria-label="Open notifications"
           >
             <Bell className="h-5 w-5" />
@@ -331,8 +331,8 @@ export function Header({
                 onClick={() => setShowNotifications(false)}
                 aria-hidden="true"
               />
-              <div className="absolute right-0 mt-3 z-50 w-96 sm:w-[420px] rounded-2xl border border-border bg-card-bg shadow-dropdown p-5 animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex items-center justify-between pb-4 border-b border-border">
+              <div className="absolute right-0 mt-3 z-50 w-96 sm:w-[420px] rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-dropdown p-5 animate-in fade-in zoom-in-95 duration-200">
+                <div className="flex items-center justify-between pb-4 border-b border-border/60">
                   <div className="flex items-center gap-2.5">
                     <h4 className="text-base font-bold text-text-primary">System Alerts</h4>
                     {unreadCount > 0 ? (
@@ -429,9 +429,9 @@ export function Header({
                 onClick={() => setShowUserMenu(false)}
                 aria-hidden="true"
               />
-              <div className="absolute right-0 mt-3 z-50 w-80 rounded-2xl border border-border bg-card-bg shadow-dropdown p-5 animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex items-center gap-4 pb-4 border-b border-border">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-navy to-primary text-white text-base font-bold shadow-md">
+              <div className="absolute right-0 mt-3 z-50 w-80 rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-dropdown p-5 animate-in fade-in zoom-in-95 duration-200">
+                <div className="flex items-center gap-4 pb-4 border-b border-border/60">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-navy to-primary text-white text-base font-bold shadow-md ring-4 ring-teal/20">
                     AK
                   </div>
                   <div>
@@ -463,10 +463,10 @@ export function Header({
                           setActiveRole(roleKey);
                           setShowUserMenu(false);
                         }}
-                        className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                        className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ios-press ${
                           activeRole === roleKey
-                            ? 'bg-primary-light text-primary font-bold border-2 border-primary/30'
-                            : 'text-text-secondary hover:bg-hover-bg hover:text-text-primary border-2 border-transparent'
+                            ? 'bg-primary/10 text-primary font-bold border border-primary/30 shadow-xs'
+                            : 'text-text-secondary hover:bg-white/60 hover:text-text-primary border border-transparent'
                         }`}
                       >
                         <span>{SYSTEM_ROLES[roleKey].name}</span>
@@ -478,7 +478,7 @@ export function Header({
                   </div>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-border flex items-center justify-between text-sm text-text-muted">
+                <div className="mt-4 pt-4 border-t border-border/60 flex items-center justify-between text-sm text-text-muted">
                   <span className="flex items-center gap-1.5">
                     <ShieldCheck className="h-4 w-4 text-emerald-500" />
                     Supabase RBAC
@@ -493,12 +493,12 @@ export function Header({
 
       {/* Global Omni-Search Command Palette (Ctrl+K) */}
       {searchOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-10 sm:pt-16 px-3 sm:px-4 bg-navy-dark/75 backdrop-blur-md animate-in fade-in duration-150">
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-10 sm:pt-16 px-3 sm:px-4 bg-slate-950/40 backdrop-blur-xl animate-in fade-in duration-150">
           <div className="fixed inset-0" onClick={handleCloseSearch} aria-hidden="true" />
 
-          <div className="relative z-10 w-full max-w-2xl rounded-2xl border border-teal/40 bg-card-bg shadow-2xl shadow-navy-dark/50 overflow-hidden flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-150">
+          <div className="relative z-10 w-full max-w-2xl rounded-[28px] border border-white/60 bg-white/90 backdrop-blur-3xl shadow-[0_25px_70px_rgba(15,23,42,0.18)] overflow-hidden flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-150">
             {/* Search Input Bar */}
-            <div className="flex items-center px-4 sm:px-5 py-3 sm:py-4 border-b border-border bg-card-bg gap-3 shrink-0">
+            <div className="flex items-center px-4 sm:px-5 py-3.5 sm:py-4 border-b border-border/60 bg-white/40 gap-3 shrink-0">
               <Search className="h-5 w-5 text-teal shrink-0" />
               <input
                 ref={searchInputRef}
@@ -513,14 +513,14 @@ export function Header({
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="text-xs text-text-muted hover:text-text-primary px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer"
+                  className="text-xs text-text-muted hover:text-text-primary px-2.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer"
                 >
                   Clear
                 </button>
               )}
               <button
                 onClick={handleCloseSearch}
-                className="text-text-muted hover:text-text-primary p-1 rounded-lg hover:bg-hover-bg transition-colors cursor-pointer"
+                className="text-text-muted hover:text-text-primary p-1.5 rounded-full hover:bg-white/60 transition-colors cursor-pointer"
                 aria-label="Close search"
               >
                 <X className="h-5 w-5" />
@@ -550,13 +550,13 @@ export function Header({
                       setSelectedIndex(0);
                     }}
                     className={cn(
-                      'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all shrink-0 cursor-pointer',
+                      'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ios-press',
                       isActive
-                        ? 'bg-teal text-white shadow-xs'
-                        : 'text-text-secondary hover:text-text-primary hover:bg-slate-200/70',
+                        ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-[0_2px_12px_rgba(20,184,166,0.35)]'
+                        : 'text-text-secondary hover:text-text-primary hover:bg-slate-200/60',
                     )}
                   >
-                    <Icon className="h-3 w-3" />
+                    <Icon className="h-3.5 w-3.5" />
                     <span>{cat.label === 'All' ? 'All (تمام)' : cat.label}</span>
                     {count > 0 && (
                       <span
@@ -585,7 +585,7 @@ export function Header({
                     <button
                       key={tag.label}
                       onClick={() => handleTagClick(tag.label)}
-                      className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-card-bg border border-border hover:border-teal/50 hover:bg-teal-bg/60 hover:text-teal transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                      className="px-3 py-1 rounded-full text-xs font-semibold bg-white/80 border border-white/80 hover:border-teal-500/50 hover:bg-teal-50 hover:text-teal transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs backdrop-blur-sm ios-press"
                     >
                       <span>{tag.label}</span>
                       <span className="text-[10px] text-text-muted font-normal">({tag.type})</span>
@@ -596,7 +596,7 @@ export function Header({
             )}
 
             {/* Search Results Area */}
-            <div className="flex-1 overflow-y-auto p-2 sm:p-3 space-y-1 scrollbar-thin">
+            <div className="flex-1 overflow-y-auto p-2 sm:p-3 space-y-1.5 scrollbar-thin">
               {activeResults.length > 0 ? (
                 <>
                   <div className="px-3 py-1 flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-text-muted">
@@ -617,16 +617,16 @@ export function Header({
                         onClick={handleCloseSearch}
                         onMouseEnter={() => setSelectedIndex(idx)}
                         className={cn(
-                          'flex items-center justify-between p-3 rounded-xl transition-all duration-150 border',
+                          'flex items-center justify-between p-3 rounded-2xl transition-all duration-150 border ios-press',
                           isSelected
-                            ? 'bg-teal-bg border-teal/40 shadow-xs'
-                            : 'bg-card-bg border-transparent hover:bg-hover-bg hover:border-border/60',
+                            ? 'bg-teal-50/80 border-teal-500/30 shadow-xs'
+                            : 'bg-white/40 border-transparent hover:bg-white/80 hover:border-white/60',
                         )}
                       >
                         <div className="flex items-center gap-3 min-w-0">
                           <div
                             className={cn(
-                              'h-9 w-9 rounded-xl flex items-center justify-center border shrink-0',
+                              'h-9 w-9 rounded-2xl flex items-center justify-center border shrink-0 shadow-xs',
                               item.category === 'Medicine'
                                 ? 'bg-teal/15 text-teal border-teal/30'
                                 : item.category === 'Patient'

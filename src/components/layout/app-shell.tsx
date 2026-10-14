@@ -15,7 +15,7 @@ export function AppShell({ children, title, subtitle }: AppShellProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex bg-page-bg">
+    <div className="min-h-screen flex bg-page-bg apple-mesh-bg transition-colors duration-500">
       {/* Sidebar navigation */}
       <Sidebar mobileOpen={mobileMenuOpen} onCloseMobile={() => setMobileMenuOpen(false)} />
 

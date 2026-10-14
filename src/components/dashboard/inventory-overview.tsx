@@ -62,10 +62,10 @@ export function InventoryOverview() {
   ];
 
   return (
-    <Card className="h-full flex flex-col justify-between border-2 border-border/80 shadow-sm">
-      <CardHeader className="px-5 py-4 border-b border-border/80 flex flex-row items-center justify-between">
+    <Card className="h-full flex flex-col justify-between border border-white/70 bg-white/75 backdrop-blur-2xl rounded-[28px] shadow-[0_10px_32px_0_rgba(15,23,42,0.04),inset_0_1px_1px_0_rgba(255,255,255,0.95)]">
+      <CardHeader className="px-5 py-4 border-b border-border/50 flex flex-row items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-teal-100 text-teal-800 shadow-xs">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/15 text-teal shadow-[0_0_14px_rgba(20,184,166,0.25)]">
             <Package className="h-5 w-5" />
           </div>
           <div>
@@ -73,7 +73,7 @@ export function InventoryOverview() {
             <p className="text-xs text-text-secondary font-medium">سٹاک کی عمومی حالت</p>
           </div>
         </div>
-        <span className="bg-slate-100 text-slate-800 border border-slate-200 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+        <span className="bg-slate-500/10 text-slate-800 border border-slate-300/40 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-2xs">
           {inventorySummary.total} SKUs
         </span>
       </CardHeader>
@@ -83,13 +83,13 @@ export function InventoryOverview() {
         <div>
           <div className="flex justify-between items-center mb-2">
             <span className="font-bold text-text-primary text-sm">Overall Reliability</span>
-            <span className="text-emerald-700 text-xs font-bold bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-200">
+            <span className="text-emerald-700 text-xs font-bold bg-emerald-500/15 px-3 py-0.5 rounded-full border border-emerald-400/40 backdrop-blur-md shadow-2xs">
               {inStockPct}% Ready
             </span>
           </div>
 
           <div
-            className="h-3.5 w-full rounded-full bg-slate-200 flex overflow-hidden shadow-inner border border-slate-300"
+            className="h-3.5 w-full rounded-full bg-slate-200/70 flex overflow-hidden shadow-inner border border-white/60 p-0.5 backdrop-blur-md"
             role="progressbar"
             aria-valuenow={inventorySummary.inStock}
             aria-valuemin={0}
@@ -98,7 +98,7 @@ export function InventoryOverview() {
           >
             <div
               style={{ width: `${inStockPct}%` }}
-              className="bg-emerald-500 transition-all duration-500"
+              className="bg-gradient-to-r from-emerald-500 to-teal-400 rounded-l-full transition-all duration-500"
               title={`In Stock: ${inventorySummary.inStock}`}
             />
             <div
@@ -113,7 +113,7 @@ export function InventoryOverview() {
             />
             <div
               style={{ width: `${expiredPct}%` }}
-              className="bg-slate-400 transition-all duration-500"
+              className="bg-slate-400 rounded-r-full transition-all duration-500"
               title={`Expired: ${inventorySummary.expired}`}
             />
           </div>
@@ -125,7 +125,7 @@ export function InventoryOverview() {
               return (
                 <div
                   key={cat.label}
-                  className={`rounded-xl border-2 p-3 sm:p-3.5 flex flex-col justify-between hover:shadow-xs hover:-translate-y-0.5 transition-all duration-200 cursor-pointer ${cat.bgColor}`}
+                  className={`rounded-[20px] border border-white/70 bg-white/60 backdrop-blur-xl p-3 sm:p-3.5 flex flex-col justify-between hover:bg-white/85 hover:shadow-apple-float hover:-translate-y-1 transition-all duration-300 cursor-pointer ios-press`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-1.5">
