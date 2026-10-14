@@ -61,7 +61,7 @@ export function PriorityAlerts() {
 
   return (
     <>
-      <Card className="h-full border border-white/70 bg-white/75 backdrop-blur-2xl rounded-[28px] shadow-[0_10px_32px_0_rgba(15,23,42,0.04),inset_0_1px_1px_0_rgba(255,255,255,0.95)]">
+      <Card className="h-full border border-white/80 bg-white/82 backdrop-blur-2xl rounded-[28px] shadow-[0_16px_40px_-8px_rgba(0,0,0,0.22),inset_0_1px_1.5px_0_rgba(255,255,255,0.95)]">
         <CardHeader className="px-5 py-4 border-b border-border/50 flex flex-row items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-500/15 text-rose-600 shadow-[0_0_14px_rgba(244,63,94,0.25)]">
