@@ -19,8 +19,8 @@ export function AppShell({ children, title, subtitle }: AppShellProps) {
       {/* Sidebar navigation */}
       <Sidebar mobileOpen={mobileMenuOpen} onCloseMobile={() => setMobileMenuOpen(false)} />
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      {/* Main Content Area (offset by lg:pl-64 for fixed sidebar) */}
+      <div className="flex-1 flex flex-col min-w-0 lg:pl-64">
         <Header
           onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
           title={title}
