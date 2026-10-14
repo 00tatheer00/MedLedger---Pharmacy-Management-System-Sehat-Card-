@@ -26,7 +26,7 @@ export function WelcomeBanner({ isLiveDatabase = true }: WelcomeBannerProps) {
   const formattedDate = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   return (
-    <div className="relative overflow-hidden rounded-[28px] border border-emerald-300/40 border-t-emerald-200/70 bg-gradient-to-br from-teal-600/35 via-emerald-600/25 to-slate-900/45 px-5 py-5 sm:px-6 sm:py-6 shadow-[0_20px_50px_rgba(13,148,136,0.35),inset_0_1.5px_2px_rgba(255,255,255,0.6)] text-white backdrop-blur-3xl">
+    <div className="relative overflow-hidden rounded-[28px] border border-white/20 border-t-white/40 bg-gradient-to-br from-teal-500/20 via-emerald-600/15 to-slate-950/45 px-5 py-5 sm:px-6 sm:py-6 shadow-[0_30px_60px_rgba(0,0,0,0.45),inset_0_1px_1px_rgba(255,255,255,0.25)] text-white backdrop-blur-3xl">
       {/* Decorative radiant ambient lights */}
       <div className="absolute top-0 right-0 w-72 h-72 bg-cyan-400/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
       <div className="absolute bottom-0 left-1/3 w-56 h-56 bg-emerald-400/20 rounded-full blur-2xl translate-y-1/3 pointer-events-none" />

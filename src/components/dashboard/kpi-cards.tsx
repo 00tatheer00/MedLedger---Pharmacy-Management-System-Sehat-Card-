@@ -15,13 +15,15 @@ export function KpiCards({ data }: KpiCardsProps) {
       change: data ? data.totalMedicines.change : '+14 items',
       subtitle: data ? data.totalMedicines.subtext : 'Active SKUs',
       icon: Pill,
-      iconBg: 'bg-emerald-500/15 text-emerald-600 shadow-[0_0_16px_rgba(16,185,129,0.2)]',
-      borderColor: 'border-white/70 hover:border-emerald-400/50',
-      hoverGlow: 'hover:shadow-[0_20px_45px_-10px_rgba(16,185,129,0.18)]',
-      accentBar: 'bg-gradient-to-r from-teal-400 to-emerald-500',
+      iconBg:
+        'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 shadow-[0_0_18px_rgba(16,185,129,0.35)]',
+      borderColor: 'border-white/20 hover:border-emerald-400/50',
+      hoverGlow: 'hover:shadow-[0_30px_60px_rgba(16,185,129,0.3)]',
+      accentBar: 'bg-gradient-to-r from-teal-400 to-emerald-400',
       badge: data ? data.totalMedicines.badgeText : 'In Stock',
-      badgeBg: 'bg-emerald-500/12 text-emerald-800 border border-emerald-400/40 backdrop-blur-md',
-      textColor: 'text-emerald-950',
+      badgeBg:
+        'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 backdrop-blur-md shadow-[0_0_12px_rgba(16,185,129,0.25)]',
+      textColor: 'text-white',
     },
     {
       title: 'Low Stock Items',
@@ -30,13 +32,15 @@ export function KpiCards({ data }: KpiCardsProps) {
       change: data ? data.lowStockItems.change : '≤ 20 threshold',
       subtitle: data ? data.lowStockItems.subtext : 'Reorder needed',
       icon: AlertTriangle,
-      iconBg: 'bg-amber-500/15 text-amber-600 shadow-[0_0_16px_rgba(245,158,11,0.2)]',
-      borderColor: 'border-white/70 hover:border-amber-400/50',
-      hoverGlow: 'hover:shadow-[0_20px_45px_-10px_rgba(245,158,11,0.18)]',
+      iconBg:
+        'bg-amber-500/20 text-amber-300 border border-amber-400/30 shadow-[0_0_18px_rgba(245,158,11,0.35)]',
+      borderColor: 'border-white/20 hover:border-amber-400/50',
+      hoverGlow: 'hover:shadow-[0_30px_60px_rgba(245,158,11,0.3)]',
       accentBar: 'bg-gradient-to-r from-amber-400 to-orange-500',
       badge: data ? data.lowStockItems.badgeText : 'Order Now',
-      badgeBg: 'bg-amber-500/12 text-amber-800 border border-amber-400/40 backdrop-blur-md',
-      textColor: 'text-amber-950',
+      badgeBg:
+        'bg-amber-500/20 text-amber-300 border border-amber-400/40 backdrop-blur-md shadow-[0_0_12px_rgba(245,158,11,0.25)]',
+      textColor: 'text-white',
     },
     {
       title: 'Expiring Medicines',
@@ -45,13 +49,15 @@ export function KpiCards({ data }: KpiCardsProps) {
       change: data ? data.expiringMedicines.change : '< 60 days',
       subtitle: data ? data.expiringMedicines.subtext : 'FEFO rotation',
       icon: Clock,
-      iconBg: 'bg-rose-500/15 text-rose-600 shadow-[0_0_16px_rgba(244,63,94,0.2)]',
-      borderColor: 'border-white/70 hover:border-rose-400/50',
-      hoverGlow: 'hover:shadow-[0_20px_45px_-10px_rgba(244,63,94,0.18)]',
-      accentBar: 'bg-gradient-to-r from-rose-400 to-red-500',
+      iconBg:
+        'bg-rose-500/20 text-rose-300 border border-rose-400/30 shadow-[0_0_18px_rgba(244,63,94,0.35)]',
+      borderColor: 'border-white/20 hover:border-rose-400/50',
+      hoverGlow: 'hover:shadow-[0_30px_60px_rgba(244,63,94,0.3)]',
+      accentBar: 'bg-gradient-to-r from-rose-400 to-pink-500',
       badge: data ? data.expiringMedicines.badgeText : 'Urgent',
-      badgeBg: 'bg-rose-500/12 text-rose-800 border border-rose-400/40 backdrop-blur-md',
-      textColor: 'text-rose-950',
+      badgeBg:
+        'bg-rose-500/20 text-rose-300 border border-rose-400/40 backdrop-blur-md shadow-[0_0_12px_rgba(244,63,94,0.25)]',
+      textColor: 'text-white',
     },
     {
       title: 'Pending Claims',
@@ -60,13 +66,15 @@ export function KpiCards({ data }: KpiCardsProps) {
       change: data ? data.pendingClaims.change : 'PKR 482,500',
       subtitle: data ? data.pendingClaims.subtext : 'Hospital audit',
       icon: Receipt,
-      iconBg: 'bg-sky-500/15 text-sky-600 shadow-[0_0_16px_rgba(14,165,233,0.2)]',
-      borderColor: 'border-white/70 hover:border-sky-400/50',
-      hoverGlow: 'hover:shadow-[0_20px_45px_-10px_rgba(14,165,233,0.18)]',
+      iconBg:
+        'bg-sky-500/20 text-sky-300 border border-sky-400/30 shadow-[0_0_18px_rgba(14,165,233,0.35)]',
+      borderColor: 'border-white/20 hover:border-sky-400/50',
+      hoverGlow: 'hover:shadow-[0_30px_60px_rgba(14,165,233,0.3)]',
       accentBar: 'bg-gradient-to-r from-sky-400 to-blue-500',
       badge: data ? data.pendingClaims.badgeText : 'In Review',
-      badgeBg: 'bg-sky-500/12 text-sky-800 border border-sky-400/40 backdrop-blur-md',
-      textColor: 'text-sky-950',
+      badgeBg:
+        'bg-sky-500/20 text-sky-300 border border-sky-400/40 backdrop-blur-md shadow-[0_0_12px_rgba(14,165,233,0.25)]',
+      textColor: 'text-white',
     },
   ];
 
@@ -77,7 +85,7 @@ export function KpiCards({ data }: KpiCardsProps) {
         return (
           <div
             key={card.title}
-            className={`relative overflow-hidden rounded-[28px] border border-white/60 border-t-white/90 bg-gradient-to-br from-white/55 via-white/42 to-white/30 backdrop-blur-3xl shadow-[0_24px_50px_-10px_rgba(0,0,0,0.32),inset_0_1.5px_2px_0_rgba(255,255,255,0.9),inset_0_-1px_1px_0_rgba(0,0,0,0.06)] transition-all duration-300 ease-out cursor-pointer group hover:-translate-y-1.5 ${card.borderColor} ${card.hoverGlow}`}
+            className={`relative overflow-hidden rounded-[28px] border border-white/20 border-t-white/40 bg-white/[0.08] hover:bg-white/[0.14] backdrop-blur-3xl shadow-[0_30px_60px_rgba(0,0,0,0.45),inset_0_1px_1px_0_rgba(255,255,255,0.25)] transition-all duration-300 ease-out cursor-pointer group hover:-translate-y-1.5 ${card.borderColor} ${card.hoverGlow}`}
           >
             {/* Top gradient accent bar */}
             <div className={`h-1.5 w-full ${card.accentBar}`} />
@@ -99,23 +107,21 @@ export function KpiCards({ data }: KpiCardsProps) {
 
               {/* Title & Urdu subtitle */}
               <div className="mb-2">
-                <h3 className="text-sm font-bold text-text-primary tracking-tight">{card.title}</h3>
-                <p className="text-[11px] font-semibold text-text-muted mt-0.5" dir="rtl">
+                <h3 className="text-sm font-bold text-white tracking-tight">{card.title}</h3>
+                <p className="text-[11px] font-semibold text-white/60 mt-0.5" dir="rtl">
                   {card.urduTitle}
                 </p>
               </div>
 
               {/* Value */}
-              <div
-                className={`text-3xl sm:text-4xl font-extrabold tracking-tight mb-2.5 ${card.textColor}`}
-              >
+              <div className="text-3xl sm:text-4xl font-black tracking-tight mb-2.5 text-white">
                 {card.value}
               </div>
 
               {/* Sub-info pill */}
-              <div className="pt-2.5 border-t border-border/50 flex items-center justify-between text-xs">
-                <span className="font-bold text-text-primary">{card.change}</span>
-                <span className="text-text-secondary font-medium">{card.subtitle}</span>
+              <div className="pt-2.5 border-t border-white/10 flex items-center justify-between text-xs">
+                <span className="font-bold text-teal-300">{card.change}</span>
+                <span className="text-white/60 font-medium">{card.subtitle}</span>
               </div>
             </div>
           </div>

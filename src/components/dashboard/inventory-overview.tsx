@@ -62,18 +62,18 @@ export function InventoryOverview() {
   ];
 
   return (
-    <Card className="h-full flex flex-col justify-between border border-white/60 border-t-white/90 bg-gradient-to-br from-white/55 via-white/42 to-white/30 backdrop-blur-3xl rounded-[28px] shadow-[0_24px_50px_-10px_rgba(0,0,0,0.32),inset_0_1.5px_2px_0_rgba(255,255,255,0.9)]">
-      <CardHeader className="px-5 py-4 border-b border-border/50 flex flex-row items-center justify-between">
+    <Card className="h-full flex flex-col justify-between border border-white/20 border-t-white/40 bg-white/[0.08] backdrop-blur-3xl rounded-[28px] shadow-[0_30px_60px_rgba(0,0,0,0.45),inset_0_1px_1px_0_rgba(255,255,255,0.25)] text-white">
+      <CardHeader className="px-5 py-4 border-b border-white/10 flex flex-row items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/15 text-teal shadow-[0_0_14px_rgba(20,184,166,0.25)]">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/20 text-teal-300 shadow-[0_0_14px_rgba(20,184,166,0.3)]">
             <Package className="h-5 w-5" />
           </div>
           <div>
-            <CardTitle className="text-lg font-bold text-text-primary">Stock Health</CardTitle>
-            <p className="text-xs text-text-secondary font-medium">سٹاک کی عمومی حالت</p>
+            <CardTitle className="text-lg font-bold text-white">Stock Health</CardTitle>
+            <p className="text-xs text-white/70 font-medium">سٹاک کی عمومی حالت</p>
           </div>
         </div>
-        <span className="bg-slate-500/10 text-slate-800 border border-slate-300/40 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-2xs">
+        <span className="bg-white/10 text-white border border-white/20 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-2xs">
           {inventorySummary.total} SKUs
         </span>
       </CardHeader>
@@ -125,24 +125,22 @@ export function InventoryOverview() {
               return (
                 <div
                   key={cat.label}
-                  className={`rounded-[20px] border border-white/50 border-t-white/80 bg-gradient-to-br from-white/50 via-white/35 to-white/25 backdrop-blur-2xl p-3 sm:p-3.5 flex flex-col justify-between hover:bg-white/65 hover:shadow-apple-float hover:-translate-y-1 transition-all duration-300 cursor-pointer ios-press`}
+                  className={`rounded-[22px] border border-white/15 border-t-white/30 bg-white/[0.06] hover:bg-white/[0.14] backdrop-blur-2xl p-3 sm:p-3.5 flex flex-col justify-between hover:shadow-apple-float hover:-translate-y-1 transition-all duration-300 cursor-pointer ios-press`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-1.5">
                       <Icon className={`h-4 w-4 shrink-0 ${cat.textColor}`} aria-hidden="true" />
-                      <span className="font-bold text-xs sm:text-sm text-text-primary">
-                        {cat.label}
-                      </span>
+                      <span className="font-bold text-xs sm:text-sm text-white">{cat.label}</span>
                     </div>
-                    <span className="text-[11px] font-semibold text-text-muted" dir="rtl">
+                    <span className="text-[11px] font-semibold text-white/60" dir="rtl">
                       {cat.urdu}
                     </span>
                   </div>
                   <div className="flex items-baseline justify-between mt-1">
-                    <span className="text-2xl sm:text-3xl font-extrabold text-text-primary">
+                    <span className="text-2xl sm:text-3xl font-extrabold text-white">
                       {cat.count}
                     </span>
-                    <span className="text-xs font-bold text-text-secondary">{cat.pct}%</span>
+                    <span className="text-xs font-bold text-teal-300">{cat.pct}%</span>
                   </div>
                 </div>
               );

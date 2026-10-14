@@ -61,22 +61,20 @@ export function PriorityAlerts() {
 
   return (
     <>
-      <Card className="h-full border border-white/60 border-t-white/90 bg-gradient-to-br from-white/55 via-white/42 to-white/30 backdrop-blur-3xl rounded-[28px] shadow-[0_24px_50px_-10px_rgba(0,0,0,0.32),inset_0_1.5px_2px_0_rgba(255,255,255,0.9)]">
-        <CardHeader className="px-5 py-4 border-b border-border/50 flex flex-row items-center justify-between">
+      <Card className="h-full border border-white/20 border-t-white/40 bg-white/[0.08] backdrop-blur-3xl rounded-[28px] shadow-[0_30px_60px_rgba(0,0,0,0.45),inset_0_1px_1px_0_rgba(255,255,255,0.25)] text-white">
+        <CardHeader className="px-5 py-4 border-b border-white/10 flex flex-row items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-500/15 text-rose-600 shadow-[0_0_14px_rgba(244,63,94,0.25)]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-500/20 text-rose-300 shadow-[0_0_14px_rgba(244,63,94,0.3)]">
               <ShieldAlert className="h-5 w-5" />
             </div>
             <div>
-              <CardTitle className="text-lg font-bold text-text-primary">
-                Urgent Pharmacy Alerts
-              </CardTitle>
-              <p className="text-xs text-text-secondary font-medium">
+              <CardTitle className="text-lg font-bold text-white">Urgent Pharmacy Alerts</CardTitle>
+              <p className="text-xs text-white/70 font-medium">
                 فوری انتباہات — Requires staff intervention
               </p>
             </div>
           </div>
-          <span className="bg-rose-500/12 text-rose-800 border border-rose-400/40 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-2xs">
+          <span className="bg-rose-500/20 text-rose-300 border border-rose-400/40 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-2xs">
             {priorityAlerts.length} Flagged
           </span>
         </CardHeader>
@@ -88,7 +86,7 @@ export function PriorityAlerts() {
             return (
               <div
                 key={alert.id}
-                className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[20px] border border-white/50 border-t-white/80 bg-gradient-to-br from-white/50 via-white/35 to-white/25 backdrop-blur-2xl shadow-xs transition-all duration-300 ease-out group hover:-translate-y-1 hover:bg-white/65 hover:shadow-apple-float cursor-pointer ios-press ${config.border}`}
+                className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[22px] border border-white/15 border-t-white/30 bg-white/[0.06] hover:bg-white/[0.14] backdrop-blur-2xl shadow-xs transition-all duration-300 ease-out group hover:-translate-y-1 cursor-pointer ios-press ${config.border}`}
                 onClick={() => setSelectedAlert(alert)}
                 role="button"
                 tabIndex={0}

@@ -249,29 +249,27 @@ export function Header({
   };
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-white/30 bg-white/35 backdrop-blur-3xl px-5 sm:px-6 shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
+    <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-white/15 bg-slate-950/45 backdrop-blur-3xl px-5 sm:px-6 shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
       {/* Left: Mobile Toggle & Page Title */}
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleMobileMenu}
-          className="lg:hidden rounded-xl p-2 text-text-secondary hover:bg-white/40 hover:text-text-primary focus-ring transition-colors"
+          className="lg:hidden rounded-xl p-2 text-white/70 hover:bg-white/10 hover:text-white focus-ring transition-colors"
           aria-label="Open navigation menu"
         >
           <Menu className="h-5 w-5" />
         </button>
 
         <div className="hidden sm:flex flex-col">
-          <h1 className="text-base font-bold text-text-primary leading-tight tracking-tight">
-            {title}
-          </h1>
-          <span className="text-xs text-text-secondary">{subtitle}</span>
+          <h1 className="text-base font-bold text-white leading-tight tracking-tight">{title}</h1>
+          <span className="text-xs text-white/70">{subtitle}</span>
         </div>
       </div>
 
       {/* Middle: Global Search Input / Trigger */}
       <div className="flex-1 max-w-md mx-6 hidden md:block">
         <div className="relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
           <input
             type="text"
             placeholder="Search medicines, patients, prescriptions, batches..."
@@ -287,14 +285,14 @@ export function Header({
               setSearchOpen(true);
               executeSearch(searchQuery);
             }}
-            className="w-full h-10 pl-10 pr-16 rounded-full border border-white/60 bg-white/45 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus-ring transition-all hover:border-teal-500/40 hover:bg-white/70 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)] backdrop-blur-xl cursor-pointer"
+            className="w-full h-10 pl-10 pr-16 rounded-full border border-white/20 bg-white/[0.08] text-xs sm:text-sm text-white placeholder:text-white/50 focus-ring transition-all hover:border-teal-400/50 hover:bg-white/[0.14] shadow-[inset_0_1px_2px_rgba(0,0,0,0.3)] backdrop-blur-xl cursor-pointer"
           />
           <button
             onClick={() => {
               setSearchOpen(true);
               executeSearch(searchQuery);
             }}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full border border-white/60 bg-white/60 px-2 py-0.5 text-[10px] font-mono text-text-secondary shadow-2xs hover:text-text-primary hover:bg-white/80 transition-colors cursor-pointer"
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full border border-white/20 bg-white/10 px-2 py-0.5 text-[10px] font-mono text-white/70 shadow-2xs hover:text-white hover:bg-white/20 transition-colors cursor-pointer"
             aria-label="Search shortcut"
           >
             Ctrl K
@@ -331,10 +329,10 @@ export function Header({
                 onClick={() => setShowNotifications(false)}
                 aria-hidden="true"
               />
-              <div className="absolute right-0 mt-3 z-50 w-96 sm:w-[420px] rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-dropdown p-5 animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex items-center justify-between pb-4 border-b border-border/60">
+              <div className="absolute right-0 mt-3 z-50 w-96 sm:w-[420px] rounded-[28px] border border-white/20 border-t-white/40 bg-slate-950/85 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.65)] p-5 text-white animate-in fade-in zoom-in-95 duration-200">
+                <div className="flex items-center justify-between pb-4 border-b border-white/10">
                   <div className="flex items-center gap-2.5">
-                    <h4 className="text-base font-bold text-text-primary">System Alerts</h4>
+                    <h4 className="text-base font-bold text-white">System Alerts</h4>
                     {unreadCount > 0 ? (
                       <Badge variant="warning" size="sm" className="font-bold">
                         {unreadCount} unread
@@ -348,7 +346,7 @@ export function Header({
                   {unreadCount > 0 && (
                     <button
                       onClick={handleMarkAllRead}
-                      className="text-sm text-primary hover:underline font-bold"
+                      className="text-sm text-teal-300 hover:underline font-bold"
                     >
                       Mark all read
                     </button>
@@ -359,7 +357,7 @@ export function Header({
                   {notificationsList.map((alert) => (
                     <div
                       key={alert.id}
-                      className="rounded-xl border border-border bg-page-bg/60 p-4 hover:bg-hover-bg hover:border-primary/30 transition-all duration-200 cursor-pointer"
+                      className="rounded-2xl border border-white/10 bg-white/[0.05] p-4 hover:bg-white/[0.1] hover:border-teal-400/40 transition-all duration-200 cursor-pointer"
                     >
                       <div className="flex items-center justify-between mb-2">
                         <Badge
@@ -386,14 +384,14 @@ export function Header({
                   ))}
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
+                <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
                   <button
                     onClick={() => setShowNotifications(false)}
-                    className="text-sm text-text-secondary hover:text-text-primary font-semibold transition-colors"
+                    className="text-sm text-white/70 hover:text-white font-semibold transition-colors"
                   >
                     Close panel
                   </button>
-                  <span className="text-xs text-text-muted">Operational alerts</span>
+                  <span className="text-xs text-white/50">Operational alerts</span>
                 </div>
               </div>
             </>
@@ -404,22 +402,20 @@ export function Header({
         <div className="relative">
           <button
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="flex items-center gap-3 pl-3 sm:pl-4 border-l-2 border-border focus-ring rounded-xl py-1.5 hover:bg-hover-bg transition-colors"
+            className="flex items-center gap-3 pl-3 sm:pl-4 border-l border-white/20 focus-ring rounded-xl py-1.5 hover:bg-white/10 transition-colors"
             aria-label="User profile and role menu"
             aria-expanded={showUserMenu}
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-navy to-primary text-white text-sm font-bold ring-3 ring-teal/30 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 text-white text-sm font-bold ring-2 ring-teal-400/40 shadow-sm">
               AK
             </div>
             <div className="hidden sm:flex flex-col text-left">
-              <span className="text-sm font-bold text-text-primary leading-tight">
-                Dr. Ayesha Khan
-              </span>
-              <span className="text-xs text-text-secondary font-semibold">
+              <span className="text-sm font-bold text-white leading-tight">Dr. Ayesha Khan</span>
+              <span className="text-xs text-white/70 font-semibold">
                 {SYSTEM_ROLES[activeRole].name}
               </span>
             </div>
-            <ChevronDown className="hidden sm:block h-4 w-4 text-text-muted" />
+            <ChevronDown className="hidden sm:block h-4 w-4 text-white/50" />
           </button>
 
           {showUserMenu && (
@@ -429,14 +425,14 @@ export function Header({
                 onClick={() => setShowUserMenu(false)}
                 aria-hidden="true"
               />
-              <div className="absolute right-0 mt-3 z-50 w-80 rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-dropdown p-5 animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex items-center gap-4 pb-4 border-b border-border/60">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-navy to-primary text-white text-base font-bold shadow-md ring-4 ring-teal/20">
+              <div className="absolute right-0 mt-3 z-50 w-80 rounded-[28px] border border-white/20 border-t-white/40 bg-slate-950/85 backdrop-blur-3xl shadow-[0_30px_70px_rgba(0,0,0,0.65)] p-5 text-white animate-in fade-in zoom-in-95 duration-200">
+                <div className="flex items-center gap-4 pb-4 border-b border-white/10">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 text-white text-base font-bold shadow-md ring-4 ring-teal/20">
                     AK
                   </div>
                   <div>
-                    <h4 className="text-base font-bold text-text-primary">Dr. Ayesha Khan</h4>
-                    <p className="text-sm text-text-secondary">ayesha.khan@dhqkohat.test</p>
+                    <h4 className="text-base font-bold text-white">Dr. Ayesha Khan</h4>
+                    <p className="text-sm text-white/70">ayesha.khan@dhqkohat.test</p>
                   </div>
                 </div>
 
@@ -496,10 +492,10 @@ export function Header({
         <div className="fixed inset-0 z-50 flex items-start justify-center pt-10 sm:pt-16 px-3 sm:px-4 bg-slate-950/40 backdrop-blur-xl animate-in fade-in duration-150">
           <div className="fixed inset-0" onClick={handleCloseSearch} aria-hidden="true" />
 
-          <div className="relative z-10 w-full max-w-2xl rounded-[28px] border border-white/60 bg-white/90 backdrop-blur-3xl shadow-[0_25px_70px_rgba(15,23,42,0.18)] overflow-hidden flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-150">
+          <div className="relative z-10 w-full max-w-2xl rounded-[28px] border border-white/20 border-t-white/40 bg-slate-950/85 backdrop-blur-3xl shadow-[0_30px_80px_rgba(0,0,0,0.65)] overflow-hidden flex flex-col max-h-[85vh] text-white animate-in zoom-in-95 duration-150">
             {/* Search Input Bar */}
-            <div className="flex items-center px-4 sm:px-5 py-3.5 sm:py-4 border-b border-border/60 bg-white/40 gap-3 shrink-0">
-              <Search className="h-5 w-5 text-teal shrink-0" />
+            <div className="flex items-center px-4 sm:px-5 py-3.5 sm:py-4 border-b border-white/10 bg-white/[0.05] gap-3 shrink-0">
+              <Search className="h-5 w-5 text-teal-300 shrink-0" />
               <input
                 ref={searchInputRef}
                 type="text"
@@ -507,20 +503,20 @@ export function Header({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDownInSearch}
-                className="flex-1 bg-transparent text-sm sm:text-base font-semibold text-text-primary placeholder:text-text-muted focus:outline-hidden"
+                className="flex-1 bg-transparent text-sm sm:text-base font-semibold text-white placeholder:text-white/50 focus:outline-hidden"
               />
-              {isSearching && <Loader2 className="h-5 w-5 text-teal animate-spin shrink-0" />}
+              {isSearching && <Loader2 className="h-5 w-5 text-teal-300 animate-spin shrink-0" />}
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="text-xs text-text-muted hover:text-text-primary px-2.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer"
+                  className="text-xs text-white/60 hover:text-white px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
                 >
                   Clear
                 </button>
               )}
               <button
                 onClick={handleCloseSearch}
-                className="text-text-muted hover:text-text-primary p-1.5 rounded-full hover:bg-white/60 transition-colors cursor-pointer"
+                className="text-white/60 hover:text-white p-1.5 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
                 aria-label="Close search"
               >
                 <X className="h-5 w-5" />
@@ -528,7 +524,7 @@ export function Header({
             </div>
 
             {/* Category Filter Pills Bar with Dynamic Counts */}
-            <div className="flex items-center gap-1.5 px-3 sm:px-4 py-2 border-b border-border/70 bg-slate-50/90 overflow-x-auto no-scrollbar shrink-0">
+            <div className="flex items-center gap-1.5 px-3 sm:px-4 py-2 border-b border-white/10 bg-slate-900/60 overflow-x-auto no-scrollbar shrink-0">
               {[
                 { label: 'All', icon: Sparkles },
                 { label: 'Medicine', icon: Pill },

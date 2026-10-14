@@ -29,13 +29,14 @@ const actions: ActionItem[] = [
     description: 'Issue prescribed medicines to OPD/IPD patients with real-time stock deduction.',
     href: '/dispensing',
     icon: ClipboardCheck,
-    iconBg: 'bg-emerald-100',
-    iconColor: 'text-emerald-700',
-    borderColor: 'border-emerald-200 hover:border-emerald-500',
-    hoverGlow: 'hover:shadow-emerald-500/10',
+    iconBg:
+      'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 shadow-[0_0_16px_rgba(16,185,129,0.3)]',
+    iconColor: 'text-emerald-300',
+    borderColor: 'border-white/15 hover:border-emerald-400/50',
+    hoverGlow: 'hover:shadow-[0_24px_50px_rgba(16,185,129,0.25)]',
     badge: 'Counter Action',
-    badgeBg: 'bg-emerald-100 text-emerald-800',
-    buttonColor: 'bg-emerald-600 hover:bg-emerald-700 text-white',
+    badgeBg: 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40',
+    buttonColor: 'bg-emerald-500/30 hover:bg-emerald-500/50 text-emerald-100 border-emerald-400/40',
   },
   {
     id: 'qa-receive-stock',
@@ -44,13 +45,14 @@ const actions: ActionItem[] = [
     description: 'Verify supplier deliveries against POs and log batch inventory into warehouse.',
     href: '/purchases',
     icon: PackagePlus,
-    iconBg: 'bg-teal-100',
-    iconColor: 'text-teal-700',
-    borderColor: 'border-teal-200 hover:border-teal-500',
-    hoverGlow: 'hover:shadow-teal-500/10',
+    iconBg:
+      'bg-teal-500/20 text-teal-300 border border-teal-400/30 shadow-[0_0_16px_rgba(20,184,166,0.3)]',
+    iconColor: 'text-teal-300',
+    borderColor: 'border-white/15 hover:border-teal-400/50',
+    hoverGlow: 'hover:shadow-[0_24px_50px_rgba(20,184,166,0.25)]',
     badge: 'Store Intake',
-    badgeBg: 'bg-teal-100 text-teal-800',
-    buttonColor: 'bg-teal-600 hover:bg-teal-700 text-white',
+    badgeBg: 'bg-teal-500/20 text-teal-300 border border-teal-400/40',
+    buttonColor: 'bg-teal-500/30 hover:bg-teal-500/50 text-teal-100 border-teal-400/40',
   },
   {
     id: 'qa-add-medicine',
@@ -60,13 +62,14 @@ const actions: ActionItem[] = [
       'Search formulary, check unit prices, reorder levels, and manage hospital medicines.',
     href: '/medicines',
     icon: Pill,
-    iconBg: 'bg-blue-100',
-    iconColor: 'text-blue-700',
-    borderColor: 'border-blue-200 hover:border-blue-500',
-    hoverGlow: 'hover:shadow-blue-500/10',
+    iconBg:
+      'bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 shadow-[0_0_16px_rgba(6,182,212,0.3)]',
+    iconColor: 'text-cyan-300',
+    borderColor: 'border-white/15 hover:border-cyan-400/50',
+    hoverGlow: 'hover:shadow-[0_24px_50px_rgba(6,182,212,0.25)]',
     badge: 'Registry',
-    badgeBg: 'bg-blue-100 text-blue-800',
-    buttonColor: 'bg-blue-600 hover:bg-blue-700 text-white',
+    badgeBg: 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40',
+    buttonColor: 'bg-cyan-500/30 hover:bg-cyan-500/50 text-cyan-100 border-cyan-400/40',
   },
   {
     id: 'qa-review-claims',
@@ -75,29 +78,30 @@ const actions: ActionItem[] = [
     description: 'Audit patient eligibility, review pending hospital claims, and balance billing.',
     href: '/claims',
     icon: FileCheck2,
-    iconBg: 'bg-purple-100',
-    iconColor: 'text-purple-700',
-    borderColor: 'border-purple-200 hover:border-purple-500',
-    hoverGlow: 'hover:shadow-purple-500/10',
+    iconBg:
+      'bg-purple-500/20 text-purple-300 border border-purple-400/30 shadow-[0_0_16px_rgba(168,85,247,0.3)]',
+    iconColor: 'text-purple-300',
+    borderColor: 'border-white/15 hover:border-purple-400/50',
+    hoverGlow: 'hover:shadow-[0_24px_50px_rgba(168,85,247,0.25)]',
     badge: 'Finance',
-    badgeBg: 'bg-purple-100 text-purple-800',
-    buttonColor: 'bg-purple-600 hover:bg-purple-700 text-white',
+    badgeBg: 'bg-purple-500/20 text-purple-300 border border-purple-400/40',
+    buttonColor: 'bg-purple-500/30 hover:bg-purple-500/50 text-purple-100 border-purple-400/40',
   },
 ];
 
 export function QuickActions() {
   return (
-    <Card className="border border-white/70 bg-white/75 backdrop-blur-2xl rounded-[28px] shadow-[0_10px_32px_0_rgba(15,23,42,0.04),inset_0_1px_1px_0_rgba(255,255,255,0.95)]">
-      <CardHeader className="px-5 py-4 border-b border-border/50 flex flex-row items-center justify-between">
+    <Card className="border border-white/20 border-t-white/40 bg-white/[0.08] backdrop-blur-3xl rounded-[28px] shadow-[0_30px_60px_rgba(0,0,0,0.45),inset_0_1px_1px_0_rgba(255,255,255,0.25)] text-white">
+      <CardHeader className="px-5 py-4 border-b border-white/10 flex flex-row items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/15 text-teal shadow-[0_0_14px_rgba(20,184,166,0.25)]">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/20 text-teal-300 shadow-[0_0_14px_rgba(20,184,166,0.3)]">
             <span className="text-base">⚡</span>
           </div>
           <div>
-            <CardTitle className="text-lg font-bold text-text-primary">
+            <CardTitle className="text-lg font-bold text-white">
               Frequent Pharmacy Operations
             </CardTitle>
-            <p className="text-xs text-text-secondary font-medium">
+            <p className="text-xs text-white/70 font-medium">
               فارمیسی کے بنیادی کام — One-click operational workflows
             </p>
           </div>
@@ -115,18 +119,18 @@ export function QuickActions() {
               <Link
                 key={action.id}
                 href={action.href}
-                className={`flex flex-col justify-between p-4.5 sm:p-5 rounded-[22px] border border-white/50 border-t-white/80 bg-gradient-to-br from-white/50 via-white/35 to-white/25 backdrop-blur-2xl shadow-sm transition-all duration-300 ease-out group cursor-pointer hover:-translate-y-1.5 hover:bg-white/65 hover:shadow-apple-float ios-press ${action.borderColor} ${action.hoverGlow}`}
+                className={`flex flex-col justify-between p-4.5 sm:p-5 rounded-[24px] border border-white/15 border-t-white/35 bg-white/[0.06] hover:bg-white/[0.14] backdrop-blur-2xl shadow-xs transition-all duration-300 ease-out group cursor-pointer hover:-translate-y-1.5 hover:shadow-apple-float ios-press ${action.borderColor} ${action.hoverGlow}`}
               >
                 <div>
                   {/* Icon & Badge Header */}
                   <div className="flex items-center justify-between w-full mb-3.5">
                     <div
-                      className={`flex h-12 w-12 items-center justify-center rounded-2xl ${action.iconBg} ${action.iconColor} group-hover:scale-105 transition-transform duration-300 shadow-xs`}
+                      className={`flex h-12 w-12 items-center justify-center rounded-2xl ${action.iconBg} group-hover:scale-105 transition-transform duration-300 shadow-xs`}
                     >
                       <Icon className="h-6 w-6" strokeWidth={2.2} />
                     </div>
                     <span
-                      className={`${action.badgeBg} px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wide border border-white/40 backdrop-blur-md shadow-2xs`}
+                      className={`${action.badgeBg} px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wide backdrop-blur-md shadow-2xs`}
                     >
                       {action.badge}
                     </span>
@@ -134,23 +138,23 @@ export function QuickActions() {
 
                   {/* Urdu & English Labels */}
                   <div className="mb-1.5">
-                    <h3 className="font-bold text-base text-text-primary group-hover:text-primary transition-colors duration-200">
+                    <h3 className="font-bold text-base text-white group-hover:text-teal-300 transition-colors duration-200">
                       {action.label}
                     </h3>
-                    <p className="text-xs font-semibold text-primary/80" dir="rtl">
+                    <p className="text-xs font-semibold text-teal-300/80" dir="rtl">
                       {action.urduLabel}
                     </p>
                   </div>
 
                   {/* Description */}
-                  <p className="text-xs text-text-secondary leading-relaxed line-clamp-2 mb-4">
+                  <p className="text-xs text-white/70 leading-relaxed line-clamp-2 mb-4">
                     {action.description}
                   </p>
                 </div>
 
                 {/* Direct action button */}
                 <div
-                  className={`w-full py-2.5 px-3.5 rounded-full font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors ios-press ${action.buttonColor}`}
+                  className={`w-full py-2.5 px-3.5 rounded-full font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition-colors ios-press border ${action.buttonColor}`}
                 >
                   <span>Open Workflow</span>
                   <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />

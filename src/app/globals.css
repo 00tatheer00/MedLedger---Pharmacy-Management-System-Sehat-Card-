@@ -37,27 +37,27 @@
   --color-info: #0ea5e9;
   --color-info-light: #e0f2fe;
 
-  /* --- Surfaces --- */
-  --color-page-bg: #f8fafc;
-  --color-card-bg: #ffffff;
-  --color-sidebar-bg: #0f172a;
-  --color-sidebar-hover: #1e293b;
-  --color-sidebar-active: #020617;
+  /* --- Surfaces (Apple visionOS Spatial Glass) --- */
+  --color-page-bg: transparent;
+  --color-card-bg: rgba(255, 255, 255, 0.08);
+  --color-sidebar-bg: rgba(15, 23, 42, 0.45);
+  --color-sidebar-hover: rgba(255, 255, 255, 0.1);
+  --color-sidebar-active: rgba(20, 184, 166, 0.25);
 
-  /* --- Borders & Separators --- */
-  --color-border: #e2e8f0;
-  --color-border-light: #f1f5f9;
+  /* --- Borders & Separators (Apple Specular Glass Edges) --- */
+  --color-border: rgba(255, 255, 255, 0.16);
+  --color-border-light: rgba(255, 255, 255, 0.08);
 
-  /* --- Text — High Contrast for Readability --- */
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #475569;
-  --color-text-muted: #94a3b8;
-  --color-text-on-dark: #f1f5f9;
-  --color-text-on-dark-muted: #94a3b8;
+  /* --- Text — Apple visionOS White Vibrancy Hierarchy --- */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.78);
+  --color-text-muted: rgba(255, 255, 255, 0.52);
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-muted: rgba(255, 255, 255, 0.6);
 
   /* --- Interactive --- */
-  --color-focus-ring: #0d9488;
-  --color-hover-bg: #f1f5f9;
+  --color-focus-ring: #2dd4bf;
+  --color-hover-bg: rgba(255, 255, 255, 0.12);
 
   /* --- Typography --- */
   --font-sans: var(--font-geist-sans);
@@ -66,11 +66,11 @@
   /* --- Font Sizes --- */
   --text-2xs: 0.75rem;
 
-  /* --- Shadows — Elevated & Premium --- */
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-card-hover: 0 10px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.04);
-  --shadow-dropdown: 0 20px 40px rgba(0, 0, 0, 0.15);
-  --shadow-sidebar: 4px 0 16px rgba(0, 0, 0, 0.1);
+  /* --- Shadows — Elevated & Spatial --- */
+  --shadow-card: 0 20px 45px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 30px 60px rgba(0, 0, 0, 0.45);
+  --shadow-dropdown: 0 30px 60px rgba(0, 0, 0, 0.55);
+  --shadow-sidebar: 8px 0 32px rgba(0, 0, 0, 0.4);
 
   /* --- Border Radius — Rounded & Friendly --- */
   --radius-sm: 0.5rem;
@@ -81,25 +81,24 @@
   --radius-3xl: 1.75rem;
   --radius-4xl: 2rem;
 
-  /* --- Apple iOS 27 Glassmorphism & Tinted UI Surfaces --- */
-  --color-glass-surface: rgba(255, 255, 255, 0.75);
-  --color-glass-surface-hover: rgba(255, 255, 255, 0.9);
-  --color-glass-surface-subtle: rgba(255, 255, 255, 0.45);
-  --color-glass-border: rgba(255, 255, 255, 0.65);
-  --color-glass-border-subtle: rgba(255, 255, 255, 0.35);
-  --color-glass-dark: rgba(15, 23, 42, 0.82);
-  --color-glass-dark-border: rgba(255, 255, 255, 0.12);
+  /* --- Apple iOS 27 / visionOS Glassmorphism & Tinted UI Surfaces --- */
+  --color-glass-surface: rgba(255, 255, 255, 0.08);
+  --color-glass-surface-hover: rgba(255, 255, 255, 0.16);
+  --color-glass-surface-subtle: rgba(255, 255, 255, 0.04);
+  --color-glass-border: rgba(255, 255, 255, 0.22);
+  --color-glass-border-subtle: rgba(255, 255, 255, 0.12);
+  --color-glass-dark: rgba(15, 23, 42, 0.45);
+  --color-glass-dark-border: rgba(255, 255, 255, 0.18);
 
   /* --- Apple iOS 27 Ambient Shadows --- */
   --shadow-apple-glass:
-    0 10px 32px 0 rgba(0, 0, 0, 0.04), inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
-  --shadow-apple-float:
-    0 20px 48px -10px rgba(0, 0, 0, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
-  --shadow-apple-glow-teal: 0 12px 36px -6px rgba(20, 184, 166, 0.28);
-  --shadow-apple-glow-emerald: 0 12px 36px -6px rgba(16, 185, 129, 0.28);
-  --shadow-apple-glow-blue: 0 12px 36px -6px rgba(59, 130, 246, 0.28);
-  --shadow-apple-glow-rose: 0 12px 36px -6px rgba(244, 63, 94, 0.28);
-  --shadow-apple-glow-amber: 0 12px 36px -6px rgba(245, 158, 11, 0.28);
+    0 30px 60px rgba(0, 0, 0, 0.45), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+  --shadow-apple-float: 0 40px 80px rgba(0, 0, 0, 0.55), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+  --shadow-apple-glow-teal: 0 12px 36px -6px rgba(20, 184, 166, 0.4);
+  --shadow-apple-glow-emerald: 0 12px 36px -6px rgba(16, 185, 129, 0.4);
+  --shadow-apple-glow-blue: 0 12px 36px -6px rgba(59, 130, 246, 0.4);
+  --shadow-apple-glow-rose: 0 12px 36px -6px rgba(244, 63, 94, 0.4);
+  --shadow-apple-glow-amber: 0 12px 36px -6px rgba(245, 158, 11, 0.4);
 }
 
 /* --- Base styles & Mobile Viewport Protection --- */
@@ -144,65 +143,67 @@ body {
   background-attachment: fixed;
 }
 
-/* --- Apple iOS 27 Liquid Frosted Glass Panels --- */
+/* --- Apple iOS 27 / visionOS Spatial Glass Panels --- */
 .glass-panel {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.35) 100%);
-  backdrop-filter: blur(36px) saturate(210%);
-  -webkit-backdrop-filter: blur(36px) saturate(210%);
-  border: 1px solid rgba(255, 255, 255, 0.65);
-  border-top: 1px solid rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 0.5px solid rgba(255, 255, 255, 0.22);
+  border-top: 0.5px solid rgba(255, 255, 255, 0.45);
   box-shadow:
-    0 24px 50px -10px rgba(0, 0, 0, 0.32),
-    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.05);
+    0 30px 60px rgba(0, 0, 0, 0.45),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+  color: #ffffff;
 }
 
 .glass-panel-subtle {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.22) 100%);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 0.5px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
 }
 
 .glass-panel-dark {
-  background: rgba(15, 23, 42, 0.45);
-  backdrop-filter: blur(40px) saturate(220%);
-  -webkit-backdrop-filter: blur(40px) saturate(220%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 0.5px solid rgba(255, 255, 255, 0.15);
+  border-top: 0.5px solid rgba(255, 255, 255, 0.3);
   box-shadow:
-    0 24px 50px 0 rgba(0, 0, 0, 0.45),
-    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.25);
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.2);
+  color: #ffffff;
 }
 
 /* --- Tinted Glass Highlights --- */
 .glass-tint-teal {
-  background: linear-gradient(135deg, rgba(20, 184, 166, 0.12) 0%, rgba(255, 255, 255, 0.78) 100%);
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
   border-color: rgba(45, 212, 191, 0.4);
 }
 
 .glass-tint-emerald {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(255, 255, 255, 0.78) 100%);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
   border-color: rgba(52, 211, 153, 0.4);
 }
 
 .glass-tint-amber {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(255, 255, 255, 0.78) 100%);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
   border-color: rgba(251, 191, 36, 0.4);
 }
 
 .glass-tint-rose {
-  background: linear-gradient(135deg, rgba(244, 63, 94, 0.12) 0%, rgba(255, 255, 255, 0.78) 100%);
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
   border-color: rgba(251, 113, 133, 0.4);
 }
 
 .glass-tint-blue {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(255, 255, 255, 0.78) 100%);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
   border-color: rgba(96, 165, 250, 0.4);
 }
 
 .glass-tint-purple {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, rgba(255, 255, 255, 0.78) 100%);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
   border-color: rgba(192, 132, 252, 0.4);
 }
 
