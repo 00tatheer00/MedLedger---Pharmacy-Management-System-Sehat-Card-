@@ -22,7 +22,7 @@ export function MobileBottomNav({ onOpenMenu }: MobileBottomNavProps) {
   return (
     <nav
       aria-label="Mobile Bottom Navigation"
-      className="lg:hidden fixed bottom-3 left-3 right-3 max-w-md mx-auto z-40 bg-slate-950/85 backdrop-blur-3xl border border-white/20 rounded-full px-3 py-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.35)] flex items-center justify-around select-none"
+      className="lg:hidden fixed bottom-3 left-3 right-3 max-w-md mx-auto z-40 bg-slate-950/50 backdrop-blur-3xl border border-white/25 rounded-full px-3 py-1.5 shadow-[0_16px_50px_rgba(0,0,0,0.45)] flex items-center justify-around select-none"
     >
       {navItems.map((item) => {
         const Icon = item.icon;

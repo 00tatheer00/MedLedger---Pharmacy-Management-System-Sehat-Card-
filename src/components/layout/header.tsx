@@ -249,12 +249,12 @@ export function Header({
   };
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-white/40 bg-white/75 backdrop-blur-3xl px-5 sm:px-6 shadow-[0_8px_32px_rgba(0,0,0,0.08)]">
+    <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-white/30 bg-white/35 backdrop-blur-3xl px-5 sm:px-6 shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
       {/* Left: Mobile Toggle & Page Title */}
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleMobileMenu}
-          className="lg:hidden rounded-xl p-2 text-text-secondary hover:bg-white/60 hover:text-text-primary focus-ring transition-colors"
+          className="lg:hidden rounded-xl p-2 text-text-secondary hover:bg-white/40 hover:text-text-primary focus-ring transition-colors"
           aria-label="Open navigation menu"
         >
           <Menu className="h-5 w-5" />
@@ -287,14 +287,14 @@ export function Header({
               setSearchOpen(true);
               executeSearch(searchQuery);
             }}
-            className="w-full h-10 pl-10 pr-16 rounded-full border border-white/80 bg-white/60 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus-ring transition-all hover:border-teal-500/40 hover:bg-white/85 shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] backdrop-blur-md cursor-pointer"
+            className="w-full h-10 pl-10 pr-16 rounded-full border border-white/60 bg-white/45 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus-ring transition-all hover:border-teal-500/40 hover:bg-white/70 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)] backdrop-blur-xl cursor-pointer"
           />
           <button
             onClick={() => {
               setSearchOpen(true);
               executeSearch(searchQuery);
             }}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full border border-white/60 bg-white/80 px-2 py-0.5 text-[10px] font-mono text-text-muted shadow-2xs hover:text-text-primary hover:bg-white transition-colors cursor-pointer"
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full border border-white/60 bg-white/60 px-2 py-0.5 text-[10px] font-mono text-text-secondary shadow-2xs hover:text-text-primary hover:bg-white/80 transition-colors cursor-pointer"
             aria-label="Search shortcut"
           >
             Ctrl K
@@ -311,7 +311,7 @@ export function Header({
             variant="ghost"
             size="sm"
             onClick={() => setShowNotifications(!showNotifications)}
-            className="relative h-10 w-10 p-0 rounded-full text-text-secondary hover:text-text-primary hover:bg-white/60 backdrop-blur-sm transition-all"
+            className="relative h-10 w-10 p-0 rounded-full text-text-secondary hover:text-text-primary hover:bg-white/40 border border-white/40 bg-white/20 backdrop-blur-md transition-all shadow-2xs"
             aria-label="Open notifications"
           >
             <Bell className="h-5 w-5" />

@@ -7,7 +7,7 @@ interface PrototypeBannerProps {
 
 export function PrototypeBanner({ isLiveDatabase = false, sourceNotice }: PrototypeBannerProps) {
   return (
-    <div className="rounded-[24px] border border-white/70 bg-white/70 backdrop-blur-2xl px-5 sm:px-6 py-4 sm:py-5 text-sm text-text-secondary flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-[0_8px_30px_rgba(15,23,42,0.03),inset_0_1px_1px_rgba(255,255,255,0.9)]">
+    <div className="rounded-[28px] border border-white/60 border-t-white/90 bg-gradient-to-br from-white/55 via-white/42 to-white/30 backdrop-blur-3xl px-5 sm:px-6 py-4 sm:py-5 text-sm text-text-secondary flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-[0_24px_50px_-10px_rgba(0,0,0,0.32),inset_0_1.5px_2px_0_rgba(255,255,255,0.9)]">
       <div className="flex items-start gap-3">
         {isLiveDatabase ? (
           <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-600 shadow-[0_0_14px_rgba(16,185,129,0.25)] shrink-0">

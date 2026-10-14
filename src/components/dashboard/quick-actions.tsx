@@ -115,7 +115,7 @@ export function QuickActions() {
               <Link
                 key={action.id}
                 href={action.href}
-                className={`flex flex-col justify-between p-4.5 sm:p-5 rounded-[22px] border bg-white/60 backdrop-blur-xl shadow-xs transition-all duration-300 ease-out group cursor-pointer hover:-translate-y-1.5 hover:bg-white/85 hover:shadow-apple-float ios-press ${action.borderColor} ${action.hoverGlow}`}
+                className={`flex flex-col justify-between p-4.5 sm:p-5 rounded-[22px] border border-white/50 border-t-white/80 bg-gradient-to-br from-white/50 via-white/35 to-white/25 backdrop-blur-2xl shadow-sm transition-all duration-300 ease-out group cursor-pointer hover:-translate-y-1.5 hover:bg-white/65 hover:shadow-apple-float ios-press ${action.borderColor} ${action.hoverGlow}`}
               >
                 <div>
                   {/* Icon & Badge Header */}

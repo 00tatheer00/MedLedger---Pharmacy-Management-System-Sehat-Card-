@@ -82,7 +82,7 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
   const pathname = usePathname();
 
   const content = (
-    <div className="flex h-full flex-col bg-slate-950/85 backdrop-blur-3xl text-text-on-dark w-64 border-r border-white/10 shadow-2xl select-none relative overflow-hidden">
+    <div className="flex h-full flex-col bg-slate-950/45 backdrop-blur-3xl text-text-on-dark w-64 border-r border-white/15 shadow-[8px_0_32px_rgba(0,0,0,0.3)] select-none relative overflow-hidden">
       {/* Ambient glowing orbs inside sidebar */}
       <div className="absolute top-0 left-0 w-36 h-36 bg-teal-500/10 rounded-full blur-2xl pointer-events-none" />
       <div className="absolute bottom-10 right-0 w-36 h-36 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />

@@ -61,7 +61,7 @@ export function PriorityAlerts() {
 
   return (
     <>
-      <Card className="h-full border border-white/80 bg-white/82 backdrop-blur-2xl rounded-[28px] shadow-[0_16px_40px_-8px_rgba(0,0,0,0.22),inset_0_1px_1.5px_0_rgba(255,255,255,0.95)]">
+      <Card className="h-full border border-white/60 border-t-white/90 bg-gradient-to-br from-white/55 via-white/42 to-white/30 backdrop-blur-3xl rounded-[28px] shadow-[0_24px_50px_-10px_rgba(0,0,0,0.32),inset_0_1.5px_2px_0_rgba(255,255,255,0.9)]">
         <CardHeader className="px-5 py-4 border-b border-border/50 flex flex-row items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-500/15 text-rose-600 shadow-[0_0_14px_rgba(244,63,94,0.25)]">
@@ -88,7 +88,7 @@ export function PriorityAlerts() {
             return (
               <div
                 key={alert.id}
-                className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[20px] border bg-white/60 backdrop-blur-xl shadow-xs transition-all duration-300 ease-out group hover:-translate-y-1 hover:bg-white/85 hover:shadow-apple-float cursor-pointer ios-press ${config.border}`}
+                className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[20px] border border-white/50 border-t-white/80 bg-gradient-to-br from-white/50 via-white/35 to-white/25 backdrop-blur-2xl shadow-xs transition-all duration-300 ease-out group hover:-translate-y-1 hover:bg-white/65 hover:shadow-apple-float cursor-pointer ios-press ${config.border}`}
                 onClick={() => setSelectedAlert(alert)}
                 role="button"
                 tabIndex={0}

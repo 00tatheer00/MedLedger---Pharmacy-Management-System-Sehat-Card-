@@ -115,7 +115,7 @@ export function RecentActivityTable() {
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="border-b border-border bg-page-bg/60">
+              <TableRow className="border-b border-white/40 bg-white/30 backdrop-blur-md">
                 <TableHead className="w-[140px] py-3.5 px-5 text-sm font-bold">
                   Reference #
                 </TableHead>

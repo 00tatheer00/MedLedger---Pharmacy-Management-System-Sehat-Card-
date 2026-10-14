@@ -62,7 +62,7 @@ export function InventoryOverview() {
   ];
 
   return (
-    <Card className="h-full flex flex-col justify-between border border-white/80 bg-white/82 backdrop-blur-2xl rounded-[28px] shadow-[0_16px_40px_-8px_rgba(0,0,0,0.22),inset_0_1px_1.5px_0_rgba(255,255,255,0.95)]">
+    <Card className="h-full flex flex-col justify-between border border-white/60 border-t-white/90 bg-gradient-to-br from-white/55 via-white/42 to-white/30 backdrop-blur-3xl rounded-[28px] shadow-[0_24px_50px_-10px_rgba(0,0,0,0.32),inset_0_1.5px_2px_0_rgba(255,255,255,0.9)]">
       <CardHeader className="px-5 py-4 border-b border-border/50 flex flex-row items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/15 text-teal shadow-[0_0_14px_rgba(20,184,166,0.25)]">
@@ -125,7 +125,7 @@ export function InventoryOverview() {
               return (
                 <div
                   key={cat.label}
-                  className={`rounded-[20px] border border-white/70 bg-white/60 backdrop-blur-xl p-3 sm:p-3.5 flex flex-col justify-between hover:bg-white/85 hover:shadow-apple-float hover:-translate-y-1 transition-all duration-300 cursor-pointer ios-press`}
+                  className={`rounded-[20px] border border-white/50 border-t-white/80 bg-gradient-to-br from-white/50 via-white/35 to-white/25 backdrop-blur-2xl p-3 sm:p-3.5 flex flex-col justify-between hover:bg-white/65 hover:shadow-apple-float hover:-translate-y-1 transition-all duration-300 cursor-pointer ios-press`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-1.5">
