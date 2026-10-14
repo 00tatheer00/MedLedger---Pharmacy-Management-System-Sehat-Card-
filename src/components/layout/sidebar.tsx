@@ -81,23 +81,23 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
   const pathname = usePathname();
 
   const content = (
-    <div className="flex h-full flex-col justify-between bg-navy text-text-on-dark w-72 border-r border-navy-dark shadow-sidebar">
+    <div className="flex h-full flex-col justify-between bg-navy text-text-on-dark w-64 border-r border-navy-dark shadow-sidebar">
       {/* Brand Header */}
       <div>
-        <div className="flex h-[72px] items-center justify-between px-6 border-b border-navy-light/40">
+        <div className="flex h-16 items-center justify-between px-5 border-b border-navy-light/40">
           <Link
             href="/"
             onClick={onCloseMobile}
-            className="flex items-center gap-3 group focus-ring rounded-xl py-1"
+            className="flex items-center gap-2.5 group focus-ring rounded-xl py-1"
           >
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-teal to-primary text-white shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
-              <Cross className="h-5 w-5 rotate-45" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-teal to-primary text-white shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
+              <Cross className="h-4.5 w-4.5 rotate-45" />
             </div>
             <div className="flex flex-col">
-              <span className="font-extrabold tracking-tight text-white text-xl leading-tight">
+              <span className="font-extrabold tracking-tight text-white text-lg leading-tight">
                 MedLedger
               </span>
-              <span className="text-xs uppercase font-bold tracking-wider text-teal-light">
+              <span className="text-[10px] uppercase font-bold tracking-wider text-teal-light">
                 DHQ Hospital Kohat
               </span>
             </div>
@@ -105,22 +105,22 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
           {onCloseMobile && (
             <button
               onClick={onCloseMobile}
-              className="lg:hidden text-text-on-dark-muted hover:text-white p-2 rounded-xl hover:bg-navy-light transition-colors"
+              className="lg:hidden text-text-on-dark-muted hover:text-white p-1.5 rounded-lg hover:bg-navy-light transition-colors"
               aria-label="Close menu"
             >
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5" />
             </button>
           )}
         </div>
 
         {/* Navigation list */}
-        <nav className="p-4 space-y-6 overflow-y-auto max-h-[calc(100vh-160px)] scrollbar-thin">
+        <nav className="p-3 space-y-4.5 overflow-y-auto max-h-[calc(100vh-140px)] scrollbar-thin">
           {navigationGroups.map((group) => (
-            <div key={group.title} className="space-y-1.5">
-              <h4 className="px-3 text-xs font-bold uppercase tracking-widest text-text-on-dark-muted/70 mb-2">
+            <div key={group.title} className="space-y-1">
+              <h4 className="px-3 text-[11px] font-bold uppercase tracking-widest text-text-on-dark-muted/70 mb-1.5">
                 {group.title}
               </h4>
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 {group.items.map((item) => {
                   const Icon = item.icon;
                   const isActive =
@@ -132,13 +132,13 @@ export function Sidebar({ mobileOpen = false, onCloseMobile }: SidebarProps) {
                       href={item.href}
                       onClick={onCloseMobile}
                       className={cn(
-                        'flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-200 focus-ring',
+                        'flex items-center justify-between rounded-lg px-3 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 focus-ring',
                         isActive
                           ? 'bg-gradient-to-r from-teal to-primary text-white shadow-md font-bold'
-                          : 'text-text-on-dark-muted hover:bg-navy-light/80 hover:text-white hover:translate-x-1',
+                          : 'text-text-on-dark-muted hover:bg-navy-light/80 hover:text-white hover:translate-x-0.5',
                       )}
                     >
-                      <div className="flex items-center gap-3.5">
+                      <div className="flex items-center gap-2.5">
                         <Icon
                           className={cn(
                             'h-5 w-5 shrink-0',

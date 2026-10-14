@@ -52,103 +52,103 @@ export function DispensingClientView({
 
   return (
     <div className="space-y-6">
-      {/* Top Operational Big KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div className="bg-card-bg rounded-2xl border-2 border-emerald-200/80 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between group">
+      {/* Top Operational KPI Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-card-bg rounded-xl border-2 border-emerald-200/80 p-4 sm:p-4.5 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-between group">
           <div>
-            <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-800 block">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 block">
               Dispensed Today • آج جاری کردہ
             </span>
-            <span className="text-3xl sm:text-4xl font-black text-emerald-950 mt-1.5 block">
+            <span className="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-1 block">
               {kpis.total_dispensed_today}
             </span>
-            <span className="text-xs text-emerald-700 font-extrabold flex items-center gap-1.5 mt-1 bg-emerald-100/60 px-2.5 py-0.5 rounded-full w-fit">
-              <Sparkles className="h-3.5 w-3.5" />
-              {kpis.total_units_dispensed_today} units issued
+            <span className="text-xs text-emerald-700 font-bold flex items-center gap-1 mt-1 bg-emerald-100/60 px-2 py-0.5 rounded-full w-fit">
+              <Sparkles className="h-3 w-3" />
+              {kpis.total_units_dispensed_today} units
             </span>
           </div>
-          <div className="h-14 w-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-sm">
-            <ClipboardCheck className="h-7 w-7" strokeWidth={2.2} />
+          <div className="h-11 w-11 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform shadow-xs">
+            <ClipboardCheck className="h-5.5 w-5.5" strokeWidth={2.2} />
           </div>
         </div>
 
-        <div className="bg-card-bg rounded-2xl border-2 border-primary/30 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between group">
+        <div className="bg-card-bg rounded-xl border-2 border-primary/30 p-4 sm:p-4.5 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-between group">
           <div>
-            <span className="text-xs font-extrabold uppercase tracking-wider text-primary block">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-primary block">
               Pending Rx Queue • منتظر نسخے
             </span>
-            <span className="text-3xl sm:text-4xl font-black text-text-primary mt-1.5 block">
+            <span className="text-2xl sm:text-3xl font-extrabold text-text-primary mt-1 block">
               {kpis.pending_prescriptions_count}
             </span>
-            <span className="text-xs text-text-secondary font-bold mt-1 block">
+            <span className="text-xs text-text-secondary font-medium mt-1 block">
               Awaiting dispensary issue
             </span>
           </div>
-          <div className="h-14 w-14 rounded-2xl bg-primary/15 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-sm">
-            <Clock className="h-7 w-7" strokeWidth={2.2} />
+          <div className="h-11 w-11 rounded-xl bg-primary/15 text-primary flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform shadow-xs">
+            <Clock className="h-5.5 w-5.5" strokeWidth={2.2} />
           </div>
         </div>
 
-        <div className="bg-card-bg rounded-2xl border-2 border-amber-200/80 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between group">
+        <div className="bg-card-bg rounded-xl border-2 border-amber-200/80 p-4 sm:p-4.5 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-between group">
           <div>
-            <span className="text-xs font-extrabold uppercase tracking-wider text-amber-800 block">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 block">
               Partially Dispensed • جزوی جاری
             </span>
-            <span className="text-3xl sm:text-4xl font-black text-amber-950 mt-1.5 block">
+            <span className="text-2xl sm:text-3xl font-extrabold text-amber-950 mt-1 block">
               {kpis.partially_dispensed_count}
             </span>
-            <span className="text-xs text-amber-800 font-bold mt-1 block">
+            <span className="text-xs text-amber-800 font-medium mt-1 block">
               Remaining balance active
             </span>
           </div>
-          <div className="h-14 w-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-sm">
-            <Package className="h-7 w-7" strokeWidth={2.2} />
+          <div className="h-11 w-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform shadow-xs">
+            <Package className="h-5.5 w-5.5" strokeWidth={2.2} />
           </div>
         </div>
 
-        <div className="bg-card-bg rounded-2xl border-2 border-slate-200 p-5 sm:p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-between group">
+        <div className="bg-card-bg rounded-xl border-2 border-slate-200 p-4 sm:p-4.5 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-between group">
           <div>
-            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-700 block">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-700 block">
               Reversals Recorded • واپس شدہ
             </span>
-            <span className="text-3xl sm:text-4xl font-black text-slate-900 mt-1.5 block">
+            <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1 block">
               {kpis.reversed_dispensations_count}
             </span>
-            <span className="text-xs text-slate-500 font-bold mt-1 block">
+            <span className="text-xs text-slate-500 font-medium mt-1 block">
               Restored to warehouse
             </span>
           </div>
-          <div className="h-14 w-14 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-sm">
-            <History className="h-7 w-7" strokeWidth={2.2} />
+          <div className="h-11 w-11 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform shadow-xs">
+            <History className="h-5.5 w-5.5" strokeWidth={2.2} />
           </div>
         </div>
       </div>
 
       {/* Main Mode Navigation Tabs */}
-      <div className="flex items-center gap-3 border-b-2 border-border pb-3">
+      <div className="flex items-center gap-2 border-b border-border pb-2">
         <button
           onClick={() => setActiveTab('counter')}
-          className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-extrabold transition-all duration-200 shadow-sm cursor-pointer ${
+          className={`flex items-center gap-2 px-4.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 shadow-xs cursor-pointer ${
             activeTab === 'counter'
-              ? 'bg-primary text-white shadow-md scale-[1.02]'
+              ? 'bg-primary text-white shadow-sm'
               : 'text-text-secondary hover:text-text-primary hover:bg-hover-bg'
           }`}
         >
-          <ClipboardCheck className="h-5 w-5" />
-          <span>Dispensing Counter (دوائی جاری کاؤنٹر)</span>
+          <ClipboardCheck className="h-4 w-4" />
+          <span>Dispensing Counter (دوائی کاؤنٹر)</span>
         </button>
 
         <button
           onClick={() => setActiveTab('history')}
-          className={`flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-extrabold transition-all duration-200 shadow-sm cursor-pointer ${
+          className={`flex items-center gap-2 px-4.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 shadow-xs cursor-pointer ${
             activeTab === 'history'
-              ? 'bg-primary text-white shadow-md scale-[1.02]'
+              ? 'bg-primary text-white shadow-sm'
               : 'text-text-secondary hover:text-text-primary hover:bg-hover-bg'
           }`}
         >
-          <History className="h-5 w-5" />
+          <History className="h-4 w-4" />
           <span>Dispensing History & Audit Log</span>
-          <Badge variant="default" className="ml-1 text-xs font-bold">
+          <Badge variant="default" className="ml-1 text-[11px] font-bold">
             {dispensingRecords.length}
           </Badge>
         </button>
@@ -156,7 +156,7 @@ export function DispensingClientView({
 
       {/* Tab 1: Active Dispensing Counter */}
       {activeTab === 'counter' && (
-        <div className="space-y-6">
+        <div className="space-y-5">
           {selectedPrescription ? (
             <DispensingWorkspace
               prescription={selectedPrescription}
@@ -164,7 +164,7 @@ export function DispensingClientView({
               onCancelSelection={() => setSelectedPrescription(null)}
             />
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
               {/* Left Column: Search & Queue Selector */}
               <div className="lg:col-span-5">
                 <PatientPrescriptionsSearch
@@ -174,25 +174,25 @@ export function DispensingClientView({
               </div>
 
               {/* Right Column: Prompt & Counter Welcome */}
-              <div className="lg:col-span-7 bg-card-bg rounded-3xl border-2 border-border/80 p-8 sm:p-10 shadow-card text-center">
-                <div className="max-w-md mx-auto space-y-5">
-                  <div className="h-20 w-20 bg-primary/10 text-primary rounded-3xl flex items-center justify-center mx-auto shadow-sm">
-                    <FileCheck2 className="h-10 w-10" />
+              <div className="lg:col-span-7 bg-card-bg rounded-2xl border-2 border-border/80 p-6 sm:p-7 shadow-xs text-center">
+                <div className="max-w-md mx-auto space-y-4">
+                  <div className="h-14 w-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mx-auto shadow-xs">
+                    <FileCheck2 className="h-7 w-7" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-black text-text-primary tracking-tight">
+                    <h2 className="text-xl font-extrabold text-text-primary tracking-tight">
                       Ready to Dispense Medicines
                     </h2>
-                    <p className="text-sm font-bold text-primary mt-1" dir="rtl">
+                    <p className="text-xs font-bold text-primary mt-0.5" dir="rtl">
                       نسخہ منتخب کریں اور دوائی جاری کریں
                     </p>
-                    <p className="text-sm text-text-secondary mt-2 leading-relaxed font-medium">
+                    <p className="text-xs sm:text-sm text-text-secondary mt-1.5 leading-relaxed font-medium">
                       Select an eligible pending or partially dispensed prescription from the queue
                       on the left to open the batch allocation counter.
                     </p>
                   </div>
 
-                  <div className="bg-page-bg p-5 rounded-2xl border-2 border-border text-left text-sm text-text-secondary space-y-3">
+                  <div className="bg-page-bg p-4 rounded-xl border border-border text-left text-xs sm:text-sm text-text-secondary space-y-2">
                     <div className="font-extrabold text-text-primary flex items-center gap-2">
                       <Layers className="h-5 w-5 text-primary" />
                       Automatic Pharmacist Guarantees:

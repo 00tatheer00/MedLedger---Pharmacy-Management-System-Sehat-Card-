@@ -117,29 +117,29 @@ export function Header({
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-[72px] w-full items-center justify-between border-b border-border bg-card-bg/98 px-5 sm:px-6 backdrop-blur-sm">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border bg-card-bg/98 px-5 sm:px-6 backdrop-blur-sm">
       {/* Left: Mobile Toggle & Page Title */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <button
           onClick={onToggleMobileMenu}
-          className="lg:hidden rounded-xl p-2.5 text-text-secondary hover:bg-hover-bg hover:text-text-primary focus-ring transition-colors"
+          className="lg:hidden rounded-lg p-2 text-text-secondary hover:bg-hover-bg hover:text-text-primary focus-ring transition-colors"
           aria-label="Open navigation menu"
         >
-          <Menu className="h-6 w-6" />
+          <Menu className="h-5 w-5" />
         </button>
 
         <div className="hidden sm:flex flex-col">
-          <h1 className="text-lg font-bold text-text-primary leading-tight tracking-tight">
+          <h1 className="text-base font-bold text-text-primary leading-tight tracking-tight">
             {title}
           </h1>
-          <span className="text-sm text-text-secondary">{subtitle}</span>
+          <span className="text-xs text-text-secondary">{subtitle}</span>
         </div>
       </div>
 
       {/* Middle: Global Search Input / Trigger */}
-      <div className="flex-1 max-w-lg mx-6 hidden md:block">
+      <div className="flex-1 max-w-md mx-6 hidden md:block">
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-text-muted" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
           <input
             type="text"
             placeholder="Search medicines, prescriptions, claims..."
@@ -151,11 +151,11 @@ export function Header({
               }
             }}
             onClick={() => setSearchOpen(true)}
-            className="w-full h-12 pl-12 pr-16 rounded-xl border-2 border-border bg-page-bg/60 text-sm text-text-primary placeholder:text-text-muted focus-ring transition-all hover:border-primary/30 focus:border-primary cursor-pointer"
+            className="w-full h-10 pl-10 pr-16 rounded-xl border border-border bg-page-bg/60 text-xs sm:text-sm text-text-primary placeholder:text-text-muted focus-ring transition-all hover:border-primary/40 focus:border-primary cursor-pointer"
           />
           <button
             onClick={() => setSearchOpen(true)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg border border-border bg-card-bg px-2.5 py-1 text-xs font-mono text-text-muted shadow-sm hover:text-text-primary transition-colors"
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md border border-border bg-card-bg px-2 py-0.5 text-[10px] font-mono text-text-muted shadow-xs hover:text-text-primary transition-colors"
             aria-label="Search shortcut"
           >
             Ctrl K
