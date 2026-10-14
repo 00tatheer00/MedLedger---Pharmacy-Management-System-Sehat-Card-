@@ -60,10 +60,13 @@ async function runStagingVerification() {
     if (anonInsertError && anonInsertError.code === '42501') {
       logPass(
         'RLS Authorization Boundary',
-        `Unauthenticated insert rejected by RLS (PG Error 42501: ${anonInsertError.message})`
+        `Unauthenticated insert rejected by RLS (PG Error 42501: ${anonInsertError.message})`,
       );
     } else {
-      logFail('RLS Authorization Boundary', `Expected 42501, got: ${JSON.stringify(anonInsertError)}`);
+      logFail(
+        'RLS Authorization Boundary',
+        `Expected 42501, got: ${JSON.stringify(anonInsertError)}`,
+      );
     }
 
     // -----------------------------------------------------------------
@@ -89,7 +92,10 @@ async function runStagingVerification() {
       logFail('Patient Persistence', `Failed to create patient: ${patientError?.message}`);
       return;
     }
-    logPass('Patient Persistence', `Created test patient ID ${patient.id} with MRN ${patient.mr_number}`);
+    logPass(
+      'Patient Persistence',
+      `Created test patient ID ${patient.id} with MRN ${patient.mr_number}`,
+    );
 
     // Create a staff profile for transactions
     const { data: profile } = await adminClient
@@ -127,7 +133,10 @@ async function runStagingVerification() {
       logFail('Medicine Persistence', `Failed to create medicine: ${medError?.message}`);
       return;
     }
-    logPass('Medicine Persistence', `Created catalogue SKU ${medicine.name} (${medicine.item_code})`);
+    logPass(
+      'Medicine Persistence',
+      `Created catalogue SKU ${medicine.name} (${medicine.item_code})`,
+    );
 
     const batchNumber = `B-STG-${Date.now().toString().slice(-4)}`;
     const { data: batch, error: batchError } = await adminClient
@@ -138,7 +147,7 @@ async function runStagingVerification() {
         expiry_date: '2027-12-31',
         quantity_received: 100,
         quantity_on_hand: 50,
-        unit_cost: 15.50,
+        unit_cost: 15.5,
         status: 'available',
       })
       .select()
@@ -157,9 +166,15 @@ async function runStagingVerification() {
       .eq('id', batch.id);
 
     if (negStockError) {
-      logPass('Non-Negative Stock Constraint', `CHECK constraint prevented negative inventory balance (${negStockError.message})`);
+      logPass(
+        'Non-Negative Stock Constraint',
+        `CHECK constraint prevented negative inventory balance (${negStockError.message})`,
+      );
     } else {
-      logFail('Non-Negative Stock Constraint', 'Negative quantity update should have been blocked!');
+      logFail(
+        'Non-Negative Stock Constraint',
+        'Negative quantity update should have been blocked!',
+      );
     }
 
     // -----------------------------------------------------------------
@@ -201,7 +216,10 @@ async function runStagingVerification() {
       logFail('Prescription Item Intake', `Failed to create rx line: ${rxItemError?.message}`);
       return;
     }
-    logPass('Prescription Intake', `Prescription ${rx.prescription_number} recorded for 20 units with zero stock deduction`);
+    logPass(
+      'Prescription Intake',
+      `Prescription ${rx.prescription_number} recorded for 20 units with zero stock deduction`,
+    );
 
     // -----------------------------------------------------------------
     // TEST 5: Atomic Dispensing RPC (Partial Dispensing)
@@ -209,7 +227,7 @@ async function runStagingVerification() {
     console.log('\n--- TEST 5: Atomic Dispensing RPC (fn_dispense_prescription_atomic) ---');
     const idempotencyKey = `IDEMP-${Date.now()}`;
     const dispenseQty = 10;
-    const dispenseUnitPrice = 25.00;
+    const dispenseUnitPrice = 25.0;
 
     const { data: dispensingRecordId, error: dispenseError } = await adminClient.rpc(
       'fn_dispense_prescription_atomic',
@@ -228,14 +246,17 @@ async function runStagingVerification() {
           },
         ],
         p_idempotency_key: idempotencyKey,
-      }
+      },
     );
 
     if (dispenseError || !dispensingRecordId) {
       logFail('Atomic Dispensing RPC', `Dispense transaction failed: ${dispenseError?.message}`);
       return;
     }
-    logPass('Atomic Dispensing RPC', `Dispensing completed successfully. Transaction Record ID: ${dispensingRecordId}`);
+    logPass(
+      'Atomic Dispensing RPC',
+      `Dispensing completed successfully. Transaction Record ID: ${dispensingRecordId}`,
+    );
 
     // Verify batch stock was deducted exactly from 50 to 40
     const { data: updatedBatch } = await adminClient
@@ -247,7 +268,10 @@ async function runStagingVerification() {
     if (updatedBatch?.quantity_on_hand === 40) {
       logPass('Atomic Stock Balance Update', `Batch balance deducted accurately: 50 -> 40 units`);
     } else {
-      logFail('Atomic Stock Balance Update', `Expected 40 units, found ${updatedBatch?.quantity_on_hand}`);
+      logFail(
+        'Atomic Stock Balance Update',
+        `Expected 40 units, found ${updatedBatch?.quantity_on_hand}`,
+      );
     }
 
     // Verify immutable stock movement was logged
@@ -260,7 +284,10 @@ async function runStagingVerification() {
       .single();
 
     if (movement && movement.movement_type === 'dispensing' && movement.quantity === -10) {
-      logPass('Immutable Stock Ledger', `Stock movement recorded: Type '${movement.movement_type}', Quantity ${movement.quantity}`);
+      logPass(
+        'Immutable Stock Ledger',
+        `Stock movement recorded: Type '${movement.movement_type}', Quantity ${movement.quantity}`,
+      );
     } else {
       logFail('Immutable Stock Ledger', `Stock movement check failed: ${JSON.stringify(movement)}`);
     }
@@ -273,9 +300,15 @@ async function runStagingVerification() {
       .single();
 
     if (updatedRx?.status === 'partially_dispensed') {
-      logPass('Prescription State Machine', `Prescription transitioned accurately to '${updatedRx.status}'`);
+      logPass(
+        'Prescription State Machine',
+        `Prescription transitioned accurately to '${updatedRx.status}'`,
+      );
     } else {
-      logFail('Prescription State Machine', `Expected partially_dispensed, got ${updatedRx?.status}`);
+      logFail(
+        'Prescription State Machine',
+        `Expected partially_dispensed, got ${updatedRx?.status}`,
+      );
     }
 
     // -----------------------------------------------------------------
@@ -298,42 +331,51 @@ async function runStagingVerification() {
           },
         ],
         p_idempotency_key: idempotencyKey,
-      }
+      },
     );
 
     if (duplicateDispenseError) {
-      logPass('Idempotency Key Protection', `Replay attempt was blocked: ${duplicateDispenseError.message}`);
+      logPass(
+        'Idempotency Key Protection',
+        `Replay attempt was blocked: ${duplicateDispenseError.message}`,
+      );
     } else {
-      logFail('Idempotency Key Protection', 'Duplicate submit should have raised an idempotency conflict!');
+      logFail(
+        'Idempotency Key Protection',
+        'Duplicate submit should have raised an idempotency conflict!',
+      );
     }
 
     // -----------------------------------------------------------------
     // TEST 7: Transaction Rollback Verification (Stock Exhaustion)
     // -----------------------------------------------------------------
     console.log('\n--- TEST 7: Transaction Rollback on Over-Dispense ---');
-    const { error: overDispenseError } = await adminClient.rpc(
-      'fn_dispense_prescription_atomic',
-      {
-        p_prescription_id: rx.id,
-        p_dispensed_by: profile.id,
-        p_notes: 'Attempting to dispense 1000 units when only 40 are available',
-        p_items: [
-          {
-            prescription_item_id: rxItem.id,
-            medicine_batch_id: batch.id,
-            dispensed_medicine_id: medicine.id,
-            quantity: 1000,
-            unit_price: dispenseUnitPrice,
-          },
-        ],
-        p_idempotency_key: `OVER-${Date.now()}`,
-      }
-    );
+    const { error: overDispenseError } = await adminClient.rpc('fn_dispense_prescription_atomic', {
+      p_prescription_id: rx.id,
+      p_dispensed_by: profile.id,
+      p_notes: 'Attempting to dispense 1000 units when only 40 are available',
+      p_items: [
+        {
+          prescription_item_id: rxItem.id,
+          medicine_batch_id: batch.id,
+          dispensed_medicine_id: medicine.id,
+          quantity: 1000,
+          unit_price: dispenseUnitPrice,
+        },
+      ],
+      p_idempotency_key: `OVER-${Date.now()}`,
+    });
 
     if (overDispenseError) {
-      logPass('ACID Transaction Rollback', `Over-dispense transaction aborted cleanly: ${overDispenseError.message}`);
+      logPass(
+        'ACID Transaction Rollback',
+        `Over-dispense transaction aborted cleanly: ${overDispenseError.message}`,
+      );
     } else {
-      logFail('ACID Transaction Rollback', 'Transaction should have raised an exception and rolled back!');
+      logFail(
+        'ACID Transaction Rollback',
+        'Transaction should have raised an exception and rolled back!',
+      );
     }
 
     // Confirm batch stock remained at 40
@@ -344,9 +386,15 @@ async function runStagingVerification() {
       .single();
 
     if (rollbackBatch?.quantity_on_hand === 40) {
-      logPass('Rollback Stock Invariant', `Stock verified unchanged at 40 units following rollback`);
+      logPass(
+        'Rollback Stock Invariant',
+        `Stock verified unchanged at 40 units following rollback`,
+      );
     } else {
-      logFail('Rollback Stock Invariant', `Stock corrupted after rollback! Balance: ${rollbackBatch?.quantity_on_hand}`);
+      logFail(
+        'Rollback Stock Invariant',
+        `Stock corrupted after rollback! Balance: ${rollbackBatch?.quantity_on_hand}`,
+      );
     }
 
     // -----------------------------------------------------------------
@@ -359,55 +407,55 @@ async function runStagingVerification() {
       .eq('dispensing_record_id', dispensingRecordId);
 
     const targetDispItem = dispItems[0];
-    const { data: claimId, error: claimError } = await adminClient.rpc(
-      'fn_create_claim_atomic',
-      {
-        p_claim_period_start: '2026-10-01',
-        p_claim_period_end: '2026-10-31',
-        p_notes: 'Synthetic staging claim compilation',
-        p_items: [
-          {
-            dispensing_record_id: dispensingRecordId,
-            dispensing_item_id: targetDispItem.id,
-            medicine_id: medicine.id,
-            quantity: targetDispItem.quantity_dispensed,
-            unit_rate: targetDispItem.unit_price,
-          },
-        ],
-        p_submitted_by: profile.id,
-        p_status: 'submitted',
-      }
-    );
+    const { data: claimId, error: claimError } = await adminClient.rpc('fn_create_claim_atomic', {
+      p_claim_period_start: '2026-10-01',
+      p_claim_period_end: '2026-10-31',
+      p_notes: 'Synthetic staging claim compilation',
+      p_items: [
+        {
+          dispensing_record_id: dispensingRecordId,
+          dispensing_item_id: targetDispItem.id,
+          medicine_id: medicine.id,
+          quantity: targetDispItem.quantity_dispensed,
+          unit_rate: targetDispItem.unit_price,
+        },
+      ],
+      p_submitted_by: profile.id,
+      p_status: 'submitted',
+    });
 
     if (claimError || !claimId) {
       logFail('Atomic Claim Creation', `Failed to create claim: ${claimError?.message}`);
       return;
     }
-    logPass('Atomic Claim Creation', `Hospital claim created from dispensing items. Claim ID: ${claimId}`);
-
-    // Prevent duplicate claiming on same dispensing item
-    const { error: dupClaimError } = await adminClient.rpc(
-      'fn_create_claim_atomic',
-      {
-        p_claim_period_start: '2026-10-01',
-        p_claim_period_end: '2026-10-31',
-        p_notes: 'Duplicate claim attempt',
-        p_items: [
-          {
-            dispensing_record_id: dispensingRecordId,
-            dispensing_item_id: targetDispItem.id,
-            medicine_id: medicine.id,
-            quantity: targetDispItem.quantity_dispensed,
-            unit_rate: targetDispItem.unit_price,
-          },
-        ],
-        p_submitted_by: profile.id,
-        p_status: 'submitted',
-      }
+    logPass(
+      'Atomic Claim Creation',
+      `Hospital claim created from dispensing items. Claim ID: ${claimId}`,
     );
 
+    // Prevent duplicate claiming on same dispensing item
+    const { error: dupClaimError } = await adminClient.rpc('fn_create_claim_atomic', {
+      p_claim_period_start: '2026-10-01',
+      p_claim_period_end: '2026-10-31',
+      p_notes: 'Duplicate claim attempt',
+      p_items: [
+        {
+          dispensing_record_id: dispensingRecordId,
+          dispensing_item_id: targetDispItem.id,
+          medicine_id: medicine.id,
+          quantity: targetDispItem.quantity_dispensed,
+          unit_rate: targetDispItem.unit_price,
+        },
+      ],
+      p_submitted_by: profile.id,
+      p_status: 'submitted',
+    });
+
     if (dupClaimError) {
-      logPass('Duplicate Claim Prevention', `Attempt to re-claim already claimed items blocked: ${dupClaimError.message}`);
+      logPass(
+        'Duplicate Claim Prevention',
+        `Attempt to re-claim already claimed items blocked: ${dupClaimError.message}`,
+      );
     } else {
       logFail('Duplicate Claim Prevention', 'Duplicate claim should have been rejected!');
     }
@@ -435,8 +483,8 @@ async function runStagingVerification() {
         supplier_id: supplier.id,
         invoice_date: '2026-10-01',
         due_date: '2026-10-31',
-        total_amount: 10000.00,
-        paid_amount: 0.00,
+        total_amount: 10000.0,
+        paid_amount: 0.0,
         status: 'pending',
       })
       .select()
@@ -448,7 +496,7 @@ async function runStagingVerification() {
       {
         p_supplier_id: supplier.id,
         p_payment_date: '2026-10-14',
-        p_amount: 6000.00,
+        p_amount: 6000.0,
         p_payment_method: 'Cheque',
         p_reference_number: 'CHQ-987654',
         p_notes: 'Partial invoice settlement',
@@ -456,17 +504,20 @@ async function runStagingVerification() {
         p_allocations: [
           {
             invoice_id: invoice.id,
-            amount_allocated: 6000.00,
+            amount_allocated: 6000.0,
           },
         ],
-      }
+      },
     );
 
     if (paymentError || !paymentId) {
       logFail('Supplier Payment Allocation', `Payment allocation failed: ${paymentError?.message}`);
       return;
     }
-    logPass('Supplier Payment Allocation', `Payment voucher created (${paymentId}) allocating 6,000 PKR to invoice ${invNum}`);
+    logPass(
+      'Supplier Payment Allocation',
+      `Payment voucher created (${paymentId}) allocating 6,000 PKR to invoice ${invNum}`,
+    );
 
     // Verify invoice paid_amount and status transitioned to 'partially_paid'
     const { data: updatedInvoice } = await adminClient
@@ -476,9 +527,15 @@ async function runStagingVerification() {
       .single();
 
     if (Number(updatedInvoice.paid_amount) === 6000 && updatedInvoice.status === 'partially_paid') {
-      logPass('Invoice Balance State', `Invoice paid amount: 6,000 PKR, status: '${updatedInvoice.status}'`);
+      logPass(
+        'Invoice Balance State',
+        `Invoice paid amount: 6,000 PKR, status: '${updatedInvoice.status}'`,
+      );
     } else {
-      logFail('Invoice Balance State', `Unexpected invoice state: ${JSON.stringify(updatedInvoice)}`);
+      logFail(
+        'Invoice Balance State',
+        `Unexpected invoice state: ${JSON.stringify(updatedInvoice)}`,
+      );
     }
 
     // Verify reconciliation view surfaces this transaction
@@ -487,10 +544,20 @@ async function runStagingVerification() {
       .select('*')
       .eq('transaction_id', paymentId);
 
-    if (reconRows && reconRows.length > 0 && reconRows[0].reconciliation_status === 'fully_allocated') {
-      logPass('Financial Reconciliation View', `View v_financial_reconciliation verified: status '${reconRows[0].reconciliation_status}', unallocated balance ${reconRows[0].unallocated_amount} PKR`);
+    if (
+      reconRows &&
+      reconRows.length > 0 &&
+      reconRows[0].reconciliation_status === 'fully_allocated'
+    ) {
+      logPass(
+        'Financial Reconciliation View',
+        `View v_financial_reconciliation verified: status '${reconRows[0].reconciliation_status}', unallocated balance ${reconRows[0].unallocated_amount} PKR`,
+      );
     } else {
-      logFail('Financial Reconciliation View', `Reconciliation row check failed: ${JSON.stringify(reconRows)}`);
+      logFail(
+        'Financial Reconciliation View',
+        `Reconciliation row check failed: ${JSON.stringify(reconRows)}`,
+      );
     }
 
     // -----------------------------------------------------------------
@@ -499,16 +566,28 @@ async function runStagingVerification() {
     console.log('\n--- TEST 10: Tamper-Proof Audit Trigger ---');
     try {
       await pgClient.query("UPDATE audit_events SET event_type = 'tampered' WHERE 1=1;");
-      logFail('Audit Tamper Protection', 'Update on audit_events should have raised a SQL exception!');
+      logFail(
+        'Audit Tamper Protection',
+        'Update on audit_events should have raised a SQL exception!',
+      );
     } catch (tamperErr) {
-      logPass('Audit Tamper Protection', `Trigger successfully blocked UPDATE on audit_events: ${tamperErr.message}`);
+      logPass(
+        'Audit Tamper Protection',
+        `Trigger successfully blocked UPDATE on audit_events: ${tamperErr.message}`,
+      );
     }
 
     try {
       await pgClient.query('DELETE FROM audit_events WHERE 1=1;');
-      logFail('Audit Tamper Protection', 'DELETE on audit_events should have raised a SQL exception!');
+      logFail(
+        'Audit Tamper Protection',
+        'DELETE on audit_events should have raised a SQL exception!',
+      );
     } catch (tamperErr) {
-      logPass('Audit Tamper Protection', `Trigger successfully blocked DELETE on audit_events: ${tamperErr.message}`);
+      logPass(
+        'Audit Tamper Protection',
+        `Trigger successfully blocked DELETE on audit_events: ${tamperErr.message}`,
+      );
     }
 
     // -----------------------------------------------------------------
@@ -529,7 +608,6 @@ async function runStagingVerification() {
       console.error(`\nSTATUS: ${failedCount} CHECKS FAILED`);
       process.exit(1);
     }
-
   } finally {
     await pgClient.end();
   }

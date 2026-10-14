@@ -63,7 +63,10 @@ async function main() {
       await client.query('BEGIN');
       try {
         await client.query(sql);
-        await client.query('INSERT INTO _medledger_migrations (filename) VALUES ($1) ON CONFLICT (filename) DO UPDATE SET applied_at = NOW()', [file]);
+        await client.query(
+          'INSERT INTO _medledger_migrations (filename) VALUES ($1) ON CONFLICT (filename) DO UPDATE SET applied_at = NOW()',
+          [file],
+        );
         await client.query('COMMIT');
         console.log(`  ✓ Applied: ${file}`);
       } catch (err) {
@@ -85,7 +88,6 @@ async function main() {
 
     console.log(`\nVerified ${tables.length} tables/views in public schema:`);
     tables.forEach((t) => console.log(`  - ${t.table_name}`));
-
   } catch (err) {
     console.error('Migration failed:', err);
     process.exit(1);
