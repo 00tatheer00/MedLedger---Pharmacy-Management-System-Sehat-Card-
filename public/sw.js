@@ -124,3 +124,10 @@ self.addEventListener('fetch', (event) => {
     }),
   );
 });
+
+// Message Event — handle SKIP_WAITING to activate new version immediately
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});

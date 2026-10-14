@@ -5,6 +5,6 @@ interface InstallButtonProps {
   variant?: 'header' | 'sidebar';
 }
 
-export function InstallButton(_props: InstallButtonProps) {
+export function InstallButton() {
   return null;
 }
