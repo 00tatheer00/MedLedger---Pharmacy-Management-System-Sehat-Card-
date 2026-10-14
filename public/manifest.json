@@ -1,0 +1,64 @@
+{
+  "name": "MedLedger — DHQ Hospital Kohat",
+  "short_name": "MedLedger",
+  "description": "Hospital Pharmacy & Sehat Card Management System for DHQ Hospital Kohat",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0d9488",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["medical", "health", "business", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dispense Medicine",
+      "short_name": "Dispense",
+      "description": "Open medicine dispensing counter",
+      "url": "/dispensing",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Stock Inventory",
+      "short_name": "Inventory",
+      "description": "Check hospital medicine stock",
+      "url": "/inventory",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Patients & Sehat Card",
+      "short_name": "Patients",
+      "description": "Search patient records and free medicine quota",
+      "url": "/patients",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

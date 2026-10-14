@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from 'react';
 import { Sidebar } from './sidebar';
 import { Header } from './header';
+import { MobileBottomNav } from './mobile-bottom-nav';
 
 interface AppShellProps {
   children: ReactNode;
@@ -25,8 +26,13 @@ export function AppShell({ children, title, subtitle }: AppShellProps) {
           title={title}
           subtitle={subtitle}
         />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">{children}</main>
+        <main className="flex-1 p-3.5 sm:p-5 lg:p-7 pb-24 lg:pb-8 max-w-7xl w-full mx-auto">
+          {children}
+        </main>
       </div>
+
+      {/* Mobile Bottom Navigation Bar */}
+      <MobileBottomNav onOpenMenu={() => setMobileMenuOpen(true)} />
     </div>
   );
 }

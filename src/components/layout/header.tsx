@@ -19,6 +19,7 @@ import { priorityAlerts } from '@/lib/demo-data';
 import { searchCatalogueAction } from '@/modules/dashboard/actions';
 import { SearchResultItem } from '@/modules/dashboard/types';
 import { SYSTEM_ROLES, SystemRole } from '@/core/authorization/roles';
+import { InstallButton } from '@/components/pwa/install-button';
 
 interface HeaderProps {
   onToggleMobileMenu: () => void;
@@ -163,8 +164,9 @@ export function Header({
         </div>
       </div>
 
-      {/* Right: Notifications, User Profile */}
-      <div className="flex items-center gap-3 sm:gap-4">
+      {/* Right: Notifications, User Profile, PWA Install */}
+      <div className="flex items-center gap-2 sm:gap-3">
+        <InstallButton />
         {/* Notifications Bell */}
         <div className="relative">
           <Button
