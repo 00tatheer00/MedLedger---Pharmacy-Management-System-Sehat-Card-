@@ -32,17 +32,19 @@ interface ToastContextType {
 
 const ToastContext = createContext<ToastContextType | null>(null);
 
-let globalToastHandler: {
-  success: (message: string, title?: string) => void;
-  error: (message: string, title?: string) => void;
-  info: (message: string, title?: string) => void;
-  warning: (message: string, title?: string) => void;
-} = {
+const noopToastHandler = {
   success: () => {},
   error: () => {},
   info: () => {},
   warning: () => {},
 };
+
+let globalToastHandler: {
+  success: (message: string, title?: string) => void;
+  error: (message: string, title?: string) => void;
+  info: (message: string, title?: string) => void;
+  warning: (message: string, title?: string) => void;
+} = noopToastHandler;
 
 export const toast = {
   success: (message: string, title?: string) => globalToastHandler.success(message, title),
@@ -85,7 +87,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     globalToastHandler = toastMethods;
     return () => {
-      globalToastHandler = null;
+      globalToastHandler = noopToastHandler;
     };
   }, [toastMethods]);
 

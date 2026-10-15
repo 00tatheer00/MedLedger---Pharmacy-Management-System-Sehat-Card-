@@ -5,16 +5,16 @@ import { FileSpreadsheet, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/feedback/toast';
 
-export interface CsvColumn<T> {
+export interface CsvColumn<T = unknown> {
   header: string;
-  accessor: (item: T) => string | number | boolean | null | undefined;
+  accessor: (item: T) => unknown;
 }
 
 /**
  * Universal client-side CSV Exporter
  * Formats values safely with UTF-8 BOM for flawless Excel compatibility in Pakistan / international locales.
  */
-export function exportToCsv<T extends Record<string, unknown>>(
+export function exportToCsv<T = unknown>(
   filename: string,
   data: T[],
   columns?: CsvColumn<T>[],
@@ -28,9 +28,9 @@ export function exportToCsv<T extends Record<string, unknown>>(
     const resolvedColumns: CsvColumn<T>[] =
       columns && columns.length > 0
         ? columns
-        : Object.keys(data[0] || {}).map((key) => ({
+        : Object.keys((data[0] as object) || {}).map((key) => ({
             header: key,
-            accessor: (item: T) => item[key],
+            accessor: (item: T) => (item as Record<string, unknown>)[key],
           }));
 
     const headers = resolvedColumns.map((col) => `"${col.header.replace(/"/g, '""')}"`).join(',');
@@ -67,7 +67,7 @@ export function exportToCsv<T extends Record<string, unknown>>(
   }
 }
 
-export interface ExportCsvButtonProps<T extends Record<string, unknown>> {
+export interface ExportCsvButtonProps<T = unknown> {
   filename: string;
   data: T[];
   columns?: CsvColumn<T>[];
@@ -80,7 +80,7 @@ export interface ExportCsvButtonProps<T extends Record<string, unknown>> {
 /**
  * Interactive Export CSV Button with live downloaded feedback state
  */
-export function ExportCsvButton<T extends Record<string, unknown>>({
+export function ExportCsvButton<T = unknown>({
   filename,
   data,
   columns,
