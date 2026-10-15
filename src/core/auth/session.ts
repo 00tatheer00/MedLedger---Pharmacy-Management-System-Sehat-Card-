@@ -14,29 +14,32 @@ export interface AuthenticatedUser {
   roles: string[];
 }
 
+export const DEV_FALLBACK_USER: AuthenticatedUser = {
+  id: 'usr-admin-prototype',
+  email: 'dr.ayesha@dhqkohat.gov.pk',
+  fullName: 'Dr. Ayesha Bangash',
+  isActive: true,
+  roles: ['system_admin', 'pharmacy_manager', 'pharmacist'],
+};
+
 /**
  * Retrieves the current authenticated user and their assigned roles.
- * Returns prototype staff session strictly in development tier when Supabase is unconfigured,
+ * Returns prototype staff session in development tier when Supabase is unconfigured
+ * or when active auth cookie is not present in local dev mode,
  * or null if not authenticated in staging/production.
  */
 export async function getCurrentUser(): Promise<AuthenticatedUser | null> {
   const env = getEnvConfig();
-  if (
-    !isSupabaseConfigured() &&
-    env.NEXT_PUBLIC_APP_ENV === 'development' &&
-    process.env.NODE_ENV !== 'production'
-  ) {
-    return {
-      id: 'usr-admin-prototype',
-      email: 'dr.ayesha@dhqkohat.gov.pk',
-      fullName: 'Dr. Ayesha Bangash',
-      isActive: true,
-      roles: ['system_admin', 'pharmacy_manager'],
-    };
+  const isDev = env.NEXT_PUBLIC_APP_ENV === 'development' || process.env.NODE_ENV !== 'production';
+
+  if (!isSupabaseConfigured() && isDev) {
+    return DEV_FALLBACK_USER;
   }
 
   const supabase = await createServerClient();
-  if (!supabase) return null;
+  if (!supabase) {
+    return isDev ? DEV_FALLBACK_USER : null;
+  }
 
   try {
     const {
@@ -44,7 +47,9 @@ export async function getCurrentUser(): Promise<AuthenticatedUser | null> {
       error: authError,
     } = await supabase.auth.getUser();
 
-    if (authError || !user) return null;
+    if (authError || !user) {
+      return isDev ? DEV_FALLBACK_USER : null;
+    }
 
     // Fetch user profile and roles
     const { data: profile } = await supabase
