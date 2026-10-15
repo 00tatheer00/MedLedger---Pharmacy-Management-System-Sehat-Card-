@@ -34,9 +34,13 @@ export async function getAdmissions(
         query = query.eq('patient_id', params.patientId);
       }
 
+      if (params.sspVisitNo) {
+        query = query.eq('ssp_visit_no', params.sspVisitNo.trim().toUpperCase());
+      }
+
       if (search) {
         query = query.or(
-          `admission_number.ilike.%${search}%,ward.ilike.%${search}%,attending_doctor.ilike.%${search}%`,
+          `admission_number.ilike.%${search}%,ssp_visit_no.ilike.%${search}%,ward.ilike.%${search}%,attending_doctor.ilike.%${search}%`,
         );
       }
 
@@ -78,6 +82,11 @@ export async function getAdmissions(
   // Development Prototype Mode
   let all = AdmissionPrototypeStore.getAll();
 
+  if (params.sspVisitNo) {
+    const targetVisitNo = params.sspVisitNo.trim().toUpperCase();
+    all = all.filter((a) => a.ssp_visit_no && a.ssp_visit_no.toUpperCase() === targetVisitNo);
+  }
+
   if (params.patientId) {
     all = all.filter((a) => a.patient_id === params.patientId);
   }
@@ -103,6 +112,7 @@ export async function getAdmissions(
     enriched = enriched.filter(
       (a) =>
         a.admission_number.toLowerCase().includes(search) ||
+        (a.ssp_visit_no && a.ssp_visit_no.toLowerCase().includes(search)) ||
         a.ward.toLowerCase().includes(search) ||
         (a.attending_doctor && a.attending_doctor.toLowerCase().includes(search)) ||
         (a.patient && a.patient.full_name.toLowerCase().includes(search)) ||
@@ -209,4 +219,43 @@ export async function checkAdmissionNumberExists(
   }
 
   return AdmissionPrototypeStore.existsAdmissionNumber(admNumber, excludeId);
+}
+
+/**
+ * Checks whether an SSP Visit Number is already assigned to another admission.
+ */
+export async function checkSspVisitNoExists(
+  sspVisitNo: string,
+  excludeId?: string,
+): Promise<boolean> {
+  const visitNo = sspVisitNo.trim().toUpperCase();
+  if (!visitNo) return false;
+
+  if (isSupabaseConfigured()) {
+    const supabase = await createServerClient();
+    if (supabase) {
+      let q = supabase
+        .from('admissions')
+        .select('id')
+        .eq('ssp_visit_no', visitNo)
+        .is('deleted_at', null);
+
+      if (excludeId) {
+        q = q.neq('id', excludeId);
+      }
+
+      const { data, error } = await q;
+      if (error) {
+        throw new Error(`Database error checking SSP Visit Number ${visitNo}: ${error.message}`);
+      }
+      return Boolean(data && data.length > 0);
+    }
+  }
+
+  const env = getEnvConfig();
+  if (env.NEXT_PUBLIC_APP_ENV !== 'development') {
+    throw new Error('Supabase database configuration missing in staging/production tier.');
+  }
+
+  return AdmissionPrototypeStore.existsSspVisitNo(visitNo, excludeId);
 }

@@ -33,6 +33,7 @@ export interface ClaimItemDetail {
   mr_number: string;
   admission_id?: string | null;
   admission_number?: string | null;
+  ssp_visit_no?: string | null;
   ward?: string | null;
   bed_number?: string | null;
   medicine_name: string;
@@ -104,6 +105,7 @@ export interface EligibleDispensingItem {
   mr_number: string;
   admission_id?: string | null;
   admission_number?: string | null;
+  ssp_visit_no?: string | null;
   ward?: string | null;
   bed_number?: string | null;
   medicine_id: string;

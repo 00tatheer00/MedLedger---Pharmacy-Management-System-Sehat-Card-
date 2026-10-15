@@ -24,6 +24,8 @@ import { PatientPrescriptionsSearch } from './patient-prescriptions-search';
 import { DispensingWorkspace } from './dispensing-workspace';
 import { DispensingTable } from './dispensing-table';
 import { DispensingReceiptDialog } from './dispensing-receipt-dialog';
+import { FastCounterWorkspace } from './fast-counter-workspace';
+import { Zap } from 'lucide-react';
 
 interface DispensingClientViewProps {
   initialPrescriptions: PrescriptionWithDetails[];
@@ -36,7 +38,7 @@ export function DispensingClientView({
   initialDispensingRecords,
   kpis,
 }: DispensingClientViewProps) {
-  const [activeTab, setActiveTab] = useState<'counter' | 'history'>('counter');
+  const [activeTab, setActiveTab] = useState<'quick' | 'queue' | 'history'>('quick');
   const [selectedPrescription, setSelectedPrescription] = useState<PrescriptionWithDetails | null>(
     null,
   );
@@ -124,38 +126,57 @@ export function DispensingClientView({
         </div>
       </div>
 
-      {/* Main Mode Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-border pb-2">
+      {/* Main Mode Navigation Tabs (Vibrant, Thin Borders, On Hover Glow) */}
+      <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-2">
         <button
-          onClick={() => setActiveTab('counter')}
-          className={`flex items-center gap-2 px-4.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 shadow-xs cursor-pointer ${
-            activeTab === 'counter'
-              ? 'bg-primary text-white shadow-sm'
-              : 'text-text-secondary hover:text-text-primary hover:bg-hover-bg'
+          onClick={() => setActiveTab('quick')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold border transition-all duration-200 cursor-pointer shadow-xs ${
+            activeTab === 'quick'
+              ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white border-emerald-500 shadow-md shadow-emerald-500/20'
+              : 'border-slate-200 bg-white text-slate-700 hover:border-emerald-500 hover:text-emerald-700 hover:bg-emerald-50/50 hover:shadow-xs'
+          }`}
+        >
+          <Zap className="h-4 w-4 text-amber-300 fill-amber-300" />
+          <span>⚡ 1-Screen Quick Counter (فوری پرچی کاؤنٹر)</span>
+          <span className="text-[10px] bg-white/20 px-1.5 py-0.2 rounded font-bold">Fastest</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('queue')}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold border transition-all duration-200 cursor-pointer shadow-xs ${
+            activeTab === 'queue'
+              ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-blue-500 shadow-md shadow-blue-500/20'
+              : 'border-slate-200 bg-white text-slate-700 hover:border-blue-500 hover:text-blue-700 hover:bg-blue-50/50 hover:shadow-xs'
           }`}
         >
           <ClipboardCheck className="h-4 w-4" />
-          <span>Dispensing Counter (دوائی کاؤنٹر)</span>
+          <span>📋 Pre-entered Rx Queue (منتظر نسخے)</span>
+          <Badge variant="default" className="ml-1 text-[11px] font-bold">
+            {kpis.pending_prescriptions_count}
+          </Badge>
         </button>
 
         <button
           onClick={() => setActiveTab('history')}
-          className={`flex items-center gap-2 px-4.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 shadow-xs cursor-pointer ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold border transition-all duration-200 cursor-pointer shadow-xs ${
             activeTab === 'history'
-              ? 'bg-primary text-white shadow-sm'
-              : 'text-text-secondary hover:text-text-primary hover:bg-hover-bg'
+              ? 'bg-gradient-to-r from-slate-800 to-slate-900 text-white border-slate-700 shadow-md shadow-slate-900/20'
+              : 'border-slate-200 bg-white text-slate-700 hover:border-slate-500 hover:text-slate-900 hover:bg-slate-100 hover:shadow-xs'
           }`}
         >
           <History className="h-4 w-4" />
-          <span>Dispensing History & Audit Log</span>
+          <span>📜 Dispensing History & Bills (جاری شدہ بلز)</span>
           <Badge variant="default" className="ml-1 text-[11px] font-bold">
             {dispensingRecords.length}
           </Badge>
         </button>
       </div>
 
-      {/* Tab 1: Active Dispensing Counter */}
-      {activeTab === 'counter' && (
+      {/* Tab 1: 1-Screen Fast Dispense Counter (Default - Easy & Instant!) */}
+      {activeTab === 'quick' && <FastCounterWorkspace onDispenseSuccess={handleDispenseSuccess} />}
+
+      {/* Tab 2: Pre-entered Prescriptions Queue */}
+      {activeTab === 'queue' && (
         <div className="space-y-5">
           {selectedPrescription ? (
             <DispensingWorkspace

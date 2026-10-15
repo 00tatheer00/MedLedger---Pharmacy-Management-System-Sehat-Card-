@@ -72,7 +72,14 @@ export function DispensingReceiptDialog({ open, onClose, record }: DispensingRec
           <div>
             <span className="text-slate-500 block">Patient Name:</span>
             <strong className="text-slate-900 text-sm">{record.patient_name}</strong>
-            <span className="text-slate-600 block mt-0.5 font-mono">MRN: {record.mr_number}</span>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <span className="text-slate-600 font-mono">MRN: {record.mr_number}</span>
+              {record.ssp_visit_no && (
+                <span className="font-mono text-[10px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-300 px-1.5 py-0.5 rounded">
+                  Party Code / SSP: {record.ssp_visit_no}
+                </span>
+              )}
+            </div>
           </div>
           <div>
             <span className="text-slate-500 block">Prescription Ref:</span>

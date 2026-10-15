@@ -43,6 +43,7 @@ export interface DispensingWithDetails {
   mr_number: string;
   admission_id?: string | null;
   admission_number?: string | null;
+  ssp_visit_no?: string | null;
   ward?: string | null;
   bed_number?: string | null;
   dispensed_by: string;

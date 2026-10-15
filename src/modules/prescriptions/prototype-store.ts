@@ -44,6 +44,7 @@ const initialPrescriptions: PrescriptionWithDetails[] = [
     admission: {
       id: 'adm-001-kohat',
       admission_number: 'ADM-2026-0412',
+      ssp_visit_no: '37634827',
       ward: 'Male Medical Ward',
       bed_number: 'Bed 14',
       status: 'admitted',
@@ -101,6 +102,7 @@ const initialPrescriptions: PrescriptionWithDetails[] = [
     admission: {
       id: 'adm-002-kohat',
       admission_number: 'ADM-2026-0398',
+      ssp_visit_no: '37643797',
       ward: 'Female Surgical Ward',
       bed_number: 'Bed 06',
       status: 'admitted',
@@ -234,6 +236,7 @@ export const PrescriptionPrototypeStore = {
     admissionSummary?: {
       id: string;
       admission_number: string;
+      ssp_visit_no?: string | null;
       ward: string;
       bed_number?: string | null;
       status: string;

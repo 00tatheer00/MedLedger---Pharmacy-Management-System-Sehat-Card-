@@ -39,7 +39,8 @@ export function PatientPrescriptionsSearch({
       rx.prescription_number.toLowerCase().includes(term) ||
       rx.patient.full_name.toLowerCase().includes(term) ||
       rx.patient.mr_number.toLowerCase().includes(term) ||
-      (rx.admission?.ward && rx.admission.ward.toLowerCase().includes(term))
+      (rx.admission?.ward && rx.admission.ward.toLowerCase().includes(term)) ||
+      (rx.admission?.ssp_visit_no && rx.admission.ssp_visit_no.toLowerCase().includes(term))
     );
   });
 
@@ -51,14 +52,14 @@ export function PatientPrescriptionsSearch({
           Lookup Patient Prescription Queue
         </h2>
         <p className="text-xs text-slate-500 mt-0.5">
-          Search by MR Number, Patient Name, or Prescription Slip # to initiate dispensing.
+          Search by MR Number, Patient Name, Prescription Slip #, or SSP Visit # (Sehat Card).
         </p>
       </div>
 
       <div className="relative">
         <Input
           type="search"
-          placeholder="e.g. MRN-2026-00101, Tariq Mehmood, or RX-2026-0041..."
+          placeholder="e.g. MRN-2026-00101, Tariq Mehmood, RX-2026-0041, or SSP # 37634827..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="text-xs pl-3 pr-8 py-2"
@@ -98,6 +99,11 @@ export function PatientPrescriptionsSearch({
                       <span className="font-mono text-slate-500 font-normal">
                         ({rx.patient.mr_number})
                       </span>
+                      {rx.admission?.ssp_visit_no && (
+                        <span className="font-mono text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded">
+                          SSP #{rx.admission.ssp_visit_no}
+                        </span>
+                      )}
                     </div>
                     <div className="flex items-center gap-2 mt-1 text-[11px] text-slate-500">
                       <span className="font-mono font-semibold text-primary">

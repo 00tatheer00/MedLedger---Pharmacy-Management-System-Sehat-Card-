@@ -296,3 +296,54 @@ export async function getDispensingKPIsAction(): Promise<{
     };
   }
 }
+
+// ==========================================
+// 7. Fast 1-Screen Quick Dispense Requisition Action
+// ==========================================
+
+export interface QuickDispensePayload {
+  ssp_visit_no?: string | null;
+  patient_name: string;
+  mr_number?: string | null;
+  ward: string;
+  bed_number?: string | null;
+  prescriber_name?: string | null;
+  notes?: string | null;
+  items: {
+    medicine_id: string;
+    quantity: number;
+    unit_price?: number;
+  }[];
+}
+
+export async function quickDispenseRequisitionAction(
+  payload: QuickDispensePayload,
+): Promise<{ success: boolean; data?: DispensingWithDetails; error?: string }> {
+  try {
+    const user = await getCurrentUser();
+    const authCheck = requirePermission(user, 'dispensing:create');
+    if (!authCheck.success) {
+      return { success: false, error: authCheck.error.message };
+    }
+
+    if (!payload.items || payload.items.length === 0) {
+      return { success: false, error: 'At least one medicine or consumable item must be added.' };
+    }
+
+    const actor = {
+      id: user?.id || 'usr-pharmacist-001',
+      name: user?.fullName || 'Staff Pharmacist',
+    };
+
+    const record = dispensingStore.quickDispensePaperRequisition(payload, actor);
+    revalidatePath('/dispensing');
+    revalidatePath('/admissions');
+    revalidatePath('/claims');
+    return { success: true, data: record };
+  } catch (err) {
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Failed to process quick dispensing.',
+    };
+  }
+}

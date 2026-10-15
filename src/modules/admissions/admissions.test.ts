@@ -73,6 +73,17 @@ describe('Admissions Domain Module', () => {
       const admission = await getAdmissionById('adm-001-kohat');
       expect(admission).toBeDefined();
       expect(admission?.admission_number).toBe('ADM-2026-0412');
+      expect(admission?.ssp_visit_no).toBe('37634827');
+    });
+
+    it('filters and searches admissions by SSP Visit Number', async () => {
+      const filtered = await getAdmissions({ sspVisitNo: '37634827' });
+      expect(filtered.admissions).toHaveLength(1);
+      expect(filtered.admissions[0].admission_number).toBe('ADM-2026-0412');
+
+      const searched = await getAdmissions({ search: '37634827' });
+      expect(searched.admissions.length).toBeGreaterThan(0);
+      expect(searched.admissions.some((a) => a.ssp_visit_no === '37634827')).toBe(true);
     });
   });
 
@@ -103,6 +114,7 @@ describe('Admissions Domain Module', () => {
       const res = await createAdmissionAction({
         patient_id: 'pat-004-kohat',
         admission_number: 'ADM-2026-9555',
+        ssp_visit_no: '37639999',
         admission_date: '2026-10-13T09:00:00.000Z',
         ward: 'Pediatrics Ward',
         bed_number: 'Bed 04',
@@ -112,6 +124,7 @@ describe('Admissions Domain Module', () => {
       expect(res.success).toBe(true);
       if (res.success) {
         expect(res.data.admission_number).toBe('ADM-2026-9555');
+        expect(res.data.ssp_visit_no).toBe('37639999');
         expect(res.data.status).toBe('admitted');
         expect(res.data.patient?.id).toBe('pat-004-kohat');
       }

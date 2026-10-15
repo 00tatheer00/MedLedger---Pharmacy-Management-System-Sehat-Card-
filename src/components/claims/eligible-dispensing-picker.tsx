@@ -52,6 +52,7 @@ export function EligibleDispensingPicker({ onSelectionChange }: EligibleDispensi
     return (
       item.patient_name.toLowerCase().includes(term) ||
       item.mr_number.toLowerCase().includes(term) ||
+      (item.ssp_visit_no && item.ssp_visit_no.toLowerCase().includes(term)) ||
       item.dispensing_number.toLowerCase().includes(term) ||
       item.prescription_number.toLowerCase().includes(term) ||
       item.medicine_name.toLowerCase().includes(term) ||
@@ -219,8 +220,14 @@ export function EligibleDispensingPicker({ onSelectionChange }: EligibleDispensi
                       </td>
                       <td className="px-3 py-2">
                         <div className="font-semibold text-slate-900">{item.patient_name}</div>
-                        <div className="text-[11px] text-slate-400">
-                          {item.mr_number} {item.ward ? `• ${item.ward}` : ''}
+                        <div className="text-[11px] text-slate-500 flex items-center gap-1.5 flex-wrap mt-0.5">
+                          <span>{item.mr_number}</span>
+                          {item.ward && <span>• {item.ward}</span>}
+                          {item.ssp_visit_no && (
+                            <span className="font-mono text-[10px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-300 px-1 py-0.2 rounded">
+                              SSP: {item.ssp_visit_no}
+                            </span>
+                          )}
                         </div>
                       </td>
                       <td className="px-3 py-2 font-mono text-[11px] text-slate-600">

@@ -12,6 +12,13 @@ export const createAdmissionSchema = z
         /^[A-Za-z0-9\-_/]+$/,
         'Admission number may only contain letters, numbers, hyphens, and slashes.',
       ),
+    ssp_visit_no: z
+      .string()
+      .trim()
+      .max(50, 'SSP Visit number cannot exceed 50 characters.')
+      .optional()
+      .nullable()
+      .or(z.literal('')),
     admission_date: z.string().refine((val) => {
       const parsed = new Date(val);
       return !isNaN(parsed.getTime());

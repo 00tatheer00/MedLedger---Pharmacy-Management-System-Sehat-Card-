@@ -95,6 +95,7 @@ export interface Admission {
   id: string;
   patient_id: string;
   admission_number: string;
+  ssp_visit_no?: string | null;
   admission_date: string;
   discharge_date: string | null;
   ward: string;

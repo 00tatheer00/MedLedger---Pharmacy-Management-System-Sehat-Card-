@@ -27,6 +27,7 @@ export interface PrescriptionPatientSummary {
 export interface PrescriptionAdmissionSummary {
   id: string;
   admission_number: string;
+  ssp_visit_no?: string | null;
   ward: string;
   bed_number?: string | null;
   status: string;

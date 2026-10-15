@@ -17,6 +17,8 @@ import {
 import { prescriptionStore } from '@/modules/prescriptions/prototype-store';
 import { inventoryStore } from '@/modules/inventory/prototype-store';
 import { medicineStore } from '@/modules/medicines/prototype-store';
+import { AdmissionPrototypeStore } from '@/modules/admissions/prototype-store';
+import { PatientPrototypeStore } from '@/modules/patients/prototype-store';
 import { multiplyMoney, addMoney } from '@/lib/decimal';
 
 export const initialDispensingRecords: DispensingWithDetails[] = [
@@ -30,6 +32,7 @@ export const initialDispensingRecords: DispensingWithDetails[] = [
     mr_number: 'MRN-2026-00101',
     admission_id: 'adm-001-kohat',
     admission_number: 'ADM-2026-0412',
+    ssp_visit_no: '37634827',
     ward: 'Male Medical Ward',
     bed_number: 'Bed 14',
     dispensed_by: 'usr-pharmacist-001',
@@ -256,6 +259,7 @@ class DispensingPrototypeStore {
         mr_number: rx.patient.mr_number,
         admission_id: rx.admission?.id || null,
         admission_number: rx.admission?.admission_number || null,
+        ssp_visit_no: rx.admission?.ssp_visit_no || null,
         ward: rx.admission?.ward || null,
         bed_number: rx.admission?.bed_number || null,
         dispensed_by: actor.id,
@@ -437,6 +441,199 @@ class DispensingPrototypeStore {
       partially_dispensed_count: partialRx,
       reversed_dispensations_count: reversedCount,
     };
+  }
+
+  public quickDispensePaperRequisition(
+    input: {
+      ssp_visit_no?: string | null;
+      patient_name: string;
+      mr_number?: string | null;
+      ward: string;
+      bed_number?: string | null;
+      prescriber_name?: string | null;
+      notes?: string | null;
+      items: {
+        medicine_id: string;
+        quantity: number;
+        unit_price?: number;
+      }[];
+    },
+    actor: { id: string; name: string } = {
+      id: 'usr-pharmacist-001',
+      name: 'Dr. Tariq Khan (Pharmacist)',
+    },
+  ): DispensingWithDetails {
+    if (!input.items || input.items.length === 0) {
+      throw new Error('Please add at least one medicine or surgical consumable item to dispense.');
+    }
+
+    const now = new Date().toISOString();
+    const cleanSsp = input.ssp_visit_no?.trim() || null;
+    const cleanPatientName = input.patient_name.trim() || 'Ward Inpatient';
+    const mrn = input.mr_number?.trim() || `MRN-2026-${Math.floor(10000 + Math.random() * 90000)}`;
+
+    // 1. Find or create patient
+    let patient = PatientPrototypeStore.getAll().find(
+      (p) =>
+        p.mr_number.toUpperCase() === mrn.toUpperCase() ||
+        p.full_name.toLowerCase() === cleanPatientName.toLowerCase(),
+    );
+    if (!patient) {
+      patient = PatientPrototypeStore.create({
+        mr_number: mrn,
+        full_name: cleanPatientName,
+        gender: 'male',
+      });
+    }
+
+    // 2. Find or create admission
+    let admission = cleanSsp ? AdmissionPrototypeStore.getBySspVisitNo(cleanSsp) : null;
+    if (!admission && input.ward) {
+      admission = AdmissionPrototypeStore.create({
+        patient_id: patient.id,
+        admission_number: `ADM-${Date.now().toString().slice(-5)}`,
+        ssp_visit_no: cleanSsp,
+        admission_date: now,
+        ward: input.ward.trim(),
+        bed_number: input.bed_number?.trim() || null,
+        attending_doctor: input.prescriber_name?.trim() || 'Staff Physician',
+        status: 'admitted',
+      });
+    }
+
+    // 3. Create prescription
+    const rxNumber = `RX-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+    const rx = prescriptionStore.create(
+      {
+        prescription_number: rxNumber,
+        patient_id: patient.id,
+        admission_id: admission ? admission.id : null,
+        prescriber_name: input.prescriber_name?.trim() || 'Ward Medical Officer',
+        prescription_date: now.slice(0, 10),
+        notes: input.notes || 'Counter Quick Dispense from Ward Requisition Form',
+        items: input.items.map((it) => ({
+          medicine_id: it.medicine_id,
+          prescribed_quantity: it.quantity,
+          dosage_instructions: 'As directed',
+        })),
+      },
+      {
+        id: patient.id,
+        mr_number: patient.mr_number,
+        full_name: patient.full_name,
+        gender: patient.gender,
+      },
+      admission
+        ? {
+            id: admission.id,
+            admission_number: admission.admission_number,
+            ssp_visit_no: admission.ssp_visit_no,
+            ward: admission.ward,
+            bed_number: admission.bed_number,
+            status: admission.status,
+          }
+        : null,
+    );
+
+    // 4. For each item, allocate batch (FEFO) and deduct stock
+    const createdItems: DispensingItemDetail[] = [];
+    const lineDisbursedAmounts: number[] = [];
+    const dispensingId = `dsp-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+    const dispensingNumber = `DSP-${now.slice(0, 10).replace(/-/g, '')}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    for (let i = 0; i < input.items.length; i++) {
+      const it = input.items[i];
+      const rxItem = rx.items[i];
+      const med = medicineStore.getAllRawMedicines().find((m) => m.id === it.medicine_id);
+
+      const batches = inventoryStore
+        .getBatchesForMedicine(it.medicine_id)
+        .filter((b) => b.status === 'available' && b.quantity_on_hand > 0)
+        .sort((a, b) => a.expiry_date.localeCompare(b.expiry_date));
+
+      const batch = batches[0];
+      const unitRate = it.unit_price ?? batch?.unit_cost ?? 100.0;
+      const lineTotal = multiplyMoney(it.quantity, unitRate);
+      lineDisbursedAmounts.push(lineTotal);
+
+      const itemId = `dspi-${Date.now()}-${i}`;
+      if (batch) {
+        inventoryStore.dispenseBatchStock(
+          {
+            batch_id: batch.id,
+            quantity: it.quantity,
+            dispensing_record_id: dispensingId,
+            dispensing_item_id: itemId,
+            dispensing_number: dispensingNumber,
+            prescription_number: rxNumber,
+            notes: 'Quick Counter Requisition Dispense',
+            idempotency_key: `quick-${dispensingId}-${i}`,
+          },
+          actor,
+        );
+      }
+
+      createdItems.push({
+        id: itemId,
+        dispensing_record_id: dispensingId,
+        prescription_item_id: rxItem.id,
+        medicine_batch_id: batch ? batch.id : 'bat-emergency',
+        dispensed_medicine_id: it.medicine_id,
+        quantity_dispensed: it.quantity,
+        unit_price: unitRate,
+        total_price: lineTotal,
+        created_at: now,
+        prescribed_medicine_name: med ? med.name : 'Prescribed Item',
+        dispensed_medicine_name: med ? med.name : 'Dispensed Item',
+        strength: med ? med.strength : 'Standard',
+        dosage_form: med ? med.dosage_form : 'Piece',
+        batch_number: batch ? batch.batch_number : 'B-QUICK-2026',
+        expiry_date: batch ? batch.expiry_date : '2028-12-31',
+        is_substitution: false,
+        substitution_reason: null,
+        is_fefo_override: false,
+        fefo_override_reason: null,
+      });
+    }
+
+    prescriptionStore.recordDispensedItems(
+      rx.id,
+      input.items.map((it, idx) => ({
+        prescriptionItemId: rx.items[idx].id,
+        quantity: it.quantity,
+      })),
+    );
+
+    const totalAmount = addMoney(...lineDisbursedAmounts);
+    const completedRecord: DispensingWithDetails = {
+      id: dispensingId,
+      dispensing_number: dispensingNumber,
+      prescription_id: rx.id,
+      prescription_number: rxNumber,
+      patient_id: patient.id,
+      patient_name: patient.full_name,
+      mr_number: patient.mr_number,
+      admission_id: admission ? admission.id : null,
+      admission_number: admission ? admission.admission_number : null,
+      ssp_visit_no: cleanSsp,
+      ward: admission ? admission.ward : input.ward || null,
+      bed_number: admission ? admission.bed_number : input.bed_number || null,
+      dispensed_by: actor.id,
+      dispensed_by_name: actor.name,
+      dispensed_at: now,
+      notes: input.notes || 'Dispensed via 1-Screen Quick Counter',
+      status: 'completed',
+      total_amount: totalAmount,
+      total_items: createdItems.length,
+      created_at: now,
+      updated_at: now,
+      deleted_at: null,
+      items: createdItems,
+      prescription: rx,
+    };
+
+    this.records = [completedRecord, ...this.records];
+    return completedRecord;
   }
 
   public resetForTesting(): void {

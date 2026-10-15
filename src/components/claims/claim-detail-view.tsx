@@ -315,8 +315,14 @@ export function ClaimDetailView({ initialClaim }: ClaimDetailViewProps) {
                   <tr key={it.id} className="hover:bg-slate-50/60 transition-colors">
                     <td className="px-4 py-3">
                       <div className="font-semibold text-slate-900">{it.patient_name}</div>
-                      <div className="text-[11px] text-slate-400">
-                        {it.mr_number} {it.ward ? `• ${it.ward}` : ''}
+                      <div className="text-[11px] text-slate-500 flex items-center gap-1.5 flex-wrap mt-0.5">
+                        <span>{it.mr_number}</span>
+                        {it.ward && <span>• {it.ward}</span>}
+                        {it.ssp_visit_no && (
+                          <span className="font-mono text-[10px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-300 px-1 py-0.2 rounded">
+                            SSP: {it.ssp_visit_no}
+                          </span>
+                        )}
                       </div>
                     </td>
                     <td className="px-4 py-3 font-mono text-[11px] text-slate-600">

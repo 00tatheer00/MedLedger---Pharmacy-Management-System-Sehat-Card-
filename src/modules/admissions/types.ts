@@ -10,6 +10,7 @@ export interface AdmissionWithPatient extends Admission {
 export interface CreateAdmissionInput {
   patient_id: string;
   admission_number: string;
+  ssp_visit_no?: string | null;
   admission_date: string;
   ward: string;
   bed_number?: string | null;
@@ -19,6 +20,7 @@ export interface CreateAdmissionInput {
 
 export interface UpdateAdmissionInput {
   discharge_date?: string | null;
+  ssp_visit_no?: string | null;
   status?: AdmissionStatus;
   ward?: string;
   bed_number?: string | null;
@@ -27,6 +29,7 @@ export interface UpdateAdmissionInput {
 
 export interface AdmissionFilterParams {
   patientId?: string;
+  sspVisitNo?: string;
   ward?: string;
   status?: AdmissionStatus | 'all';
   search?: string;

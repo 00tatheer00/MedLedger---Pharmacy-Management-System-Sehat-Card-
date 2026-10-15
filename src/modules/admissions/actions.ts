@@ -61,6 +61,7 @@ export async function createAdmissionAction(
         .insert({
           patient_id: input.patient_id,
           admission_number: input.admission_number.trim().toUpperCase(),
+          ssp_visit_no: input.ssp_visit_no?.trim() || null,
           admission_date: input.admission_date,
           ward: input.ward.trim(),
           bed_number: input.bed_number?.trim() || null,

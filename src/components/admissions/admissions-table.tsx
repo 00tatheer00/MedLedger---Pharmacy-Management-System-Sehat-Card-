@@ -71,6 +71,7 @@ export function AdmissionsTable({
 
   const exportData = initialAdmissions.map((adm) => ({
     'Admission #': adm.admission_number,
+    'SSP Visit #': adm.ssp_visit_no || 'Non-SSP',
     'Patient Name': adm.patient?.full_name || 'N/A',
     MRN: adm.patient?.mr_number || 'N/A',
     'Ward / Department': adm.ward,
@@ -117,7 +118,7 @@ export function AdmissionsTable({
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-muted" />
               <Input
                 type="text"
-                placeholder="Search by admission number, ward, doctor, or patient..."
+                placeholder="Search by admission number, SSP visit #, ward, doctor, or patient..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="pl-9 text-xs h-9"
@@ -206,8 +207,19 @@ export function AdmissionsTable({
               <TableBody>
                 {initialAdmissions.map((adm) => (
                   <TableRow key={adm.id} className="hover:bg-hover-bg/60 transition-colors">
-                    <TableCell className="font-mono text-xs font-semibold text-primary">
-                      {adm.admission_number}
+                    <TableCell>
+                      <div className="flex flex-col">
+                        <span className="font-mono text-xs font-semibold text-primary">
+                          {adm.admission_number}
+                        </span>
+                        {adm.ssp_visit_no ? (
+                          <span className="inline-flex items-center gap-1 font-mono text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded mt-0.5 w-fit">
+                            SSP: {adm.ssp_visit_no}
+                          </span>
+                        ) : (
+                          <span className="text-[10px] text-text-muted">General Ward</span>
+                        )}
+                      </div>
                     </TableCell>
 
                     <TableCell>
