@@ -1,10 +1,17 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { AppShell } from '@/components/layout/app-shell';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { SYSTEM_ROLES, ROLE_PERMISSIONS_MATRIX, SystemRole } from '@/core/authorization/roles';
 import { isSupabaseConfigured } from '@/core/config/env';
 import { Settings, Building2, Clock, Database, Lock } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Hospital Settings & System Configuration',
+  description:
+    'DHQ Hospital Kohat facility configuration, user roles, security policies, and database connection status.',
+};
 
 export default function SettingsPage() {
   const isLiveDb = isSupabaseConfigured();

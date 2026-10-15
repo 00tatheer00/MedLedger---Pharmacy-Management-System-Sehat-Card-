@@ -259,9 +259,11 @@ export function Header({
           <Menu className="h-5 w-5" />
         </button>
 
-        <div className="hidden sm:flex flex-col">
-          <h1 className="text-sm font-semibold text-text-primary leading-tight">{title}</h1>
-          <span className="text-[11px] text-text-muted">{subtitle}</span>
+        <div className="flex flex-col min-w-0 max-w-[180px] sm:max-w-none">
+          <h1 className="text-xs sm:text-sm font-semibold text-text-primary leading-tight truncate">
+            {title}
+          </h1>
+          <span className="text-[10px] sm:text-[11px] text-text-muted truncate">{subtitle}</span>
         </div>
       </div>
 
@@ -327,7 +329,7 @@ export function Header({
                 onClick={() => setShowNotifications(false)}
                 aria-hidden="true"
               />
-              <div className="absolute right-0 mt-2 z-50 w-[380px] rounded-xl border border-border bg-white shadow-dropdown p-4 animate-in fade-in zoom-in-95 duration-150">
+              <div className="absolute right-0 mt-2 z-50 w-[360px] max-w-[calc(100vw-1.5rem)] rounded-xl border border-border bg-white shadow-dropdown p-4 animate-in fade-in zoom-in-95 duration-150">
                 <div className="flex items-center justify-between pb-3 border-b border-border">
                   <div className="flex items-center gap-2">
                     <h4 className="text-sm font-semibold text-text-primary">System Alerts</h4>
@@ -423,7 +425,7 @@ export function Header({
                 onClick={() => setShowUserMenu(false)}
                 aria-hidden="true"
               />
-              <div className="absolute right-0 mt-2 z-50 w-72 rounded-xl border border-border bg-white shadow-dropdown p-4 animate-in fade-in zoom-in-95 duration-150">
+              <div className="absolute right-0 mt-2 z-50 w-72 max-w-[calc(100vw-1.5rem)] rounded-xl border border-border bg-white shadow-dropdown p-4 animate-in fade-in zoom-in-95 duration-150">
                 <div className="flex items-center gap-3 pb-3 border-b border-border">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 text-white text-sm font-semibold">
                     AK

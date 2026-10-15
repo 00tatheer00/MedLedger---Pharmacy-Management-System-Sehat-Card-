@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { connection } from 'next/server';
 import { Layers, History, AlertTriangle, Pill, ArrowRight } from 'lucide-react';
@@ -13,6 +14,12 @@ import {
   getStockMovementsAction,
   getInventoryAlertsAction,
 } from '@/modules/inventory/actions';
+
+export const metadata: Metadata = {
+  title: 'Warehouse Inventory & Stock Batches',
+  description:
+    'Hospital warehouse stock levels, batch expiry monitoring, and stock movement logs at DHQ Hospital Kohat.',
+};
 
 interface InventoryPageProps {
   searchParams: Promise<{

@@ -9,12 +9,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Eye, FileText, RotateCcw } from 'lucide-react';
+import { Eye, FileText, RotateCcw, ClipboardCheck, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { formatPKR } from '@/lib/decimal';
 import { ExportCsvButton } from '@/lib/csv-helper';
+import { EmptyState } from '@/components/ui/empty-state';
 import { DispensingWithDetails, DispensingStatus } from '@/modules/dispensing/types';
 import { DispensingReceiptDialog } from './dispensing-receipt-dialog';
 import { ReverseDispensingDialog } from './reverse-dispensing-dialog';
@@ -155,8 +156,30 @@ export function DispensingTable({ initialRecords }: DispensingTableProps) {
             <tbody className="divide-y divide-slate-200">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="p-8 text-center text-slate-400">
-                    No dispensing records found matching the filter criteria.
+                  <td colSpan={9} className="p-8">
+                    <EmptyState
+                      icon={ClipboardCheck}
+                      title="No dispensing records found"
+                      description={
+                        searchTerm || statusFilter !== 'all'
+                          ? `No records matching "${searchTerm}" or filter. Try clearing filters.`
+                          : 'No hospital dispensations have been recorded yet.'
+                      }
+                      action={
+                        searchTerm || statusFilter !== 'all' ? (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              setSearchTerm('');
+                              setStatusFilter('all');
+                            }}
+                          >
+                            Clear Filters
+                          </Button>
+                        ) : undefined
+                      }
+                    />
                   </td>
                 </tr>
               ) : (

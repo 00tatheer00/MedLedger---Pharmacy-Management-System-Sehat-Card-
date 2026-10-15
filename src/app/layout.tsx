@@ -23,22 +23,28 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'MedLedger — Pharmacy Management System',
+  title: {
+    default: 'MedLedger — Pharmacy Management System | DHQ Hospital Kohat',
+    template: '%s | MedLedger DHQ Kohat',
+  },
   description:
-    'MedLedger Pharmacy Management System for DHQ Hospital Kohat, developed by Tech4Edges',
+    'MedLedger Pharmacy Management & Sehat Sahulat Program Billing System for DHQ Hospital Kohat, developed by Tech4Edges',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: 'MedLedger',
+    title: 'MedLedger DHQ Kohat',
   },
   formatDetection: {
     telephone: false,
   },
   icons: {
     icon: [
+      { url: '/favicon.ico' },
+      { url: '/icons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/icons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
       { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' },
     ],
     apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
   },

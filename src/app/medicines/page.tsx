@@ -1,7 +1,14 @@
+import type { Metadata } from 'next';
 import { connection } from 'next/server';
 import { AppShell } from '@/components/layout/app-shell';
 import { MedicineTable } from '@/components/medicines/medicine-table';
 import { getMedicinesAction } from '@/modules/medicines/actions';
+
+export const metadata: Metadata = {
+  title: 'Medicine Formulary & Hospital Rates',
+  description:
+    'DHQ Kohat official hospital medicine formulary, generic names, item codes, and government rates.',
+};
 
 interface MedicinesPageProps {
   searchParams: Promise<{

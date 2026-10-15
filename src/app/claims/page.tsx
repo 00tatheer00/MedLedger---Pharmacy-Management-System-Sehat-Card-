@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { connection } from 'next/server';
 import { Plus, Receipt } from 'lucide-react';
@@ -6,6 +7,12 @@ import { Button } from '@/components/ui/button';
 import { fetchClaims, fetchClaimsKPIs } from '@/modules/claims/server-queries';
 import { ClaimsKpiCards } from '@/components/claims/claims-kpi-cards';
 import { ClaimsTable } from '@/components/claims/claims-table';
+
+export const metadata: Metadata = {
+  title: 'Sehat Card (SSP) Claims & Billing',
+  description:
+    'Sehat Sahulat Program reimbursement claims, government audit files, and reconciliation at DHQ Hospital Kohat.',
+};
 
 export const instant = false;
 

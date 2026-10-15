@@ -1,7 +1,14 @@
+import type { Metadata } from 'next';
 import { connection } from 'next/server';
 import { AppShell } from '@/components/layout/app-shell';
 import { SuppliersTable } from '@/components/suppliers/suppliers-table';
 import { getSuppliersAction } from '@/modules/suppliers/actions';
+
+export const metadata: Metadata = {
+  title: 'Registered Medicine Suppliers & Vendors',
+  description:
+    'Pharmaceutical vendors, distributor contacts, and drug license records for DHQ Hospital Kohat.',
+};
 
 interface SuppliersPageProps {
   searchParams: Promise<{

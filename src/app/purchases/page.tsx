@@ -1,9 +1,16 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { connection } from 'next/server';
 import { ShoppingCart, PackageCheck, FileText, Plus, Building2 } from 'lucide-react';
 import { AppShell } from '@/components/layout/app-shell';
 import { buttonVariants } from '@/components/ui/button';
+
+export const metadata: Metadata = {
+  title: 'Purchase Orders & Supplier Invoices',
+  description:
+    'Hospital procurement, goods receipt notes (GRN), and supplier invoicing at DHQ Hospital Kohat.',
+};
 import {
   PurchaseOrdersTable,
   GoodsReceiptsTable,

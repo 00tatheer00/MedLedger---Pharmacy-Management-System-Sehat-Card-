@@ -1,9 +1,16 @@
+import type { Metadata } from 'next';
 import { connection } from 'next/server';
 import { AppShell } from '@/components/layout/app-shell';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
 import { DispensingClientView } from '@/components/dispensing';
 import { getPrescriptions } from '@/modules/prescriptions/server-queries';
 import { fetchDispensingRecords, fetchDispensingKPIs } from '@/modules/dispensing/server-queries';
+
+export const metadata: Metadata = {
+  title: 'Fast Dispense Counter & Slip Billing',
+  description:
+    '1-Screen fast medicine dispensing, computer invoice printing, and Sehat Card slip billing at DHQ Hospital Kohat.',
+};
 
 export const instant = false;
 

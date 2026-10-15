@@ -1,9 +1,16 @@
+import type { Metadata } from 'next';
 import { connection } from 'next/server';
 import { AppShell } from '@/components/layout/app-shell';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
 import { PatientTable } from '@/components/patients/patient-table';
 import { getPatients } from '@/modules/patients/server-queries';
 import { Gender } from '@/modules/patients/types';
+
+export const metadata: Metadata = {
+  title: 'Patient Registry & Medical Records',
+  description:
+    'DHQ Kohat patient registration, MRN lookup, CNIC verification, and admission history.',
+};
 
 interface PatientsPageProps {
   searchParams: Promise<{

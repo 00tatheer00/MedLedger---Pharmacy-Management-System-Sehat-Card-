@@ -1,9 +1,16 @@
+import type { Metadata } from 'next';
 import { connection } from 'next/server';
 import { AppShell } from '@/components/layout/app-shell';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
 import { AdmissionsTable } from '@/components/admissions/admissions-table';
 import { getAdmissions } from '@/modules/admissions/server-queries';
 import { AdmissionStatus } from '@/modules/admissions/types';
+
+export const metadata: Metadata = {
+  title: 'Inpatient Admissions & Ward Slip Records',
+  description:
+    'Inpatient admissions, ward assignments, and Sehat Sahulat Program (SSP) visit tracking at DHQ Hospital Kohat.',
+};
 
 interface AdmissionsPageProps {
   searchParams: Promise<{

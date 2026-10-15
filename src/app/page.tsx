@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { AppShell } from '@/components/layout/app-shell';
 import { WelcomeBanner } from '@/components/dashboard/welcome-banner';
 import { KpiCards } from '@/components/dashboard/kpi-cards';
@@ -7,6 +8,12 @@ import { RecentActivityTable } from '@/components/dashboard/recent-activity-tabl
 import { QuickActions } from '@/components/dashboard/quick-actions';
 import { PrototypeBanner } from '@/components/dashboard/prototype-banner';
 import { getDashboardSummary } from '@/modules/dashboard/server-queries';
+
+export const metadata: Metadata = {
+  title: 'Pharmacy Operations Dashboard',
+  description:
+    'DHQ Hospital Kohat central dispensary operations, live stock alerts, and Sehat Card KPIs.',
+};
 
 export default async function DashboardPage() {
   const summary = await getDashboardSummary();

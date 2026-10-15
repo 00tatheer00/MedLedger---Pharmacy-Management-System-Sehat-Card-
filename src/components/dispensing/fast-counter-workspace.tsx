@@ -31,6 +31,7 @@ import { Badge } from '@/components/ui/badge';
 import { formatPKR, multiplyMoney, addMoney } from '@/lib/decimal';
 import { DispensingWithDetails } from '@/modules/dispensing/types';
 import { quickDispenseRequisitionAction } from '@/modules/dispensing/actions';
+import { toast } from '@/components/feedback/toast';
 
 interface BillItem {
   medicine_id: string;
@@ -410,7 +411,9 @@ export function FastCounterWorkspace({ onDispenseSuccess }: FastCounterWorkspace
 
   function handleCompleteAndPrint() {
     if (billItems.length === 0) {
-      setErrorMessage('Please add at least one medicine or surgical consumable item to dispense.');
+      const msg = 'Please add at least one medicine or surgical consumable item to dispense.';
+      setErrorMessage(msg);
+      toast.error(msg);
       return;
     }
 
@@ -430,9 +433,14 @@ export function FastCounterWorkspace({ onDispenseSuccess }: FastCounterWorkspace
       });
 
       if (res.success && res.data) {
+        toast.success(
+          `Dispensed successfully! Voucher #${res.data.dispensing_number} ready to print.`,
+        );
         onDispenseSuccess(res.data);
       } else {
-        setErrorMessage(res.error || 'Failed to complete dispensing transaction.');
+        const err = res.error || 'Failed to complete dispensing transaction.';
+        setErrorMessage(err);
+        toast.error(err);
       }
     });
   }

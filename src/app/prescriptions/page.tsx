@@ -1,9 +1,16 @@
+import type { Metadata } from 'next';
 import { connection } from 'next/server';
 import { AppShell } from '@/components/layout/app-shell';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
 import { PrescriptionTable } from '@/components/prescriptions/prescription-table';
 import { getPrescriptions } from '@/modules/prescriptions/server-queries';
 import { PrescriptionStatus } from '@/modules/prescriptions/types';
+
+export const metadata: Metadata = {
+  title: 'Prescriptions & Clinical Orders',
+  description:
+    'Doctor clinical prescriptions, electronic orders, and ward medicine verifications at DHQ Hospital Kohat.',
+};
 
 interface PrescriptionsPageProps {
   searchParams: Promise<{

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppShell } from '@/components/layout/app-shell';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -21,6 +21,10 @@ export default function NotificationsPage() {
   const [alerts] = useState(priorityAlerts);
   const [filterSeverity, setFilterSeverity] = useState<'all' | AlertSeverity>('all');
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    document.title = 'Clinical & Stock Alerts | MedLedger DHQ Kohat';
+  }, []);
 
   const activeAlerts = alerts.filter(
     (a) => !dismissedIds.has(a.id) && (filterSeverity === 'all' || a.severity === filterSeverity),

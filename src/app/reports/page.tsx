@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { connection } from 'next/server';
 import { AppShell } from '@/components/layout/app-shell';
 import { ReportsDashboardClient } from '@/components/reports';
@@ -8,6 +9,12 @@ import {
 } from '@/modules/finance/server-queries';
 import { ReportGenerator } from '@/modules/reports/generators';
 import { BarChart3 } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Pharmacy Analytics & Financial Reports',
+  description:
+    'DHQ Kohat financial reconciliations, stock utilization analytics, and Sehat Sahulat Program audit reports.',
+};
 
 export const instant = false;
 
